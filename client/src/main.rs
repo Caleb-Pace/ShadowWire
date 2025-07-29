@@ -1,3 +1,4 @@
 fn main() {
-    println!("Hello, world!");
+    println!("Hello from the client!");
+    shared::test();
 }
