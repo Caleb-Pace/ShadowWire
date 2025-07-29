@@ -46,6 +46,9 @@
 - Could encrypt traffic between clients and server (as well as end-to-end encryption) to anonymise users from each other on the same network.
 	  *(If they were packet sniffing you could see who receives the message you sent because it would be the same if only end-to-end encrypted)*
 - Transfer messages between clients.
+- Registration.
+	- Initial registration is encrypted.
+	- Provide challenge phrase when registering, to prove user has private key. 
 ### Later/Future
 - Use Post-Quantum Cryptography (PQC) algorithms.
 - Key reset (for compromised keys) - Requires old key.
