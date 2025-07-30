@@ -5,3 +5,4 @@ Planning:
 - MVP: 14m
 
 Asymmetric encryption research: 25m
+Client structure planning: 7m

@@ -1,5 +1,15 @@
 ## MVP (Minimum Viable Product)
 ### Client - Basic CLI
+```
+client/
+└── src/
+    ├── main.rs
+    ├── keys.rs          // key generation, saving, loading
+    ├── user.rs          // user info storage & retrieval
+    ├── connection.rs    // networking, server comms
+    ├── messaging.rs     // message encrypt/decrypt, format, sending/receiving
+    └── cache.rs         // message caching
+```
 - [ ] Setup
 	- [ ] Generate & store key pair.
 	- [ ] Get & store username.
