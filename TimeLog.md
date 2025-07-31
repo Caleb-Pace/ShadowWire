@@ -10,4 +10,4 @@ Client:
 - Client structure planning: 7m
 - Keys:
     - Generation: 13m
-    - Storing & Retrieval: 25m
+    - Storing & Retrieval: 27m

@@ -60,8 +60,6 @@ pub fn resolve_rsa_keypair() -> (RsaPrivateKey, RsaPublicKey) {
         (priv_key, pub_key)
     } else {
         println!("Keys not found. Generating new RSA keypair...");
-
-        let (priv_key, pub_key) = generate_rsa_keypair();
-        (priv_key, pub_key)
+        generate_rsa_keypair()
     }
 }
