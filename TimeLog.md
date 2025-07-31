@@ -4,5 +4,10 @@ Brainstorm: 48m
 Planning:
 - MVP: 14m
 
-Asymmetric encryption research: 25m
-Client structure planning: 7m
+Asymmetric encryption research: 43m
+
+Client:
+- Client structure planning: 7m
+- Keys:
+    - Generation: 13m
+    - Storing & Retrieval: 25m

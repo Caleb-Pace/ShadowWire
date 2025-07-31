@@ -11,7 +11,7 @@ client/
     └── cache.rs         // message caching
 ```
 - [ ] Setup
-	- [ ] Generate & store key pair.
+	- [x] Generate & store key pair.
 	- [ ] Get & store username.
 		- *Note: may need to do duplicate detection later*
 	- [ ] Register with server:
