@@ -21,6 +21,14 @@ client/
 	- [ ] Receive messages. (Query from server).
 	- [ ] Encrypt messages with other users public key.
 ### Server
+```
+server/
+└── src/
+    ├── main.rs
+    ├── dispatcher.rs    // parse & route incoming client requests
+    ├── users.rs         // user registration and public key storage
+    └── messages.rs      // store, relay, and serve queued messages
+```
 - [ ] Accept new users.
 	- *Note: this initial step will need to be secured later*
 	- [ ] Retrieve public key.
@@ -28,5 +36,6 @@ client/
 - [ ] Store user information.
 	- Username
 	- Public key
+- [ ] Distribute user data between users (usernames and public keys).
 - [ ] Store messages for users. (Client send).
 - [ ] Relay messages when requested. (Client receive).
