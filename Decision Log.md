@@ -21,3 +21,6 @@ I chose **RSA-OAEP** for encrypting messages and **RSA-PSS** for signing them. T
 I used padded RSA algorithms because their padding schemes provide stronger security guarantees compared to plain RSA.
 
 RSA is widely used and battle-tested in practice, which adds passive security since it has been scrutinized extensively by cryptographers and attackers alike. More importantly, RSA supports both signing and encryption, making it a natural fit for this project.
+### 6. Protocol: WebSockets
+WebSockets were chosen because they are fast, lightweight, and efficient — ideal for real-time messaging.
+They allow full-duplex communication over a single connection, which simplifies message handling and reduces latency compared to polling or traditional HTTP.
