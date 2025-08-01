@@ -8,7 +8,7 @@ Asymmetric encryption research: 43m
 
 Client:
 - Client structure planning: 7m
-- Keys:
+- Keys: 7m
     - Generation: 13m
     - Storing & Retrieval: 27m
 - User: 42m

@@ -3,8 +3,9 @@ use rsa::{RsaPrivateKey, RsaPublicKey};
 const PRIVATE_KEY_FILE: &str = "sw_key_private.der";
 const PUBLIC_KEY_FILE: &str = "sw_key_public.der";
 
+/// Generates a new 2048-bit RSA keypair, saves them to disk, and returns the pair.
 fn generate_rsa_keypair() -> (RsaPrivateKey, RsaPublicKey) {
-    let mut rng = rand::thread_rng(); // rand@0.8
+    let mut rng = rand::thread_rng(); // Use thread-local random number generator
     let bits = 2048;
 
     let priv_key = RsaPrivateKey::new(&mut rng, bits).expect("failed to generate a key");
@@ -15,6 +16,7 @@ fn generate_rsa_keypair() -> (RsaPrivateKey, RsaPublicKey) {
     load_rsa_keypair().expect("failed to load keys after generation")
 }
 
+/// Saves the given RSA private and public keys to disk in DER format.
 fn save_rsa_keypair(priv_key: &RsaPrivateKey, pub_key: &RsaPublicKey) -> std::io::Result<()> {
     use rsa::pkcs1::EncodeRsaPublicKey;
     use rsa::pkcs8::EncodePrivateKey;
@@ -38,6 +40,7 @@ fn save_rsa_keypair(priv_key: &RsaPrivateKey, pub_key: &RsaPublicKey) -> std::io
     Ok(())
 }
 
+/// Loads the RSA private and public keys from disk, returning None if either is missing or invalid.
 fn load_rsa_keypair() -> Option<(RsaPrivateKey, RsaPublicKey)> {
     use rsa::pkcs1::DecodeRsaPublicKey;
     use rsa::pkcs8::DecodePrivateKey;
@@ -54,6 +57,7 @@ fn load_rsa_keypair() -> Option<(RsaPrivateKey, RsaPublicKey)> {
     Some((priv_key, pub_key))
 }
 
+/// Returns the existing RSA keypair if found, otherwise generates and saves a new keypair.
 pub fn resolve_rsa_keypair() -> (RsaPrivateKey, RsaPublicKey) {
     if let Some((priv_key, pub_key)) = load_rsa_keypair() {
         println!("Loaded existing RSA keys.");
