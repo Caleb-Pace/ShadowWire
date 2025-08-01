@@ -12,7 +12,7 @@ client/
 ```
 - [ ] Setup
 	- [x] Generate & store key pair.
-	- [ ] Get & store username.
+	- [x] Get & store username.
 		- *Note: may need to do duplicate detection later*
 	- [ ] Register with server:
 		- [ ] Send public key and username to server.
