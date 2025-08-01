@@ -30,7 +30,7 @@ fn create_user() -> String {
         // Save valid username to file
         save_user(username.clone()).expect("failed to save user");
 
-        return username;
+        return load_user().expect("failed to load user after saving");
     }
 }
 
