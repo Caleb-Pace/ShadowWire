@@ -1,6 +1,6 @@
 Project setup: 23m
 Cargo workspace setup: 25m
-Brainstorm: 48m
+Brainstorm: 56m
 Planning:
 - MVP: 14m
 

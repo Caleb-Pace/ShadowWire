@@ -36,19 +36,33 @@
 - Password to access user.
 	- Encrypt private key.
 	- Stores salted hash of password.
+- Block other users.
+	- Lets server know.
 ### Server
 - Username storage (like a database), stores:
 	- Username.
 	- User public key.
 	- Current IP (if not actively connected will be blank/null).
 - Messages are cached/stored if user is not online. Once online messages will be sent.
+	- Have a Time To Live (TTL) on messages so server doesn't use up a lot of disk usage.
+	- Compress messages.
 - Verify message timestamps.
 - Could encrypt traffic between clients and server (as well as end-to-end encryption) to anonymise users from each other on the same network.
 	  *(If they were packet sniffing you could see who receives the message you sent because it would be the same if only end-to-end encrypted)*
 - Transfer messages between clients.
 - Registration.
 	- Initial registration is encrypted.
-	- Provide challenge phrase when registering, to prove user has private key. 
+	- Provide challenge phrase when registering, to prove user has private key.
+- Rate limit messages. (maybe like only 2 messages per second).
+	- Helps to avoid DoS.
+- Blocking.
+	- If a client sends a message to a client that has blocked them then it will:
+		- Immediately dump message.
+		- Or just store the message on the server.
+		- Could also send message failed to send. But that tells sender they are blocked which is not always good thing.
+- Delivered and Read receipts.
+	- Lets the sender know when a message was delivered.
+	- Lets the sender know when the message was opened/read.
 ### Later/Future
 - Use Post-Quantum Cryptography (PQC) algorithms.
 - Key reset (for compromised keys) - Requires old key.
