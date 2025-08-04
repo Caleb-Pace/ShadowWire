@@ -22,3 +22,6 @@ Server:
 - Users: 49m
     - Identification: 29m
 - Dispatcher Manager: 32m
+
+Shared:
+- Identity protocol: 15m
