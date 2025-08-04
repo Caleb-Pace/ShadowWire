@@ -18,6 +18,7 @@ Server:
 - Server structure planning: 9m
 - Dispatcher: 30m
     - WebSocket setup: 2h 29m
+    - Refactor attempt (create weak ref in main): 27m
 - Dispatcher Registry: 9m
 - Users: 49m
     - Identification: 1h 34m
