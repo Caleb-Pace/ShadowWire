@@ -12,7 +12,9 @@ fn create_user() -> String {
         io::stdout().flush().unwrap(); // Ensure prompt is shown
 
         let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
 
         // Filter input to allowed characters and limit to 10 chars
         let username: String = input
