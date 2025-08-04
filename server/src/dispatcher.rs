@@ -11,6 +11,8 @@ use tokio_tungstenite::{
     tungstenite::{Bytes, protocol::Message},
 };
 
+use crate::{identifier::Identifier, users::UserManager};
+
 pub type DispatcherRegistry = Arc<Mutex<HashMap<u64, Arc<Mutex<Dispatcher>>>>>;
 
 struct WebSocket {
@@ -20,8 +22,9 @@ struct WebSocket {
 }
 
 pub struct Dispatcher {
-    identifier: Option<String>,
+    identifier: Option<Identifier>,
     registry_ref: Option<DispatcherRegistry>,
+    user_manager_ref: Option<Arc<Mutex<UserManager>>>,
     websocket: Option<WebSocket>,
 }
 
@@ -30,38 +33,43 @@ impl Dispatcher {
         Dispatcher {
             identifier: None,
             registry_ref: None,
+            user_manager_ref: None,
             websocket: None,
         }
     }
 
+    fn identify_user(&mut self) {}
+
     fn register_user(&self) {
         unimplemented!(
-            "Registration request functionality not implemented yet! (identifier: {:?})",
-            self.identifier
+            "Registration request functionality not implemented yet! (identifier: {:#?})",
+            self.identifier.as_ref().map(|id| id.fingerprint)
         );
     }
 
     fn lookup_request(&self) {
         unimplemented!(
-            "Lookup request functionality not implemented yet! (identifier: {:?})",
-            self.identifier
+            "Lookup request functionality not implemented yet! (identifier: {:#?})",
+            self.identifier.as_ref().map(|id| id.fingerprint)
         );
     }
 
-    fn relay_messages(&self, recipient_identifier: &str) {
+    fn relay_messages(&self, recipient_identifier: &Identifier) {
         unimplemented!(
-            "Message relaying functionality not implemented yet! (identifier: {})",
-            recipient_identifier
+            "Message relaying functionality not implemented yet! (identifier: {:#?})",
+            recipient_identifier.fingerprint
         );
     }
 
     pub async fn init_websocket_session(
         &mut self,
-        registry_ref: DispatcherRegistry,
         stream: TcpStream,
         addr: SocketAddr,
+        registry_ref: DispatcherRegistry,
+        user_manager_ref: Arc<Mutex<UserManager>>,
     ) {
         self.registry_ref = Some(registry_ref);
+        self.user_manager_ref = Some(user_manager_ref);
 
         // Initialize the WebSocket session
         let ws_stream: WebSocketStream<TcpStream> = accept_async(stream)

@@ -18,3 +18,6 @@ Server:
 - Server structure planning: 7m
 - Dispatcher: 30m
     - WebSocket setup: 2h 29m
+- Dispatcher Registry: 9m
+- Users: 49m
+    - Identification: 25m
