@@ -13,6 +13,7 @@ Client:
     - Generation: 13m
     - Storing & Retrieval: 27m
 - User: 42m
+- Connection: 17m
 
 Server:
 - Server structure planning: 9m

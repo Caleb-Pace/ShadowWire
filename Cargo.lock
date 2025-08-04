@@ -81,10 +81,14 @@ checksum = "9555578bc9e57714c812a1f84e4fc5b4d21fcb063490c624de019f7464c91268"
 name = "client"
 version = "0.1.0"
 dependencies = [
+ "futures",
  "rand 0.8.5",
  "rsa",
  "sha2",
  "shared",
+ "tokio",
+ "tokio-tungstenite",
+ "tungstenite",
 ]
 
 [[package]]
