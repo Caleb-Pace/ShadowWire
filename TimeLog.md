@@ -20,8 +20,8 @@ Server:
     - WebSocket setup: 2h 29m
 - Dispatcher Registry: 9m
 - Users: 49m
-    - Identification: 29m
-- Dispatcher Manager: 32m
+    - Identification: 1h 34m
+- Dispatcher Manager: 1h 21m
 
 Shared:
 - Identity protocol: 15m

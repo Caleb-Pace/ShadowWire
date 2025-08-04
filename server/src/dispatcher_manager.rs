@@ -1,9 +1,14 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    sync::{Arc, Weak},
+};
+
+use tokio::sync::Mutex;
 
 use crate::{dispatcher::Dispatcher, identifier::Identifier};
 
 pub struct DispatcherManager {
-    registry: HashMap<[u8; 32], Dispatcher>,
+    registry: HashMap<[u8; 32], Weak<Mutex<Dispatcher>>>,
 }
 
 impl DispatcherManager {
@@ -13,16 +18,31 @@ impl DispatcherManager {
         }
     }
 
-    pub fn register_dispatcher(&mut self, identifier: Identifier, dispatcher: Dispatcher) {
+    pub fn register_dispatcher(
+        &mut self,
+        identifier: Identifier,
+        dispatcher: Weak<Mutex<Dispatcher>>,
+    ) {
         self.registry
             .insert(identifier.fingerprint.clone(), dispatcher);
     }
 
-    pub fn deregister_dispatcher(&mut self, identifier: Identifier) {
-        self.registry.remove(&identifier.fingerprint);
+    fn prune_registry(&mut self) {
+        self.registry.retain(|_, weak| weak.strong_count() > 0);
     }
 
-    pub fn get_dispatcher(&self, recipient_identifier: Identifier) -> Option<&Dispatcher> {
-        self.registry.get(&recipient_identifier.fingerprint)
+    pub fn deregister_dispatcher(&mut self, identifier: Identifier) {
+        self.registry.remove(&identifier.fingerprint);
+
+        self.prune_registry(); // Shouldn't matter, just a fallback.
+    }
+
+    pub fn get_dispatcher(
+        &self,
+        recipient_identifier: Identifier,
+    ) -> Option<Arc<Mutex<Dispatcher>>> {
+        self.registry
+            .get(&recipient_identifier.fingerprint)
+            .and_then(|weak| weak.upgrade())
     }
 }

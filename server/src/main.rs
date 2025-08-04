@@ -32,9 +32,12 @@ async fn main() {
 
         tokio::spawn(async move {
             // Create a new dispatcher for the incoming connection
-            Dispatcher::new()
-                .init_websocket_session(stream, addr, dispatcher_manager_ref, user_manager_ref)
-                .await;
+            let dispatcher = Dispatcher::new();
+            {
+                let mut lock = dispatcher.lock().await;
+                lock.init_websocket_session(stream, addr, dispatcher_manager_ref, user_manager_ref)
+                    .await;
+            }
         });
     }
 }

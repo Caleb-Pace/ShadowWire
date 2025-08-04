@@ -2,8 +2,8 @@ use futures::{
     SinkExt, StreamExt,
     stream::{SplitSink, SplitStream},
 };
-use std::net::SocketAddr;
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
+use std::{net::SocketAddr, sync::Weak};
 use tokio::net::TcpStream;
 use tokio::sync::Mutex;
 use tokio_tungstenite::{
@@ -12,8 +12,6 @@ use tokio_tungstenite::{
 };
 
 use crate::{dispatcher_manager::DispatcherManager, identifier::Identifier, users::UserManager};
-
-pub type DispatcherRegistry = Arc<Mutex<HashMap<u64, Arc<Mutex<Dispatcher>>>>>;
 
 struct WebSocket {
     addr: SocketAddr,
@@ -26,27 +24,90 @@ pub struct Dispatcher {
     dispatcher_manager_ref: Option<Arc<Mutex<DispatcherManager>>>,
     user_manager_ref: Option<Arc<Mutex<UserManager>>>,
     websocket: Option<WebSocket>,
+    self_ref: Option<Weak<Mutex<Dispatcher>>>,
 }
 
 impl Dispatcher {
-    pub fn new() -> Self {
-        Dispatcher {
+    pub fn new() -> Arc<Mutex<Self>> {
+        let dispatcher = Arc::new(Mutex::new(Dispatcher {
             identifier: None,
             dispatcher_manager_ref: None,
             user_manager_ref: None,
             websocket: None,
+            self_ref: None,
+        }));
+
+        // Insert the weak self reference
+        let weak = Arc::downgrade(&dispatcher);
+        {
+            // Here you have to lock mutex to set self_ref:
+            let mut guard = futures::executor::block_on(dispatcher.lock());
+            guard.self_ref = Some(weak);
+        }
+
+        dispatcher
+    }
+
+    async fn identify_user(&mut self, bin: Bytes) {
+        use sha2::Digest;
+
+        shared::protocol::identity::Identification::from_bytes(&bin)
+            .map(|identity| {
+                let mut hasher = sha2::Sha256::new();
+                hasher.update(&identity.public_key);
+                let result = hasher.finalize();
+
+                let mut fingerprint = [0u8; 32];
+                fingerprint.copy_from_slice(&result);
+
+                self.identifier = Some(Identifier {
+                    username: identity.username,
+                    public_key: identity.public_key,
+                    fingerprint: fingerprint,
+                });
+            })
+            .unwrap_or_else(|_| {
+                eprintln!("Failed to deserialize user identification from bytes");
+            });
+
+        self.register_user().await;
+        self.register_dispatcher().await;
+    }
+
+    async fn register_user(&mut self) {
+        if let Some(user_manager) = &self.user_manager_ref {
+            let mut user_manager_guard = user_manager.lock().await;
+
+            if user_manager_guard
+                .get_user(self.identifier.as_ref().unwrap().fingerprint)
+                .is_none()
+            {
+                if let Some(identifier) = &self.identifier {
+                    user_manager_guard.add_user(identifier.clone());
+                }
+            }
+        } else {
+            panic!("User manager reference is not set, cannot register user!");
         }
     }
 
-    fn identify_user(&mut self) {
-        unimplemented!("User identification functionality not implemented yet!");
-    }
+    async fn register_dispatcher(&mut self) {
+        if let Some(dispatcher_manager) = &self.dispatcher_manager_ref {
+            let mut manager_guard = dispatcher_manager.lock().await;
 
-    fn register_user(&self) {
-        unimplemented!(
-            "Registration request functionality not implemented yet! (identifier: {:#?})",
-            self.identifier.as_ref().map(|id| id.fingerprint)
-        );
+            if let Some(identifier) = &self.identifier {
+                // Extract the weak reference from the Option.
+                if let Some(self_ref) = &self.self_ref {
+                    manager_guard.register_dispatcher(identifier.clone(), self_ref.clone());
+                } else {
+                    eprintln!("self_ref is None, cannot register dispatcher");
+                }
+            } else {
+                eprintln!("Identifier is None, cannot register dispatcher!");
+            }
+        } else {
+            panic!("Dispatcher manager reference is not set, cannot register dispatcher!");
+        }
     }
 
     fn lookup_request(&self) {
@@ -104,13 +165,16 @@ impl Dispatcher {
             };
 
             match incoming_message {
-                Some(Ok(Message::Text(txt))) => {
-                    println!("Received: \"{}\"", txt);
+                Some(Ok(Message::Binary(bin))) => {
+                    println!("Received binary message: {:?}", bin);
 
                     // Identify the user if not already done
                     if self.identifier.is_none() {
-                        self.identify_user();
+                        self.identify_user(bin);
                     }
+                }
+                Some(Ok(Message::Text(txt))) => {
+                    println!("Received: \"{}\"", txt);
 
                     let ws = self.websocket.as_ref().unwrap();
                     let mut write_guard = ws.write.lock().await;
