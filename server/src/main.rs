@@ -1,12 +1,14 @@
 mod dispatcher;
+mod dispatcher_manager;
 mod identifier;
 mod users;
 
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 use tokio::net::TcpListener;
 use tokio::sync::Mutex;
 
-use crate::dispatcher::{Dispatcher, DispatcherRegistry};
+use crate::dispatcher::Dispatcher;
+use crate::dispatcher_manager::DispatcherManager;
 use crate::users::UserManager;
 
 #[tokio::main]
@@ -16,30 +18,22 @@ async fn main() {
         .expect("Can't bind");
     println!("Listening on ws://127.0.0.1:9001");
 
-    let registry: DispatcherRegistry = Arc::new(Mutex::new(HashMap::new()));
+    let dispatcher_manager: Arc<Mutex<DispatcherManager>> =
+        Arc::new(Mutex::new(DispatcherManager::new()));
     let user_manager: Arc<Mutex<UserManager>> = Arc::new(Mutex::new(UserManager::new()));
 
     // Accept incoming connections
     while let Ok((stream, addr)) = listener.accept().await {
         println!("New connection from {}", addr);
 
-        let id = addr.port() as u64;
-
-        // Create a new dispatcher for the incoming connection
-        let dispatcher = Arc::new(Mutex::new(Dispatcher::new()));
-        {
-            // Register the dispatcher in the global registry
-            let mut registry_guard = registry.lock().await;
-            registry_guard.insert(id, Arc::clone(&dispatcher));
-        }
-
-        let registry_ref = Arc::clone(&registry);
+        // Clone manager references for the new dispatcher
+        let dispatcher_manager_ref = Arc::clone(&dispatcher_manager);
         let user_manager_ref = Arc::clone(&user_manager);
 
         tokio::spawn(async move {
-            let mut dispatcher_guard = dispatcher.lock().await;
-            dispatcher_guard
-                .init_websocket_session(stream, addr, registry_ref, user_manager_ref)
+            // Create a new dispatcher for the incoming connection
+            Dispatcher::new()
+                .init_websocket_session(stream, addr, dispatcher_manager_ref, user_manager_ref)
                 .await;
         });
     }

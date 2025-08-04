@@ -11,7 +11,7 @@ use tokio_tungstenite::{
     tungstenite::{Bytes, protocol::Message},
 };
 
-use crate::{identifier::Identifier, users::UserManager};
+use crate::{dispatcher_manager::DispatcherManager, identifier::Identifier, users::UserManager};
 
 pub type DispatcherRegistry = Arc<Mutex<HashMap<u64, Arc<Mutex<Dispatcher>>>>>;
 
@@ -23,7 +23,7 @@ struct WebSocket {
 
 pub struct Dispatcher {
     identifier: Option<Identifier>,
-    registry_ref: Option<DispatcherRegistry>,
+    dispatcher_manager_ref: Option<Arc<Mutex<DispatcherManager>>>,
     user_manager_ref: Option<Arc<Mutex<UserManager>>>,
     websocket: Option<WebSocket>,
 }
@@ -32,13 +32,15 @@ impl Dispatcher {
     pub fn new() -> Self {
         Dispatcher {
             identifier: None,
-            registry_ref: None,
+            dispatcher_manager_ref: None,
             user_manager_ref: None,
             websocket: None,
         }
     }
 
-    fn identify_user(&mut self) {}
+    fn identify_user(&mut self) {
+        unimplemented!("User identification functionality not implemented yet!");
+    }
 
     fn register_user(&self) {
         unimplemented!(
@@ -65,10 +67,10 @@ impl Dispatcher {
         &mut self,
         stream: TcpStream,
         addr: SocketAddr,
-        registry_ref: DispatcherRegistry,
+        dispatcher_manager_ref: Arc<Mutex<DispatcherManager>>,
         user_manager_ref: Arc<Mutex<UserManager>>,
     ) {
-        self.registry_ref = Some(registry_ref);
+        self.dispatcher_manager_ref = Some(dispatcher_manager_ref);
         self.user_manager_ref = Some(user_manager_ref);
 
         // Initialize the WebSocket session
@@ -88,25 +90,30 @@ impl Dispatcher {
         self.handle_connections().await;
     }
 
-    async fn handle_connections(&self) {
+    async fn handle_connections(&mut self) {
         if self.websocket.is_none() {
             eprintln!("WebSocket not initialized, cannot handle connections!");
             return;
         }
-        let ws = self.websocket.as_ref().unwrap();
 
         loop {
             let incoming_message = {
+                let ws = self.websocket.as_ref().unwrap();
                 let mut read_guard = ws.read.lock().await;
                 read_guard.next().await
             };
 
             match incoming_message {
                 Some(Ok(Message::Text(txt))) => {
-                    println!("Received: {}", txt);
+                    println!("Received: \"{}\"", txt);
 
+                    // Identify the user if not already done
+                    if self.identifier.is_none() {
+                        self.identify_user();
+                    }
+
+                    let ws = self.websocket.as_ref().unwrap();
                     let mut write_guard = ws.write.lock().await;
-
                     if write_guard
                         .send(Message::text(format!("Echo: {}", txt)))
                         .await
@@ -117,15 +124,22 @@ impl Dispatcher {
                     }
                 }
                 Some(Ok(Message::Close(_))) => {
-                    let id = ws.addr.port() as u64;
-
-                    // After session ends, remove from registry
-                    if let Some(registry) = &self.registry_ref {
-                        let mut registry_guard = registry.lock().await;
-                        registry_guard.remove(&id);
+                    // After session ends, deregister
+                    if let Some(dispatcher_manager) = &self.dispatcher_manager_ref {
+                        if let Some(id) = &self.identifier {
+                            let mut manager_guard = dispatcher_manager.lock().await;
+                            manager_guard.deregister_dispatcher(id.clone());
+                        }
                     }
 
-                    println!("{} ({}) disconnected!", ws.addr, id);
+                    let ws = self.websocket.as_ref().unwrap();
+                    println!(
+                        "{} disconnected! ({})",
+                        self.identifier
+                            .as_ref()
+                            .map_or("Unknown", |id| &id.username),
+                        ws.addr
+                    );
                     break;
                 }
                 Some(_) => {}

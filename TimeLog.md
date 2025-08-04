@@ -15,9 +15,10 @@ Client:
 - User: 42m
 
 Server:
-- Server structure planning: 7m
+- Server structure planning: 9m
 - Dispatcher: 30m
     - WebSocket setup: 2h 29m
 - Dispatcher Registry: 9m
 - Users: 49m
-    - Identification: 25m
+    - Identification: 29m
+- Dispatcher Manager: 32m
