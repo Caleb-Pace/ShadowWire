@@ -1,22 +1,22 @@
-/// File where the username is stored
+use std::io::{self, Write};
+
+/// File where the username is stored.
 const USER_FILE: &str = "user.txt";
 
-/// Prompts the user to create a new username, validates it, and saves it to file.
-fn create_user() -> String {
-    use std::io::{self, Write};
-
-    println!("Please enter a username:    ([a-zA-Z0-9_.-], 10 characters max)");
+/// Prompts the user for a username, validates it, and returns it as a String.
+pub fn get_username_input() -> String {
+    println!("Please enter username: ([a-zA-Z0-9_.-], 10 characters max)");
 
     loop {
         print!("> ");
-        io::stdout().flush().unwrap(); // Ensure prompt is shown
+        io::stdout().flush().unwrap(); // Ensure prompt is shown.
 
         let mut input = String::new();
         io::stdin()
             .read_line(&mut input)
             .expect("Failed to read line");
 
-        // Filter input to allowed characters and limit to 10 chars
+        // Filter input to allowed characters and limit to 10 chars.
         let username: String = input
             .trim()
             .chars()
@@ -29,11 +29,20 @@ fn create_user() -> String {
             continue;
         }
 
-        // Save valid username to file
-        save_user(username.clone()).expect("failed to save user");
-
-        return load_user().expect("failed to load user after saving");
+        return username;
     }
+}
+
+/// Creates a new user by prompting for a username and saving it to file.
+fn create_user() -> String {
+    // Prompt for username.
+    println!("Creating a new user...");
+    let username = get_username_input();
+
+    // Save valid username to file.
+    save_user(username).expect("failed to save user");
+
+    return load_user().expect("failed to load user after saving");
 }
 
 /// Saves the username to USER_FILE.

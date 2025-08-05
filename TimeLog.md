@@ -15,6 +15,8 @@ Client:
 - User: 42m
 - Connection: 41m
 - Messaging: 30m
+- Recipient selection: 13m
+- Input loop: 8m
 
 Server:
 - Server structure planning: 9m
