@@ -1,6 +1,5 @@
 mod dispatcher;
 mod dispatcher_manager;
-mod users;
 
 use std::sync::Arc;
 use tokio::net::TcpListener;
@@ -8,7 +7,7 @@ use tokio::sync::Mutex;
 
 use crate::dispatcher::Dispatcher;
 use crate::dispatcher_manager::DispatcherManager;
-use crate::users::UserManager;
+use shared::contacts::ContactsList;
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +18,8 @@ async fn main() {
 
     let dispatcher_manager: Arc<Mutex<DispatcherManager>> =
         Arc::new(Mutex::new(DispatcherManager::new()));
-    let user_manager: Arc<Mutex<UserManager>> = Arc::new(Mutex::new(UserManager::new()));
+    let user_manager: Arc<Mutex<ContactsList>> =
+        Arc::new(Mutex::new(ContactsList::new("users.json".to_string())));
 
     // Accept incoming connections
     while let Ok((stream, addr)) = listener.accept().await {

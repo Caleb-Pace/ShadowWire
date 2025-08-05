@@ -12,7 +12,8 @@ use tokio_tungstenite::{
 };
 
 use shared::identifier::Identifier;
-use crate::{dispatcher_manager::DispatcherManager, users::UserManager};
+use shared::contacts::ContactsList;
+use crate::dispatcher_manager::DispatcherManager;
 
 struct WebSocket {
     addr: SocketAddr,
@@ -23,7 +24,7 @@ struct WebSocket {
 pub struct Dispatcher {
     identifier: Option<Identifier>,
     dispatcher_manager_ref: Option<Arc<Mutex<DispatcherManager>>>,
-    user_manager_ref: Option<Arc<Mutex<UserManager>>>,
+    user_manager_ref: Option<Arc<Mutex<ContactsList>>>,
     websocket: Option<WebSocket>,
     self_ref: Option<Weak<Mutex<Dispatcher>>>,
 }
@@ -80,11 +81,11 @@ impl Dispatcher {
             let mut user_manager_guard = user_manager.lock().await;
 
             if user_manager_guard
-                .get_user(self.identifier.as_ref().unwrap().fingerprint)
+                .get_by_fingerprint(&self.identifier.as_ref().unwrap().fingerprint)
                 .is_none()
             {
                 if let Some(identifier) = &self.identifier {
-                    user_manager_guard.add_user(identifier.clone());
+                    user_manager_guard.add(identifier.clone());
                 }
             }
         } else {
@@ -130,7 +131,7 @@ impl Dispatcher {
         stream: TcpStream,
         addr: SocketAddr,
         dispatcher_manager_ref: Arc<Mutex<DispatcherManager>>,
-        user_manager_ref: Arc<Mutex<UserManager>>,
+        user_manager_ref: Arc<Mutex<ContactsList>>,
     ) {
         self.dispatcher_manager_ref = Some(dispatcher_manager_ref);
         self.user_manager_ref = Some(user_manager_ref);

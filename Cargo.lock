@@ -688,8 +688,6 @@ name = "server"
 version = "0.1.0"
 dependencies = [
  "futures",
- "serde",
- "serde_json",
  "sha2",
  "shared",
  "tokio",
@@ -724,6 +722,7 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_cbor",
+ "serde_json",
 ]
 
 [[package]]

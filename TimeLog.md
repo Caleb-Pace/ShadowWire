@@ -28,3 +28,4 @@ Server:
 
 Shared:
 - Identity protocol: 15m
+- Contacts list: 13m

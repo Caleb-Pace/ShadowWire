@@ -3,55 +3,53 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::BufReader;
 
-use shared::identifier::Identifier;
-
-const USERS_FILE: &str = "users.json";
+use crate::identifier::Identifier;
 
 #[derive(Serialize, Deserialize)]
-pub struct UserManager {
+pub struct ContactsList {
+    filepath: String,
     users: Vec<Identifier>,
     by_username: HashMap<String, usize>,
     by_fingerprint: HashMap<[u8; 32], usize>,
 }
 
-impl UserManager {
-    pub fn new() -> Self {
-        let mut user_manager = UserManager {
+impl ContactsList {
+    pub fn new(filepath: String) -> Self {
+        let mut contacts_list = ContactsList {
+            filepath,
             users: Vec::new(),
             by_username: HashMap::new(),
             by_fingerprint: HashMap::new(),
         };
 
-        // Load existing users from file
-        user_manager.load();
+        // Load existing contacts from file
+        contacts_list.load();
 
-        user_manager
+        contacts_list
     }
 
-    pub fn add_user(&mut self, identifier: Identifier) {
+    pub fn add(&mut self, identifier: Identifier) {
         let index = self.users.len();
         self.by_username.insert(identifier.username.clone(), index);
-        self.by_fingerprint.insert(identifier.fingerprint, index);
-
         self.users.push(identifier);
 
         self.save();
     }
 
-    pub fn get_user(&self, fingerprint: [u8; 32]) -> Option<&Identifier> {
+    pub fn get_by_fingerprint(&self, fingerprint: &[u8; 32]) -> Option<&Identifier> {
         self.by_fingerprint
-            .get(&fingerprint)
+            .get(fingerprint)
             .and_then(|&index| self.users.get(index))
     }
 
-    pub fn get_user_by_username(&self, username: &str) -> Option<&Identifier> {
+    pub fn get_by_username(&self, username: &str) -> Option<&Identifier> {
         self.by_username
             .get(username)
             .and_then(|&index| self.users.get(index))
     }
 
     fn load(&mut self) {
-        self.users = File::open(USERS_FILE)
+        self.users = File::open(self.filepath.clone())
             .ok()
             .map(BufReader::new)
             .and_then(|r| serde_json::from_reader(r).ok())
@@ -69,8 +67,8 @@ impl UserManager {
 
         let json = serde_json::to_string_pretty(&self.users).unwrap();
 
-        let mut file = File::create(USERS_FILE).unwrap();
+        let mut file = File::create(self.filepath.clone()).unwrap();
         file.write_all(json.as_bytes())
-            .expect("Failed to save to users");
+            .expect("Failed to save to contacts");
     }
 }
