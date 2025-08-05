@@ -170,7 +170,11 @@ impl Dispatcher {
 
                     // Identify the user if not already done
                     if self.identifier.is_none() {
-                        self.identify_user(bin);
+                        self.identify_user(bin).await;
+                        println!(
+                            "User identified (\"{:?}\")",
+                            self.identifier.as_ref().unwrap().username
+                        );
                     }
                 }
                 Some(Ok(Message::Text(txt))) => {
