@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use serde_cbor;
 
 /// Identity protocol structure, serialized with CBOR (Concise Binary Object Representation).
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Identification {
     /// The username associated with this identity.
     pub username: String,

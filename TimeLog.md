@@ -14,6 +14,7 @@ Client:
     - Storing & Retrieval: 27m
 - User: 42m
 - Connection: 17m 24m
+- Messaging: 30m
 
 Server:
 - Server structure planning: 9m

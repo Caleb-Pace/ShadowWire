@@ -67,3 +67,8 @@ pub fn resolve_rsa_keypair() -> (RsaPrivateKey, RsaPublicKey) {
         generate_rsa_keypair()
     }
 }
+
+pub fn decode_rsa_public_key(bytes: &[u8]) -> Option<RsaPublicKey> {
+    use rsa::pkcs1::DecodeRsaPublicKey;
+    RsaPublicKey::from_pkcs1_der(bytes).ok()
+}
