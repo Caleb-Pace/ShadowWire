@@ -13,7 +13,7 @@ Client:
     - Generation: 13m
     - Storing & Retrieval: 27m
 - User: 42m
-- Connection: 17m 24m
+- Connection: 41m
 - Messaging: 30m
 
 Server:
@@ -23,7 +23,7 @@ Server:
     - Refactor attempt (create weak ref in main): 27m
 - Dispatcher Registry: 9m
 - Users: 49m
-    - Identification: 1h 34m 1m
+    - Identification: 1h 39m
 - Dispatcher Manager: 1h 21m
 
 Shared:

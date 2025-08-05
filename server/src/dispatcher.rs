@@ -11,7 +11,8 @@ use tokio_tungstenite::{
     tungstenite::{Bytes, protocol::Message},
 };
 
-use crate::{dispatcher_manager::DispatcherManager, identifier::Identifier, users::UserManager};
+use shared::identifier::Identifier;
+use crate::{dispatcher_manager::DispatcherManager, users::UserManager};
 
 struct WebSocket {
     addr: SocketAddr,

@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::BufReader;
 
-use crate::identifier::Identifier;
+use shared::identifier::Identifier;
 
 const USERS_FILE: &str = "users.json";
 

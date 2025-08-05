@@ -5,7 +5,8 @@ use std::{
 
 use tokio::sync::Mutex;
 
-use crate::{dispatcher::Dispatcher, identifier::Identifier};
+use shared::identifier::Identifier;
+use crate::dispatcher::Dispatcher;
 
 pub struct DispatcherManager {
     registry: HashMap<[u8; 32], Weak<Mutex<Dispatcher>>>,

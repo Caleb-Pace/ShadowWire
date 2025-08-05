@@ -1,6 +1,5 @@
 mod dispatcher;
 mod dispatcher_manager;
-mod identifier;
 mod users;
 
 use std::sync::Arc;
