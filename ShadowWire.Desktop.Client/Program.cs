@@ -7,14 +7,18 @@ namespace ShadowWire.Desktop.Client
     {
         static async Task Main(string[] args)
         {
-            const string URI = "ws://127.0.0.1:4960/ws/";
+            //const string URI = "ws://127.0.0.1:4960/ws/";
 
-            var connection = new Connection(URI);
+            //var connection = new Connection(URI);
 
-            await connection.SendAsync(Encoding.UTF8.GetBytes("Hello"));
+            //await connection.SendAsync(Encoding.UTF8.GetBytes("Hello"));
 
-            var respBin = await connection.ReceiveAsync();
-            Console.WriteLine($"Response from the server: \"{Encoding.UTF8.GetString(respBin)}\"");
+            //var respBin = await connection.ReceiveAsync();
+            //Console.WriteLine($"Response from the server: \"{Encoding.UTF8.GetString(respBin)}\"");
+
+            // TODO: Remove, for debugging
+            var crypto = new Security.Cryptography();
+            Console.WriteLine($"Fingerprint: {Convert.ToBase64String(crypto.Fingerprint)}");
         }
     }
 }
