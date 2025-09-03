@@ -4,6 +4,7 @@ Planning:
 - MVP: 14m
 
 Websocket library research: 9m
+Project structure planning: 25m
 
 Server:
 - WebSocket (echo) server setup: 45m
