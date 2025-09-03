@@ -7,3 +7,6 @@ Websocket library research: 9m
 
 Server:
 - WebSocket (echo) server setup: 45m
+
+Client:
+- WebSocket setup: 15m
