@@ -10,12 +10,15 @@ namespace ShadowWire.Desktop.Client.Security
         private byte[] publicKeyDer = [];  // X.509 format
         private byte[] privateKeyDer = []; // PKCS#1 format
 
-        private const string PUBLIC_KEY_FILE = "sw-rsa-key-pub.der";
-        private const string PRIVATE_KEY_FILE = "sw-rsa-key-priv.der";
+        private readonly string publicKeyFile;
+        private readonly string privateKeyFile;
 
 
-        public Cryptography()
+        public Cryptography(string publicKeyFile, string privateKeyFile)
         {
+            this.publicKeyFile = publicKeyFile;
+            this.privateKeyFile = privateKeyFile;
+
             ResolveKeyPair();
         }
 
@@ -24,11 +27,11 @@ namespace ShadowWire.Desktop.Client.Security
         private void ResolveKeyPair()
         {
             // Generate key pair if not saved
-            if (!(File.Exists(PRIVATE_KEY_FILE) && File.Exists(PUBLIC_KEY_FILE)))
+            if (!(File.Exists(privateKeyFile) && File.Exists(publicKeyFile)))
             {
                 // TODO: Remove, for debugging
-                char pubKeyFound = File.Exists(PUBLIC_KEY_FILE) ? 'T' : 'F';
-                char privKeyFound = File.Exists(PRIVATE_KEY_FILE) ? 'T' : 'F';
+                char pubKeyFound = File.Exists(publicKeyFile) ? 'T' : 'F';
+                char privKeyFound = File.Exists(privateKeyFile) ? 'T' : 'F';
                 Console.WriteLine($"Key pair not found, generating...    (pub? {pubKeyFound}; priv? {privKeyFound})");
 
                 GenerateRsaKeyPair();
@@ -63,14 +66,14 @@ namespace ShadowWire.Desktop.Client.Security
 
         private void SaveKeyPair()
         {
-            File.WriteAllBytes(PUBLIC_KEY_FILE, publicKeyDer);
-            File.WriteAllBytes(PRIVATE_KEY_FILE, privateKeyDer);
+            File.WriteAllBytes(publicKeyFile, publicKeyDer);
+            File.WriteAllBytes(privateKeyFile, privateKeyDer);
         }
 
         private void LoadKeyPair()
         {
-            publicKeyDer = File.ReadAllBytes(PUBLIC_KEY_FILE);
-            privateKeyDer = File.ReadAllBytes(PRIVATE_KEY_FILE);
+            publicKeyDer = File.ReadAllBytes(publicKeyFile);
+            privateKeyDer = File.ReadAllBytes(privateKeyFile);
         }
     }
 }

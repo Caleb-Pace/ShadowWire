@@ -17,7 +17,7 @@ namespace ShadowWire.Desktop.Client
             //Console.WriteLine($"Response from the server: \"{Encoding.UTF8.GetString(respBin)}\"");
 
             // TODO: Remove, for debugging
-            var crypto = new Security.Cryptography();
+            var crypto = new Security.Cryptography("sw-rsa-key-pub.der", "sw-rsa-key-priv.der");
             Console.WriteLine($"Fingerprint: {Convert.ToBase64String(crypto.Fingerprint)}");
         }
     }
