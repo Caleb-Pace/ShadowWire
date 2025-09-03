@@ -11,3 +11,4 @@ Server:
 
 Client:
 - WebSocket setup: 15m
+- Connection: 32m

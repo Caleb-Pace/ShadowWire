@@ -1,4 +1,4 @@
-﻿using System.Net.WebSockets;
+﻿using ShadowWire.Desktop.Client.Network;
 using System.Text;
 
 namespace ShadowWire.Desktop.Client
@@ -8,32 +8,13 @@ namespace ShadowWire.Desktop.Client
         static async Task Main(string[] args)
         {
             const string URI = "ws://127.0.0.1:4960/ws/";
-            const string SUB_PROTOCOL = "sw";
 
-            try
-            {
-                using var ws = new ClientWebSocket();
-                ws.Options.AddSubProtocol(SUB_PROTOCOL);
-                await ws.ConnectAsync(new(URI), CancellationToken.None);
+            var connection = new Connection(URI);
 
-                // TODO: Remove, for debugging
-                var message = Encoding.UTF8.GetBytes("Hello from client!");
-                await ws.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Text, true, CancellationToken.None);
+            await connection.SendAsync(Encoding.UTF8.GetBytes("Hello"));
 
-                // TODO: Remove, for debugging
-                var buffer = new byte[1024 * 4];
-                var response = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                var respMsg = Encoding.UTF8.GetString(buffer, 0, response.Count);
-                Console.WriteLine($"Server says: \"{respMsg}\"");
-
-                await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Done", CancellationToken.None);
-            }
-            catch (WebSocketException ex)
-            {
-                // TODO: Implement logging
-
-                Console.WriteLine($"An error occured! \"{ex.Message}\""); // TODO: Remove, for debugging
-            }
+            var respBin = await connection.ReceiveAsync();
+            Console.WriteLine($"Response from the server: \"{Encoding.UTF8.GetString(respBin)}\"");
         }
     }
 }
