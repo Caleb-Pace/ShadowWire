@@ -9,7 +9,6 @@ Client/
 │── Security/
 │   └── Cryptography.cs      // Key management and encryption
 │── Users/
-│   ├── Identity.cs          // Local username and keypair
 │   └── Contacts.cs          // Directory of other users
 │── Messaging.cs             // Handle messages
 └── CliUI.cs
