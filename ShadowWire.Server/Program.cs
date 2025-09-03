@@ -11,13 +11,15 @@ namespace ShadowWire.Server
 
         static async Task Main(string[] args)
         {
+            const string URI = "http://127.0.0.1:4960/ws/";
+            const string SUB_PROTOCOL = "sw";
+
             var listener = new HttpListener();
-            listener.Prefixes.Add("http://127.0.0.1:4960/ws/");
+            listener.Prefixes.Add(URI);
             listener.Start();
 
             // TODO: Remove, for debugging
-            string uri = listener.Prefixes.First();
-            Console.WriteLine($"WebSocket server started on \"{uri}\"!");
+            Console.WriteLine($"WebSocket server started on \"{URI}\"!");
 
             while (true)
             {
@@ -29,7 +31,7 @@ namespace ShadowWire.Server
                     {
                         var socket = context.Request.RemoteEndPoint;
 
-                        var wsContext = await context.AcceptWebSocketAsync("sw");
+                        var wsContext = await context.AcceptWebSocketAsync(SUB_PROTOCOL);
                         var sessionId = Guid.NewGuid(); // Create ID for new conneciton
                         sessions.TryAdd(sessionId, wsContext.WebSocket);
 
