@@ -16,6 +16,7 @@ Client:
     - Research: 12m
 - Contacts: 43m
     - Planning: 5m
-    - Persistence: 2m
-        - Bson issue: 49m
+    - Persistence: 35m
+        - Bson issue: 41m
+        - Fingerprint lookup issue: 6m
     - Contact Packaging: 20m
