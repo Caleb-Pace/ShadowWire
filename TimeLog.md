@@ -14,7 +14,7 @@ Client:
 - Connection: 32m
 - Cryptography: 32m
     - Research: 12m
-- Contacts: 41m
+- Contacts: 43m
     - Planning: 5m
     - Persistence: 2m
         - Bson issue: 49m

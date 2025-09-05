@@ -1,6 +1,6 @@
 ﻿namespace ShadowWire.Desktop.Client.Users
 {
-    internal class Contacts
+    internal class ContactManager
     {
         private List<Contact> contacts = new();
         private Dictionary<string, int> contactsByName = new();
@@ -61,17 +61,5 @@
 
             return contacts[index];
         }
-
-        // TODO: Implement
-        //=/ Contact Data Transportation methods
-        //public static byte[] ExportContact(Contact contact) { }
-        //public static Contact ImportContact(byte[] serializedContact) { }
-    }
-
-    public class Contact(string nickname, byte[] fingerprint, byte[] publicKeyDer)
-    {
-        public string Nickname { get; private set; } = nickname;
-        public byte[] Fingerprint { get; private set; } = fingerprint;
-        public byte[] PublicKeyDer { get; private set; } = publicKeyDer;
     }
 }
