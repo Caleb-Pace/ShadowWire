@@ -4,7 +4,7 @@
     {
         private List<Contact> contacts = new();
         private Dictionary<string, int> contactsByName = new();
-        private Dictionary<byte[], int> contactsByFingerprint = new();
+        private Dictionary<byte[], int> contactsByFingerprint = new(new FingerprintComparer());
 
         private readonly string contactsFile;
 

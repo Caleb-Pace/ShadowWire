@@ -20,3 +20,4 @@ Client:
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 20m
+    - FingerprintComparer: 41m
