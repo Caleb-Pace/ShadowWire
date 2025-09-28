@@ -13,8 +13,7 @@ public readonly struct FingerprintComparer : IEqualityComparer<byte[]>
 {
     // Note: FINGERPRINT_LENGTH must be at least 8
     //       because GetHashCode reads fingerprint in 8-byte chunks.
-    private const int FINGERPRINT_LENGTH = 8; // TODO: Remove, for testing
-    //private const int FINGERPRINT_LENGTH = 32; // 256-bit fingerprint
+    private const int FINGERPRINT_LENGTH = 32; // 256-bit fingerprint
 
 
     public bool Equals(byte[]? x, byte[]? y)
