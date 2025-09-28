@@ -11,7 +11,9 @@ namespace ShadowWire.Desktop.Client.Users;
 /// </remarks>
 public readonly struct FingerprintComparer : IEqualityComparer<byte[]>
 {
-    private const int FINGERPRINT_LENGTH = 32; // 256-bit fingerprint
+    // Note: FINGERPRINT_LENGTH cannot be less than 8
+    private const int FINGERPRINT_LENGTH = 8; // TODO: Remove, for testing
+    //private const int FINGERPRINT_LENGTH = 32; // 256-bit fingerprint
 
 
     public bool Equals(byte[]? x, byte[]? y)

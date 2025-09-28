@@ -14,10 +14,10 @@ Client:
 - Connection: 32m
 - Cryptography: 32m
     - Research: 12m
-- Contacts: 43m
+- Contacts: 46m
     - Planning: 5m
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 20m
-    - FingerprintComparer: 41m
+    - FingerprintComparer: 56m

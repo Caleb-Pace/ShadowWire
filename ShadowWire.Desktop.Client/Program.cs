@@ -26,7 +26,7 @@ namespace ShadowWire.Desktop.Client
 
             // TODO: Remove, for debugging
             string name = "Steve";
-            byte[] fingerprint = [(int)'Y', (int)'e', (int)'s'];
+            byte[] fingerprint = [(int)'E', (int)'l', (int)'e', (int)'p', (int)'h', (int)'a', (int)'n', (int)'t'];
             var testContact = new Contact(name, fingerprint, [(int)'p', (int)'u', (int)'b']);
 
             // TODO: Remove, for debugging
