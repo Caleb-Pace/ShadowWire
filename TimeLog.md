@@ -6,14 +6,8 @@ Planning:
 Websocket library research: 9m
 Project structure planning: 27m
 
-Server:
-- WebSocket (echo) server setup: 45m
-
-Client:
-- WebSocket setup: 15m
-- Connection: 32m
-- Cryptography: 32m
-    - Research: 12m
+Shared:
+- Moving & setup: 7m
 - Contacts: 46m
     - Planning: 5m
     - Persistence: 35m
@@ -21,3 +15,12 @@ Client:
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 20m
     - FingerprintComparer: 58m
+
+Server:
+- WebSocket (echo) server setup: 45m
+
+Client:
+- WebSocket setup: 15m
+- Connection: 35m
+- Cryptography: 32m
+    - Research: 12m

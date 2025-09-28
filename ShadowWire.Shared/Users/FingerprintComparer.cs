@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace ShadowWire.Desktop.Client.Users;
+namespace ShadowWire.Shared.Users;
 
 /// <summary>
 /// Equality comparer for fingerprints.
@@ -40,6 +40,6 @@ public readonly struct FingerprintComparer : IEqualityComparer<byte[]>
 
         // Fold 64-bit accumulator into 32-bit hash
         // (upper 32-bits into lower 32-bits)
-        return (int)(accumulator ^ (accumulator >> 32));
+        return (int)(accumulator ^ accumulator >> 32);
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowWire.Server", "Shadow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowWire.Desktop.Client", "ShadowWire.Desktop.Client\ShadowWire.Desktop.Client.csproj", "{12A6EDCF-007C-4481-9FCE-66059595C750}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowWire.Shared", "ShadowWire.Shared\ShadowWire.Shared.csproj", "{F6015220-98A0-4288-B9DC-A53B18DA4CC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{12A6EDCF-007C-4481-9FCE-66059595C750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12A6EDCF-007C-4481-9FCE-66059595C750}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12A6EDCF-007C-4481-9FCE-66059595C750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6015220-98A0-4288-B9DC-A53B18DA4CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6015220-98A0-4288-B9DC-A53B18DA4CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6015220-98A0-4288-B9DC-A53B18DA4CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6015220-98A0-4288-B9DC-A53B18DA4CC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
