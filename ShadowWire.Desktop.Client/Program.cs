@@ -1,5 +1,5 @@
 ﻿using ShadowWire.Desktop.Client.Network;
-using ShadowWire.Desktop.Client.Users;
+using ShadowWire.Shared.Users;
 using System.Text;
 
 namespace ShadowWire.Desktop.Client
@@ -28,6 +28,11 @@ namespace ShadowWire.Desktop.Client
             //string name = "Steve";
             //byte[] fingerprint = [(int)'E', (int)'l', (int)'e', (int)'p', (int)'h', (int)'a', (int)'n', (int)'t'];
             //var testContact = new Contact(name, fingerprint, [(int)'p', (int)'u', (int)'b']);
+
+
+            // TODO: Remove, for testing
+            var usernameManger = new UsernameManager("username.txt");
+            Console.WriteLine($"Retrieved username: \"{usernameManger.Username}\"!");
         }
     }
 }
