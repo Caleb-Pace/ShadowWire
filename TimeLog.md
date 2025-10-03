@@ -24,4 +24,4 @@ Client:
 - Connection: 35m
 - Cryptography: 32m
     - Research: 12m
-- UsernameManager: 1h 44m
+- UsernameManager: 1h 46m

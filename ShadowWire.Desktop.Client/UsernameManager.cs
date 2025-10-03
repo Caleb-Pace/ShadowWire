@@ -7,10 +7,7 @@ internal class UsernameManager
 {
     private const int MINIMUM_LENGTH = 4;
     private const int MAXIMUM_LENGTH = 32;
-    // TODO: Cleanup
-    private const string CHAR_SET = "[a-zA-Z0-9-_+]";      // RegEx pattern
-    private const string INV_CHAR_SET = "[^a-zA-Z0-9-_+]"; // Inverted RegEx pattern
-    //private const string INV_CHAR_SET = "[^!-~]"; // Inverted RegEx pattern
+    private const string CHAR_SET = "[a-zA-Z0-9-_+]"; // RegEx pattern
 
     public string Username { get; private set; } = "";
 
@@ -69,8 +66,7 @@ internal class UsernameManager
           .Append("] ");
         sb.Append(';');
         sb.Append(" chars: ")
-          .Append('[')
-          .Append(INV_CHAR_SET[2..]) // (Remove invert flag)
+          .Append(CHAR_SET)
           .Append(' ');
         sb.Append('}')
           .AppendLine();
@@ -119,7 +115,7 @@ internal class UsernameManager
 
                     // Character
                     var ch = keyInfo.KeyChar.ToString();
-                    if (Regex.IsMatch(ch, INV_CHAR_SET))
+                    if (!Regex.IsMatch(ch, CHAR_SET))
                         continue; // Invalid character
 
                     // Update input
