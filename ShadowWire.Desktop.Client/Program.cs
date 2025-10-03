@@ -1,4 +1,5 @@
 ﻿using ShadowWire.Desktop.Client.Network;
+using ShadowWire.Shared;
 using ShadowWire.Shared.Users;
 using System.Text;
 

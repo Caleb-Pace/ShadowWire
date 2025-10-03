@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ShadowWire.Desktop.Client;
+namespace ShadowWire.Shared;
 
 /// <summary>
 /// Manages client username.
@@ -9,7 +9,7 @@ namespace ShadowWire.Desktop.Client;
 /// <remarks>
 /// Provides validation, prompting, and persistence.
 /// </remarks>
-internal class UsernameManager
+public class UsernameManager
 {
     private const int MINIMUM_LENGTH = 4;
     private const int MAXIMUM_LENGTH = 32;
@@ -56,7 +56,7 @@ internal class UsernameManager
     /// </returns>
     public static bool IsUsernameValid(string username)
     {
-        if (!Regex.IsMatch(username, ("^" + CHAR_SET + "+$")))
+        if (!Regex.IsMatch(username, "^" + CHAR_SET + "+$"))
             return false;
 
         if (username.Length < MINIMUM_LENGTH)
@@ -113,7 +113,7 @@ internal class UsernameManager
                 case ConsoleKey.Backspace:
                     if (index > 0)
                     {
-                        input = input.Remove((index - 1), 1);
+                        input = input.Remove(index - 1, 1);
                         index--;
                     }
                     break;

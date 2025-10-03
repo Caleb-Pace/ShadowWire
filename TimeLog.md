@@ -7,7 +7,7 @@ Websocket library research: 9m
 Project structure planning: 27m
 
 Shared:
-- Moving & setup: 7m
+- Moving & setup: 7m 1m
 - Contacts: 46m
     - Planning: 5m
     - Persistence: 35m
@@ -15,6 +15,7 @@ Shared:
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 20m
     - FingerprintComparer: 58m
+- UsernameManager: 2h 2m
 
 Server:
 - WebSocket (echo) server setup: 45m
@@ -24,4 +25,3 @@ Client:
 - Connection: 35m
 - Cryptography: 32m
     - Research: 12m
-- UsernameManager: 2h 2m
