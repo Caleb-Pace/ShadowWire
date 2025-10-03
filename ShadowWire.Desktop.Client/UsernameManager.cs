@@ -7,12 +7,16 @@ internal class UsernameManager
 {
     private const int MINIMUM_LENGTH = 4;
     private const int MAXIMUM_LENGTH = 32;
-    private const string INV_CHAR_SET = "[^!-~]"; // Inverted RegEx pattern
+    // TODO: Cleanup
+    private const string CHAR_SET = "[a-zA-Z0-9-_+]";      // RegEx pattern
+    private const string INV_CHAR_SET = "[^a-zA-Z0-9-_+]"; // Inverted RegEx pattern
+    //private const string INV_CHAR_SET = "[^!-~]"; // Inverted RegEx pattern
 
-    public string Username { get; private set; }
+    public string Username { get; private set; } = "";
 
 
     // TODO: Fix handling
+    // TODO: Comment
     public UsernameManager(string usernameFile)
     {
         //// Load existing username
@@ -25,16 +29,37 @@ internal class UsernameManager
         //}
 
         // Create a new username
-        Username = PromptForUsername();
+        while (true)
+        {
+            Username = PromptForUsername();
 
-        // TODO: Remove, for debugging
-        if (Username.Count() < 4)
-            Console.WriteLine("Invalid!");
+            // Validate username
+            if (IsUsernameValid(Username))
+                break;
+            else
+                Console.WriteLine("Invalid, try again!");
+        }
 
         Username = SanitiseUsername(Username); // Unnessasary but a precaution
         File.WriteAllText(usernameFile, Username); // Save new username
     }
 
+    // TODO: Comment
+    public static bool IsUsernameValid(string username)
+    {
+        if (!Regex.IsMatch(username, ("^" + CHAR_SET + "+$")))
+            return false;
+
+        if (username.Length < MINIMUM_LENGTH)
+            return false;
+        if (username.Length > MAXIMUM_LENGTH)
+            return false;
+
+        return true;
+    }
+
+    // TODO: Comment
+    // TODO: Maybe extract into separate classes
     private static string PromptForUsername()
     {
         // Display prompt
@@ -130,6 +155,7 @@ internal class UsernameManager
         return input;
     }
 
+    // TODO: Comment
     private static string SanitiseUsername(string username)
     {
         // Remove invalid characters
