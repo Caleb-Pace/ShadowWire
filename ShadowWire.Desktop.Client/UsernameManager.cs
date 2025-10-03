@@ -3,6 +3,12 @@ using System.Text.RegularExpressions;
 
 namespace ShadowWire.Desktop.Client;
 
+/// <summary>
+/// Manages client username.
+/// </summary>
+/// <remarks>
+/// Provides validation, prompting, and persistence.
+/// </remarks>
 internal class UsernameManager
 {
     private const int MINIMUM_LENGTH = 4;
@@ -12,7 +18,10 @@ internal class UsernameManager
     public string Username { get; private set; } = "";
 
 
-    // TODO: Comment
+    /// <summary>
+    /// Loads a valid username from a file or prompts the user to create one.
+    /// </summary>
+    /// <param name="usernameFile">Path to the username file.</param>
     public UsernameManager(string usernameFile)
     {
         // Load existing username
@@ -38,7 +47,13 @@ internal class UsernameManager
         File.WriteAllText(usernameFile, Username); // Save new username
     }
 
-    // TODO: Comment
+    /// <summary>
+    /// Checks if a username matches the allowed characters and length limits.
+    /// </summary>
+    /// <param name="username">The username to validate.</param>
+    /// <returns>
+    /// <see langword="true"/> if the username is valid; otherwise <see langword="false"/>.
+    /// </returns>
     public static bool IsUsernameValid(string username)
     {
         if (!Regex.IsMatch(username, ("^" + CHAR_SET + "+$")))
@@ -52,8 +67,15 @@ internal class UsernameManager
         return true;
     }
 
-    // TODO: Comment
     // TODO: Maybe extract into separate classes
+    /// <summary>
+    /// Prompts the user for a username.
+    /// </summary>
+    /// <remarks>
+    /// Supports editing and navigation, and enforces allowed characters 
+    /// and length constraints.
+    /// </remarks>
+    /// <returns>The username provided by the user.</returns>
     private static string PromptForUsername()
     {
         // Display prompt
@@ -124,7 +146,6 @@ internal class UsernameManager
 
                     // Redraw text
                     Console.Write(input.Substring(index - 1));
-
                     break;
             }
 
