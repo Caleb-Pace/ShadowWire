@@ -15,18 +15,17 @@ internal class UsernameManager
     public string Username { get; private set; } = "";
 
 
-    // TODO: Fix handling
     // TODO: Comment
     public UsernameManager(string usernameFile)
     {
-        //// Load existing username
-        //if (File.Exists(usernameFile))
-        //{
-        //    Username = SanitiseUsername(File.ReadAllText(usernameFile));
+        // Load existing username
+        if (File.Exists(usernameFile))
+        {
+            Username = File.ReadAllText(usernameFile);
 
-        //    if (string.IsNullOrWhiteSpace(Username))
-        //        return; // Valid username loaded
-        //}
+            if (IsUsernameValid(Username))
+                return; // Valid username loaded
+        }
 
         // Create a new username
         while (true)
@@ -39,8 +38,6 @@ internal class UsernameManager
             else
                 Console.WriteLine("Invalid, try again!");
         }
-
-        Username = SanitiseUsername(Username); // Unnessasary but a precaution
         File.WriteAllText(usernameFile, Username); // Save new username
     }
 
@@ -153,19 +150,5 @@ internal class UsernameManager
         }
 
         return input;
-    }
-
-    // TODO: Comment
-    private static string SanitiseUsername(string username)
-    {
-        // Remove invalid characters
-        string cleaned = Regex.Replace(username, INV_CHAR_SET, string.Empty);
-
-        // Ensure minimum length
-        if (cleaned.Length < MINIMUM_LENGTH)
-            return string.Empty;
-
-        // Truncate to maximum length
-        return cleaned[..Math.Min(MAXIMUM_LENGTH, cleaned.Length)];
     }
 }
