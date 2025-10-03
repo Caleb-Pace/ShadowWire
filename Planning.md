@@ -8,14 +8,12 @@ Client/
 │   └── Connection.cs        // Client connection to server
 │── Security/
 │   └── Cryptography.cs      // Key management and encryption
-│── Users/
-│   └── Contacts.cs          // Directory of other users
 │── Messaging.cs             // Handle messages
 └── CliUI.cs
 ```
 - [ ] Setup
 	- [x] Generate & store key pair.
-	- [ ] Get & store username.
+	- [x] Get & store username.
 		- *Note: may need to do duplicate detection later*
 	- [ ] Register with server:
 		- [ ] Send public key and username to server.
