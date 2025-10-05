@@ -1,5 +1,6 @@
 Project setup: 20m
-Brainstorm: 1h 31m
+Brainstorm: 3h 1m
+- Comms Sequence Diagrams: 2h 2m
 Planning:
 - MVP: 14m
 
@@ -7,7 +8,7 @@ Websocket library research: 9m
 Project structure planning: 27m
 
 Shared:
-- Moving & setup: 7m 1m
+- Moving & setup: 8m
 - Contacts: 46m
     - Planning: 5m
     - Persistence: 35m
