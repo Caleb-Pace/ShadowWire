@@ -24,5 +24,6 @@ Server:
 Client:
 - WebSocket setup: 15m
 - Connection: 35m
-- Cryptography: 32m
+- Cryptography: 33m
     - Research: 12m
+- Register with Server: 15m
