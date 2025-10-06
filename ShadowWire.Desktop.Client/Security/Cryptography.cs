@@ -7,6 +7,7 @@ namespace ShadowWire.Desktop.Client.Security
         public byte[] Fingerprint { get { return fingerprint; } }
         private byte[] fingerprint = [];   // SHA-256 hash of public key
 
+        public byte[] PublicKey { get { return publicKeyDer; } }
         private byte[] publicKeyDer = [];  // X.509 format
         private byte[] privateKeyDer = []; // PKCS#1 format
 
