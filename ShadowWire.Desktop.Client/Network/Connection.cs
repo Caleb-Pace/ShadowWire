@@ -36,9 +36,7 @@ namespace ShadowWire.Desktop.Client.Network
 
             try
             {
-                // TODO: Remove, for debugging
-                await ws.SendAsync(new ArraySegment<byte>(bin), WebSocketMessageType.Text, true, CancellationToken.None);
-                //await ws.SendAsync(new ArraySegment<byte>(bin), WebSocketMessageType.Binary, true, CancellationToken.None);
+                await ws.SendAsync(new ArraySegment<byte>(bin), WebSocketMessageType.Binary, true, CancellationToken.None);
             }
             catch (WebSocketException ex)
             {
