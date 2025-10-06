@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using ShadowWire.Shared.Users;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
@@ -42,6 +43,8 @@ namespace ShadowWire.Server
                     }
                     catch (WebSocketException ex)
                     {
+                        Console.WriteLine($"An Excecption Occured: \"{ex.Message}\""); // TODO: Remove, for debugging
+
                         // TODO: Implement logging
 
                         context.Response.StatusCode = 400;
@@ -60,7 +63,7 @@ namespace ShadowWire.Server
 
         private static async void HandleConnection(Guid sessionId)
         {
-            var buffer = new byte[1024 * 4];
+            var buffer = new byte[1024 * 4]; // 4 MB
             WebSocket ws = sessions[sessionId];
 
             try
@@ -78,6 +81,21 @@ namespace ShadowWire.Server
                         Console.WriteLine($"<{sessionId}> sent \"{msg}\" (Echoed back)");
 
                         await ws.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+                    }
+                    if (result.MessageType == WebSocketMessageType.Binary)
+                    {
+                        // TODO: Remove, for debugging
+                        var identity = ContactBinarySerializer.Deserialize(buffer);
+                        if (identity == null)
+                        {
+                            Console.WriteLine($"<{sessionId}> sent unknown binary data");
+                            
+                            // Terminate connection.
+                            await ws.CloseAsync(WebSocketCloseStatus.InvalidPayloadData, null, CancellationToken.None);
+                            break;
+                        }
+
+                        Console.WriteLine($"<{sessionId}> \"{identity.Nickname}\" connected! ({Convert.ToBase64String(identity.Fingerprint)})"); // TODO: Remove, for debugging
                     }
                 }
             }
