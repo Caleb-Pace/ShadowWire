@@ -1,80 +1,79 @@
 ﻿using System.Security.Cryptography;
 
-namespace ShadowWire.Desktop.Client.Security
+namespace ShadowWire.Desktop.Client.Security;
+
+internal class Cryptography
 {
-    internal class Cryptography
+    public byte[] Fingerprint { get { return fingerprint; } }
+    private byte[] fingerprint = [];   // SHA-256 hash of public key
+
+    public byte[] PublicKey { get { return publicKeyDer; } }
+    private byte[] publicKeyDer = [];  // X.509 format
+    private byte[] privateKeyDer = []; // PKCS#1 format
+
+    private readonly string publicKeyFile;
+    private readonly string privateKeyFile;
+
+
+    public Cryptography(string publicKeyFile, string privateKeyFile)
     {
-        public byte[] Fingerprint { get { return fingerprint; } }
-        private byte[] fingerprint = [];   // SHA-256 hash of public key
+        this.publicKeyFile = publicKeyFile;
+        this.privateKeyFile = privateKeyFile;
 
-        public byte[] PublicKey { get { return publicKeyDer; } }
-        private byte[] publicKeyDer = [];  // X.509 format
-        private byte[] privateKeyDer = []; // PKCS#1 format
-
-        private readonly string publicKeyFile;
-        private readonly string privateKeyFile;
+        ResolveKeyPair();
+    }
 
 
-        public Cryptography(string publicKeyFile, string privateKeyFile)
+    //=/ Key handling
+    private void ResolveKeyPair()
+    {
+        // Generate key pair if not saved
+        if (!(File.Exists(privateKeyFile) && File.Exists(publicKeyFile)))
         {
-            this.publicKeyFile = publicKeyFile;
-            this.privateKeyFile = privateKeyFile;
+            // TODO: Remove, for debugging
+            char pubKeyFound = File.Exists(publicKeyFile) ? 'T' : 'F';
+            char privKeyFound = File.Exists(privateKeyFile) ? 'T' : 'F';
+            Console.WriteLine($"Key pair not found, generating...    (pub? {pubKeyFound}; priv? {privKeyFound})");
 
-            ResolveKeyPair();
+            GenerateRsaKeyPair();
+
+            Console.WriteLine($"New RSA key pair, generated!"); // TODO: Remove, for debugging
+        }
+        else
+        {
+            LoadKeyPair();
+            
+            Console.WriteLine($"Found RSA key pair!"); // TODO: Remove, for debugging
         }
 
+        // Create fingerprint
+        fingerprint = SHA256.HashData(publicKeyDer);
+    }
 
-        //=/ Key handling
-        private void ResolveKeyPair()
+    // TODO: (Later) include key encryption options
+    private void GenerateRsaKeyPair()
+    {
+        const int KEY_SIZE = 2048; // In bits
+
+        // Generate keys
+        using (var rsa = RSA.Create(KEY_SIZE))
         {
-            // Generate key pair if not saved
-            if (!(File.Exists(privateKeyFile) && File.Exists(publicKeyFile)))
-            {
-                // TODO: Remove, for debugging
-                char pubKeyFound = File.Exists(publicKeyFile) ? 'T' : 'F';
-                char privKeyFound = File.Exists(privateKeyFile) ? 'T' : 'F';
-                Console.WriteLine($"Key pair not found, generating...    (pub? {pubKeyFound}; priv? {privKeyFound})");
-
-                GenerateRsaKeyPair();
-
-                Console.WriteLine($"New RSA key pair, generated!"); // TODO: Remove, for debugging
-            }
-            else
-            {
-                LoadKeyPair();
-                
-                Console.WriteLine($"Found RSA key pair!"); // TODO: Remove, for debugging
-            }
-
-            // Create fingerprint
-            fingerprint = SHA256.HashData(publicKeyDer);
+            privateKeyDer = rsa.ExportPkcs8PrivateKey();
+            publicKeyDer = rsa.ExportSubjectPublicKeyInfo();
         }
 
-        // TODO: (Later) include key encryption options
-        private void GenerateRsaKeyPair()
-        {
-            const int KEY_SIZE = 2048; // In bits
+        SaveKeyPair();
+    }
 
-            // Generate keys
-            using (var rsa = RSA.Create(KEY_SIZE))
-            {
-                privateKeyDer = rsa.ExportPkcs8PrivateKey();
-                publicKeyDer = rsa.ExportSubjectPublicKeyInfo();
-            }
+    private void SaveKeyPair()
+    {
+        File.WriteAllBytes(publicKeyFile, publicKeyDer);
+        File.WriteAllBytes(privateKeyFile, privateKeyDer);
+    }
 
-            SaveKeyPair();
-        }
-
-        private void SaveKeyPair()
-        {
-            File.WriteAllBytes(publicKeyFile, publicKeyDer);
-            File.WriteAllBytes(privateKeyFile, privateKeyDer);
-        }
-
-        private void LoadKeyPair()
-        {
-            publicKeyDer = File.ReadAllBytes(publicKeyFile);
-            privateKeyDer = File.ReadAllBytes(privateKeyFile);
-        }
+    private void LoadKeyPair()
+    {
+        publicKeyDer = File.ReadAllBytes(publicKeyFile);
+        privateKeyDer = File.ReadAllBytes(privateKeyFile);
     }
 }

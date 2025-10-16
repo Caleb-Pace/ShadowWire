@@ -6,6 +6,7 @@ Planning:
 
 Websocket library research: 9m
 Project structure planning: 27m
+Formatting: 1m
 
 Shared:
 - Moving & setup: 8m
