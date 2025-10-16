@@ -33,5 +33,10 @@ internal class Program
 
         var respBin = await connection.ReceiveAsync();
         Console.WriteLine($"Response from the server: \"{Encoding.UTF8.GetString(respBin)}\"");
+
+
+        // TODO: Remove, for testing
+        Console.WriteLine("\nPress any key to continue!");
+        Console.ReadKey();
     }
 }
