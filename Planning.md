@@ -15,8 +15,8 @@ Client/
 	- [x] Generate & store key pair.
 	- [x] Get & store username.
 		- *Note: may need to do duplicate detection later*
-	- [ ] Register with server:
-		- [ ] Send public key and username to server.
+	- [x] Register with server:
+		- [x] Send public key and username to server.
 - [ ] Messaging:
 	- [ ] Send messages. (Send to server).
 	- [ ] Receive messages. (Query from server).
