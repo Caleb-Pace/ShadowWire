@@ -22,6 +22,7 @@ Shared:
 Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
+- RelayServer: 45m
 
 Client:
 - WebSocket setup: 15m
