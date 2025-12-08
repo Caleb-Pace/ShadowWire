@@ -32,10 +32,10 @@ RelayServer/
 │   ├── UserRegistry.cs      // Stores username + public key
 │   └── MessageStore.cs      // Stores undelivered messages
 ```
-- [ ] Accept new users.
+- [x] Accept new users.
 	- *Note: this initial step will need to be secured later*
-	- [ ] Retrieve public key.
-	- [ ] Retrieve username.
+	- [x] Retrieve public key.
+	- [x] Retrieve username.
 - [ ] Store user information.
 	- Username
 	- Public key
