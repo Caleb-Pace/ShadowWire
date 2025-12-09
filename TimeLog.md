@@ -22,7 +22,9 @@ Shared:
 Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
-- RelayServer: 45m
+- RelayServer: 46m
+- SessionHandler: 13m
+- User registry: 7m
 
 Client:
 - WebSocket setup: 15m

@@ -6,9 +6,10 @@ using System.Text;
 
 namespace ShadowWire.Server.Network;
 
-internal class RelayServer
+internal class RelayServer(ContactManager userRegistry)
 {
-    private static ConcurrentDictionary<Guid, SessionHandler> sessions = new();
+    private ConcurrentDictionary<Guid, SessionHandler> _sessions = new();
+    private readonly ContactManager _userRegistry = userRegistry;
 
 
     public async Task StartAsync()
@@ -34,8 +35,8 @@ internal class RelayServer
                     var socket = context.Request.RemoteEndPoint;
 
                     var wsContext = await context.AcceptWebSocketAsync(SUB_PROTOCOL);
-                    var session = new SessionHandler(wsContext.WebSocket);
-                    sessions.TryAdd(session.Id, session);
+                    var session = new SessionHandler(wsContext.WebSocket, RouteMessageAsync, _userRegistry);
+                    _sessions.TryAdd(session.Id, session);
 
                     // TODO: Implement logging
                     Console.WriteLine($"<{session.Id}> connected to {wsContext.RequestUri}! (Socket: {socket.Address}:{socket.Port})"); // TODO: Remove, for debugging
@@ -61,10 +62,10 @@ internal class RelayServer
             }
         }
     }
-    private static async void HandleConnection(Guid sessionId)
+    private async void HandleConnection(Guid sessionId)
     {
         var buffer = new byte[1024 * 4]; // 4 MB
-        WebSocket ws = sessions[sessionId].WebSocket;
+        WebSocket ws = _sessions[sessionId].WebSocket;
 
         try
         {
@@ -105,11 +106,18 @@ internal class RelayServer
         }
         finally
         {
-            sessions.TryRemove(sessionId, out _);
+            WebSocket ws = _sessions[sessionId].WebSocket;
+
+            _sessions.TryRemove(sessionId, out _);
             await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
 
             // TODO: Implement logging
             Console.WriteLine($"<{sessionId}> disconnected!"); // TODO: Remove, for debugging
         }
+    }
+
+    private async Task RouteMessageAsync(byte[] destFingerprint, byte[] messageBinary)
+    {
+
     }
 }
