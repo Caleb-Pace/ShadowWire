@@ -185,11 +185,11 @@ This relies on the fingerprint (or derivative it) being shared outside of Shadow
 
 ### Message
 
-| Clients |          | Server | Action                    | Description                                                                                                   |
-| ------- | -------- | ------ | ------------------------- | ---------------------------------------------------------------------------------------------------- |
-| A       | --**->** | Server | Send message              | A sends encry                                                                                                 |
-| B       | **<-**-- | Server |  B receives A's message and decrypts it.<br>B also securely stores message locally for later viewing. ly  ly  ly  ly  ly  ly  ly  ly  ly  |
-| B       | --**->** | Server | Acknowledgement                                                                                                                           |
+| Clients |          | Server | Action                                                                                               | Description       |
+| ------- | -------- | ------ | ---------------------------------------------------------------------------------------------------- | ----------------- |
+| A       | --**->** | Server | Send message                                                                                         | A sends encrypted |
+| B       | **<-**-- | Server | B receives A's message and decrypts it.<br>B also securely stores message locally for later viewing. |                   |
+| B       | --**->** | Server | Acknowledgement                                                                                      |                   |
 #### Read receipts
 - Server should acknowledge that message has been either delivered to user (online recipient, triggered by acknowledgement) or stored (offline recipient).
 - Read/Seen receipt goes as follows:
@@ -217,11 +217,9 @@ This system is to automatically update the clients.
 
 **Update:**
 
-| Client |          | Server | Action             | Description                                                                                                                                                       |
-| ------ | -------- | ------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Client | --**->** | Server | Identification     | Sends public key and current version to server.<br>Server then checks if there is an update.                                                                      |
-| Client | **<-**-- | Server | Update request     | Server tells client their is an update and sends update details.                                                                                                  |
-| Client | --**->** | Server | Acknowledgement    | Client is ready to proceed.<br>Client maybe denied if updated is forced and they decline.                                                                         |
-| Client | **<-**-- | Server | Challenge Phrase   | Sends a unique and/or random message/phrase for user to sign. This is to verify the client has the private key.                                                   |
-| Client | --**->** | Server | Challenge Response | Client signs the challenge phrase. The Server then verifies this with the public key.                                                                             |
-| Client | **<-**-- | Server | Acknowledgement    | or some sort of rejection response (if the phrase was wrong). Possibly even with a punishment for trying to break the system like denying service to that device. |
+| Client |          | Server | Action          | Description                                                                                                                                                       |
+| ------ | -------- | ------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Client | --**->** | Server | Identification  | Sends public key and current version to server.<br>Server then checks if there is an update.                                                                      |
+| Client | **<-**-- | Server | Update request  | Server tells client their is an update and sends update details.                                                                                                  |
+| Client | --**->** | Server | Acknowledgement | Client is ready to proceed.<br>Client maybe denied if updated is forced and they decline.                                                                         |
+| Client | **<-**-- | Server | Acknowledgement | or some sort of rejection response (if the phrase was wrong). Possibly even with a punishment for trying to break the system like denying service to that device. |
