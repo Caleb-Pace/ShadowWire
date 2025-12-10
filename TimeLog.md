@@ -18,11 +18,12 @@ Shared:
     - Contact Packaging: 20m
     - FingerprintComparer: 58m
 - UsernameManager: 2h 2m
-- Protocols: 7m
+- Protocols: 10m
     - Planning: 21m
         - Protcol List: 45m
     - IProtocol: 1m
     - ProtocolId: 4m
+    - ProtocolIdentifier: 7m
 
 Server:
 - WebSocket (echo) server setup: 45m
