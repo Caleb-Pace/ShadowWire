@@ -23,9 +23,9 @@ Shared:
         - Protcol List: 45m
     - IProtocol: 1m
     - ProtocolId: 4m
-    - ProtocolIdentifier: 15m
+    - PacketHeader: 29m
     - Protocols
-        - Error: 2m
+        - Error: 5m
 
 Server:
 - WebSocket (echo) server setup: 45m
