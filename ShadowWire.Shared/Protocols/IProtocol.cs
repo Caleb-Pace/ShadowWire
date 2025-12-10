@@ -2,5 +2,5 @@
 
 public interface IProtocol
 {
-    public byte Id { get; }
+    public ProtocolId Id { get; }
 }
