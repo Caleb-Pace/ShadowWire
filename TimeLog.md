@@ -18,7 +18,7 @@ Shared:
     - Contact Packaging: 20m
     - FingerprintComparer: 58m
 - UsernameManager: 2h 2m
-- Protocols: 10m
+- Protocols/: 10m
     - Planning: 47m
         - Protcol List: 45m
     - IProtocol: 56m
@@ -26,6 +26,11 @@ Shared:
     - ProtocolHeader: 42m
     - Protocols
         - Error: 45m
+        - Identification: 5m
+- BinaryEncoding/
+    - Planning: 40m
+    - SpanReader: 37m
+    - SpanWriter: 
 
 Server:
 - WebSocket (echo) server setup: 45m
