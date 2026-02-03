@@ -1,46 +1,61 @@
-﻿namespace ShadowWire.Shared.Users;
+﻿using ShadowWire.Shared.BinaryEncoding;
 
+namespace ShadowWire.Shared.Users;
+
+/// <summary>
+/// Provides methods to encode and decode <see cref="Contact"/> to and from a compact binary format.
+/// </summary>
 public static class ContactBinaryCodec
 {
-    public static byte[] Serialize(Contact contact)
+    /// <summary>
+    /// Encodes a <see cref="Contact"/> into a compact binary representation.
+    /// </summary>
+    /// <param name="contact">The <see cref="Contact"/> to encode.</param>
+    /// <returns>Byte array containing the encoded contact.</returns>
+    public static byte[] Encode(Contact contact)
     {
-        var memStream = new MemoryStream();
+        var length = contact.Nickname.Length
+                   + contact.Fingerprint.Length
+                   + contact.PublicKeyDer.Length
+                   + (3 * sizeof(Int32));
 
-        using (var binWrite = new BinaryWriter(memStream))
-        {
-            binWrite.Write(contact.Nickname);
+        var buffer = new byte[length];
+        var writer = new SpanWriter(new Span<byte>(buffer));
 
-            binWrite.Write(contact.Fingerprint.Length);
-            binWrite.Write(contact.Fingerprint);
+        writer.WriteString(contact.Nickname);
+        writer.WriteBytes(contact.Fingerprint);
+        writer.WriteBytes(contact.PublicKeyDer);
 
-            binWrite.Write(contact.PublicKeyDer.Length);
-            binWrite.Write(contact.PublicKeyDer);
-        }
-
-        return memStream.ToArray();
+        return buffer;
     }
 
-    // TODO: Implement error handling
-    public static Contact? Deserialize(byte[] serializedContact)
+    /// <summary>
+    /// Attempts to decode a <see cref="Contact"/> from a binary array.
+    /// </summary>
+    /// <param name="serializedContact">The byte array to decode.</param>
+    /// <param name="contact">
+    /// Output parameter: the decoded contact if successful.
+    /// </param>
+    /// <returns>
+    /// <see langword="true"/> if decoding was successful; <see langword="false"/> if the input was invalid or corrupted.
+    /// </returns>
+    public static bool TryDecode(byte[] serializedContact, out Contact contact)
     {
-        Contact? contact = null;
-
-        using (var memStream = new MemoryStream(serializedContact))
-        using (var binReader = new BinaryReader(memStream))
+        try
         {
-            int length;
+            var reader = new SpanReader(serializedContact);
 
-            string nickname = binReader.ReadString();
-
-            length = binReader.ReadInt32();
-            byte[] fingerprint = binReader.ReadBytes(length);
-
-            length = binReader.ReadInt32();
-            byte[] publicKeyDer = binReader.ReadBytes(length);
+            var nickname = reader.ReadString();
+            var fingerprint = reader.ReadBytes().ToArray();
+            var publicKeyDer = reader.ReadBytes().ToArray();
 
             contact = new Contact(nickname, fingerprint, publicKeyDer);
+            return true;
         }
-
-        return contact;
+        catch
+        {
+            contact = default; // Invalid
+            return false;
+        }
     }
 }

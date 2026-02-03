@@ -86,8 +86,7 @@ internal class RelayServer(ContactManager userRegistry)
                 if (result.MessageType == WebSocketMessageType.Binary)
                 {
                     // TODO: Remove, for debugging
-                    var identity = ContactBinarySerializer.Deserialize(buffer);
-                    if (identity == null)
+                    if (!ContactBinaryCodec.TryDecode(buffer, out Contact identity))
                     {
                         Console.WriteLine($"<{sessionId}> sent unknown binary data");
 
@@ -106,8 +105,6 @@ internal class RelayServer(ContactManager userRegistry)
         }
         finally
         {
-            WebSocket ws = _sessions[sessionId].WebSocket;
-
             _sessions.TryRemove(sessionId, out _);
             await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
 

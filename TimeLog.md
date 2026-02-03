@@ -17,6 +17,7 @@ Shared:
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 20m
     - FingerprintComparer: 58m
+    - Codec improvement: 34m
 - UsernameManager: 2h 2m
 - Protocols/: 10m
     - Planning: 47m
