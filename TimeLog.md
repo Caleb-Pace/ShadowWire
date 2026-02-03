@@ -27,7 +27,7 @@ Shared:
     - ProtocolId: 4m
     - ProtocolHeader: 1h 14m
     - Protocols
-        - Error: 46m
+        - Error: 57m
         - Identification: 21m
 - BinaryEncoding/
     - Planning: 40m

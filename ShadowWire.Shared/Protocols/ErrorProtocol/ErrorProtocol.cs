@@ -1,54 +1,35 @@
-﻿using System.Buffers.Binary;
-using System.Text;
+﻿using ShadowWire.Shared.BinaryEncoding;
 
 namespace ShadowWire.Shared.Protocols.ErrorProtocol;
 
 public class ErrorProtocol : IProtocol<ErrorPacket>
 {
-    public ProtocolId Id => ProtocolId.Error;
+    public ProtocolId Protocol => ProtocolId.Error;
 
 
     public ErrorPacket Decode(ReadOnlySpan<byte> packetBinary)
     {
-        if (packetBinary.IsEmpty || packetBinary.Length <= (sizeof(int) + sizeof(int)))
-            throw new InvalidOperationException("Invalid Packet! (Too short)");
+        var innerPacket = ProtocolHeader.RemoveProtocolHeader(packetBinary);
+        var reader = new SpanReader(innerPacket);
 
-        int readPtr = 0; // Packet byte pointer
-
-        // Read error code
-        int errorCode = BinaryPrimitives.ReadInt32LittleEndian(packetBinary.Slice(readPtr, sizeof(int)));
-        readPtr += sizeof(int);
-
-        // Read message length
-        int msgLength = BinaryPrimitives.ReadInt32LittleEndian(packetBinary.Slice(readPtr, sizeof(int)));
-        readPtr += sizeof(int);
-
-        if ((readPtr + msgLength) > packetBinary.Length)
-            throw new InvalidOperationException("Invalid message length!");
-
-        // Read message
-        string message = Encoding.UTF8.GetString(packetBinary.Slice(readPtr, msgLength));
+        var errorCode = reader.Read<int>();
+        var message = reader.ReadString();
 
         return new ErrorPacket(errorCode, message);
     }
 
     public ReadOnlySpan<byte> Encode(ErrorPacket packetStruct)
     {
-        int msgLength = Encoding.UTF8.GetByteCount(packetStruct.Message);
-        byte[] buffer = new byte[sizeof(int) + sizeof(int) + msgLength];
-        int writePtr = 0; // Buffer position pointer
+        var length = sizeof(int) // Error Code
+                   + sizeof(Int32) // Message Length
+                   + packetStruct.Message.Length; // Message content
 
-        // Write error code
-        BinaryPrimitives.WriteInt32LittleEndian(buffer.AsSpan(writePtr, sizeof(int)), packetStruct.ErrorCode);
-        writePtr += sizeof(int);
+        var innerPacketBuffer = new byte[length];
+        var writer = new SpanWriter(new Span<byte>(innerPacketBuffer));
 
-        // Write message length
-        BinaryPrimitives.WriteInt32LittleEndian(buffer.AsSpan(writePtr, sizeof(int)), msgLength);
-        writePtr += sizeof(int);
+        writer.Write<int>(packetStruct.ErrorCode);
+        writer.WriteString(packetStruct.Message);
 
-        // Write message bytes
-        Encoding.UTF8.GetBytes(packetStruct.Message, buffer.AsSpan(writePtr, msgLength));
-
-        return buffer;
+        return ProtocolHeader.PrependProtocolHeader(innerPacketBuffer, Protocol);
     }
 }
