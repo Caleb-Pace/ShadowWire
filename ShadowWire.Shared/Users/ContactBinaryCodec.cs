@@ -8,11 +8,11 @@ namespace ShadowWire.Shared.Users;
 public static class ContactBinaryCodec
 {
     /// <summary>
-    /// Encodes a <see cref="Contact"/> into a byte span.
+    /// Encodes a <see cref="Contact"/> into a byte array.
     /// </summary>
     /// <param name="contact">The <see cref="Contact"/> to encode.</param>
-    /// <returns>A <see cref="Span{Byte}"/> containing the encoded contact.</returns>
-    public static Span<byte> Encode(Contact contact)
+    /// <returns>A byte array containing the encoded contact.</returns>
+    public static byte[] Encode(Contact contact)
     {
         var length = contact.Nickname.Length
                    + contact.Fingerprint.Length
@@ -32,7 +32,7 @@ public static class ContactBinaryCodec
     /// <summary>
     /// Attempts to decode a <see cref="Contact"/> from a binary array.
     /// </summary>
-    /// <param name="serializedContact">The byte span to decode.</param>
+    /// <param name="contactBinary">The byte span to decode.</param>
     /// <param name="contact">
     /// Output parameter: the decoded contact if successful; otherwise <c>default</c>.
     /// </param>
