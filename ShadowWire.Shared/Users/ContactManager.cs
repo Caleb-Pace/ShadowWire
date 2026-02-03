@@ -35,11 +35,11 @@ public class ContactManager
                 int length = binReader.ReadInt32();
                 byte[] data = binReader.ReadBytes(length);
 
-                var contact = ContactBinarySerializer.Deserialize(data);
-                if (contact == null) continue;
+                Contact? contact = ContactBinarySerializer.Deserialize(data);
+                if (!contact.HasValue) continue;
 
                 // Add & index contact
-                TryAddCore(contact);
+                TryAddCore(contact.Value);
             }
         }
     }
