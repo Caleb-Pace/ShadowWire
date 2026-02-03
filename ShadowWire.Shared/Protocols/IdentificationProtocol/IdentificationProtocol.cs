@@ -9,7 +9,8 @@ public class IdentificationProtocol : IProtocol<Contact>
 
     public Contact Decode(ReadOnlySpan<byte> packetBinary)
     {
-        if (ContactBinaryCodec.TryDecode(packetBinary, out Contact contact))
+        var innerPacket = ProtocolHeader.RemoveProtocolHeader(packetBinary);
+        if (ContactBinaryCodec.TryDecode(innerPacket, out Contact contact))
             return contact;
 
         throw new ArgumentException("Invalid identification packet!", nameof(packetBinary));
