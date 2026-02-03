@@ -1,23 +1,23 @@
 ﻿namespace ShadowWire.Shared.Protocols;
 
-public class PacketHeader
+public class ProtocolHeader
 {
     /// <summary>
-    /// Creates the header for a packet.
+    /// Creates the protocol header byte for the given protocol.
     /// </summary>
     /// <param name="protocol">Protocol of the packet.</param>
-    /// <returns>The packet header in bytes.</returns>
-    public static ReadOnlySpan<byte> CreateHeader(ProtocolId protocol)
+    /// <returns>The protocol header byte.</returns>
+    public static byte CreateProtocolHeader(ProtocolId protocol)
     {
-        return (ReadOnlySpan<byte>)new byte[] { (byte)protocol };
+        return (byte)protocol;
     }
 
     /// <summary>
-    /// Strips the header from a packet.
+    /// Removes the protocol header byte from a packet.
     /// </summary>
     /// <param name="packet">The full packet.</param>
-    /// <returns>The packet body.</returns>
-    public static ReadOnlySpan<byte> RemoveHeader(ReadOnlySpan<byte> packet)
+    /// <returns>The rest of the packet.</returns>
+    public static ReadOnlySpan<byte> RemoveProtocolHeader(ReadOnlySpan<byte> packet)
     {
         return packet[1..]; // Skip first byte (ID byte)
     }

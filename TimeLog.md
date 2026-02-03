@@ -23,7 +23,7 @@ Shared:
         - Protcol List: 45m
     - IProtocol: 37m
     - ProtocolId: 4m
-    - PacketHeader: 29m
+    - ProtocolHeader: 42m
     - Protocols
         - Error: 5m
 
