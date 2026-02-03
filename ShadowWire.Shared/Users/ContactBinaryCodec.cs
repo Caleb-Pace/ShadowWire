@@ -8,11 +8,11 @@ namespace ShadowWire.Shared.Users;
 public static class ContactBinaryCodec
 {
     /// <summary>
-    /// Encodes a <see cref="Contact"/> into a compact binary representation.
+    /// Encodes a <see cref="Contact"/> into a byte span.
     /// </summary>
     /// <param name="contact">The <see cref="Contact"/> to encode.</param>
-    /// <returns>Byte array containing the encoded contact.</returns>
-    public static byte[] Encode(Contact contact)
+    /// <returns>A <see cref="Span{Byte}"/> containing the encoded contact.</returns>
+    public static Span<byte> Encode(Contact contact)
     {
         var length = contact.Nickname.Length
                    + contact.Fingerprint.Length
@@ -32,18 +32,18 @@ public static class ContactBinaryCodec
     /// <summary>
     /// Attempts to decode a <see cref="Contact"/> from a binary array.
     /// </summary>
-    /// <param name="serializedContact">The byte array to decode.</param>
+    /// <param name="serializedContact">The byte span to decode.</param>
     /// <param name="contact">
-    /// Output parameter: the decoded contact if successful.
+    /// Output parameter: the decoded contact if successful; otherwise <c>default</c>.
     /// </param>
     /// <returns>
     /// <see langword="true"/> if decoding was successful; <see langword="false"/> if the input was invalid or corrupted.
     /// </returns>
-    public static bool TryDecode(byte[] serializedContact, out Contact contact)
+    public static bool TryDecode(ReadOnlySpan<byte> contactBinary, out Contact contact)
     {
         try
         {
-            var reader = new SpanReader(serializedContact);
+            var reader = new SpanReader(contactBinary);
 
             var nickname = reader.ReadString();
             var fingerprint = reader.ReadBytes().ToArray();
