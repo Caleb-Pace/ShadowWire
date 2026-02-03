@@ -5,20 +5,20 @@ public class ProtocolHeader
     /// <summary>
     /// Prepends the protocol header byte to an existing packet.
     /// </summary>
-    /// <param name="packet">The packet data without the protocol header.</param>
+    /// <param name="innerPacket">The existing protocol-specific packet, without the protocol header.</param>
     /// <param name="protocol">The protocol identifier.</param>
     /// <returns>The completed packet with the protocol header byte.</returns>
-    public static byte[] PrependProtocolHeader(ReadOnlySpan<byte> packet, ProtocolId protocol)
+    public static byte[] PrependProtocolHeader(ReadOnlySpan<byte> innerPacket, ProtocolId protocol)
     {
         // Allocate a buffer for header + packet
-        byte[] buffer = new byte[1 + packet.Length];
+        byte[] buffer = new byte[1 + innerPacket.Length];
 
         // Set header
         buffer[0] = (byte)protocol;
 
-        // Copy the packet after the header
-        if (packet.Length > 0)
-            packet.CopyTo(buffer.AsSpan(1));
+        // Copy the inner protocol packet after the header
+        if (innerPacket.Length > 0)
+            innerPacket.CopyTo(buffer.AsSpan(1));
 
         return buffer;
     }
