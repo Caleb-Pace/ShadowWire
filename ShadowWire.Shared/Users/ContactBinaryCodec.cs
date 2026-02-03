@@ -1,6 +1,6 @@
 ﻿namespace ShadowWire.Shared.Users;
 
-public static class ContactBinarySerializer
+public static class ContactBinaryCodec
 {
     public static byte[] Serialize(Contact contact)
     {
