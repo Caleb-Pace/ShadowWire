@@ -24,7 +24,7 @@ internal class Program
         
         // Prepare identity
         var identity = new Contact(usernameManger.Username, crypto.Fingerprint, crypto.PublicKey);
-        var identityBin = ContactBinaryCodec.Encode(identity);
+        var identityBin = ContactBinaryCodec.Encode(identity).ToArray();
 
 
         // Connect to Server
