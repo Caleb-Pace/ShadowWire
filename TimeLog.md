@@ -7,6 +7,7 @@ Planning:
 Websocket library research: 9m
 Project structure planning: 27m
 Formatting: 1m
+Stack (Spans) vs Heap usage research: 16m
 
 Shared:
 - Moving & setup: 8m
@@ -24,10 +25,10 @@ Shared:
         - Protcol List: 45m
     - IProtocol: 56m
     - ProtocolId: 4m
-    - ProtocolHeader: 42m
+    - ProtocolHeader: 1h 2m
     - Protocols
         - Error: 45m
-        - Identification: 12m
+        - Identification: 18m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
