@@ -1,6 +1,6 @@
 ﻿namespace ShadowWire.Shared.Protocols;
 
-public class ProtocolHeader
+public static class ProtocolHeader
 {
     /// <summary>
     /// Prepends the protocol header byte to an existing packet.
