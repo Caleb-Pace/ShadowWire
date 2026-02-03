@@ -26,7 +26,7 @@ Shared:
     - ProtocolHeader: 42m
     - Protocols
         - Error: 45m
-        - Identification: 10m
+        - Identification: 12m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
