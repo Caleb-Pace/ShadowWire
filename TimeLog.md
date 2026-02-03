@@ -10,7 +10,7 @@ Formatting: 1m
 
 Shared:
 - Moving & setup: 8m
-- Contacts: 46m
+- Contacts: 47m
     - Planning: 5m
     - Persistence: 35m
         - Bson issue: 41m

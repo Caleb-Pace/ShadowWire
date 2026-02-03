@@ -1,8 +1,8 @@
 ﻿namespace ShadowWire.Shared.Users;
 
-public class Contact(string nickname, byte[] fingerprint, byte[] publicKeyDer)
+public readonly struct Contact(string nickname, byte[] fingerprint, byte[] publicKeyDer)
 {
-    public string Nickname { get; private set; } = nickname;
-    public byte[] Fingerprint { get; private set; } = fingerprint;
-    public byte[] PublicKeyDer { get; private set; } = publicKeyDer;
+    public string Nickname { get; init; } = nickname;
+    public byte[] Fingerprint { get; init; } = fingerprint;
+    public byte[] PublicKeyDer { get; init; } = publicKeyDer;
 }
