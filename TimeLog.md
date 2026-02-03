@@ -30,7 +30,7 @@ Shared:
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 37m
-    - SpanWriter: 
+    - SpanWriter: 20m
 
 Server:
 - WebSocket (echo) server setup: 45m
