@@ -54,18 +54,13 @@ public class ProtocolHeader
 
         // Identify protocol
         byte idByte = packet[0];
-        switch (idByte)
-        {
-            case (byte)ProtocolId.Acknowledge:
-            case (byte)ProtocolId.Error:
-            case (byte)ProtocolId.Identification:
-            case (byte)ProtocolId.Lookup:
-            case (byte)ProtocolId.Message:
-            case (byte)ProtocolId.OfflineMessagesRequest:
-                return (ProtocolId)idByte;
-            default:
-                // TODO: Implement a log for unknown protocol
-                return null; // Unknown protocol
-        }
+        ProtocolId? protocol = Enum.IsDefined(typeof(ProtocolId), idByte)
+                             ? (ProtocolId)idByte
+                             : null;
+
+        // TODO: Implement a log for unknown protocol
+        //if (!protocol.HasValue)
+
+        return protocol;
     }
 }

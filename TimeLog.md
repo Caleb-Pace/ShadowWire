@@ -25,7 +25,7 @@ Shared:
         - Protcol List: 45m
     - IProtocol: 56m
     - ProtocolId: 4m
-    - ProtocolHeader: 1h 2m
+    - ProtocolHeader: 1h 4m
     - Protocols
         - Error: 45m
         - Identification: 18m
