@@ -1,8 +1,8 @@
 ﻿namespace ShadowWire.Shared.Protocols;
 
-/// <typeparam name="TPacketPayload">The payload structure contained in the packet body.</typeparam>
-public interface IProtocol<TPacketPayload>
-    where TPacketPayload : struct
+/// <typeparam name="TPacket">The structure representing the packet fields (header + body).</typeparam>
+public interface IProtocol<TPacket>
+    where TPacket : struct
 {
     /// <summary>
     /// The protocol ID as a byte-backed enum.
@@ -11,16 +11,16 @@ public interface IProtocol<TPacketPayload>
 
 
     /// <summary>
-    /// Encodes a payload into a protocol packet.
+    /// Encodes a packet structure into bytes.
     /// </summary>
-    /// <param name="payload">The payload to encode.</param>
-    /// <returns>The encoded packet in bytes.</returns>
-    public ReadOnlySpan<byte> Encode(TPacketPayload payload);
+    /// <param name="packetStruct">The packet structure to encode.</param>
+    /// <returns>The encoded packet as bytes.</returns>
+    public ReadOnlySpan<byte> Encode(TPacket packetStruct);
 
     /// <summary>
-    /// Decodes a protocol packet into its payload.
+    /// Decodes a packet from bytes.
     /// </summary>
     /// <param name="packetBinary">The full packet in bytes.</param>
-    /// <returns>The decoded payload.</returns>
-    public TPacketPayload Decode(ReadOnlySpan<byte> packetBinary);
+    /// <returns>The decoded packet structure.</returns>
+    public TPacket Decode(ReadOnlySpan<byte> packetBinary);
 }
