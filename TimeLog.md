@@ -19,13 +19,13 @@ Shared:
     - FingerprintComparer: 58m
 - UsernameManager: 2h 2m
 - Protocols: 10m
-    - Planning: 43m
+    - Planning: 47m
         - Protcol List: 45m
     - IProtocol: 56m
     - ProtocolId: 4m
     - ProtocolHeader: 42m
     - Protocols
-        - Error: 5m
+        - Error: 45m
 
 Server:
 - WebSocket (echo) server setup: 45m
