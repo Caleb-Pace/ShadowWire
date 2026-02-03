@@ -19,9 +19,9 @@ Shared:
     - FingerprintComparer: 58m
 - UsernameManager: 2h 2m
 - Protocols: 10m
-    - Planning: 21m
+    - Planning: 43m
         - Protcol List: 45m
-    - IProtocol: 1m
+    - IProtocol: 37m
     - ProtocolId: 4m
     - PacketHeader: 29m
     - Protocols
