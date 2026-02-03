@@ -26,11 +26,11 @@ Shared:
     - ProtocolHeader: 42m
     - Protocols
         - Error: 45m
-        - Identification: 5m
+        - Identification: 10m
 - BinaryEncoding/
     - Planning: 40m
-    - SpanReader: 37m
-    - SpanWriter: 20m
+    - SpanReader: 38m
+    - SpanWriter: 22m
 
 Server:
 - WebSocket (echo) server setup: 45m

@@ -22,16 +22,23 @@ public ref struct SpanWriter(Span<byte> span)
 
 
     /// <summary>
-    /// Writes a UTF-8 encoded string from the current position.
+    /// Writes a value of the specified type from the current position.
     /// </summary>
+    /// <typeparam name="T">The unmanaged type to read (primitive or struct).</typeparam>
+    /// <remarks>Advances the position by <see cref="Unsafe.SizeOf{T}"/>.</remarks>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the string length exceeds the remaining capacity of the span.
+    /// Thrown if the size of <typeparamref name="T"/> exceeds the remaining capacity of the span.
     /// </exception>
-    /// <remarks>
-    /// Strings are prefixed with a 4-byte <see cref="Int32"/> length.
-    /// </remarks>
-    public void WriteString(string str)
-        => WriteBytes(Encoding.UTF8.GetBytes(str));
+    public void Write<T>(T val)
+        where T : unmanaged
+    {
+        int size = Unsafe.SizeOf<T>();
+        if (_pos + size > _span.Length)
+            throw new ArgumentOutOfRangeException(nameof(T), "Attempted to write past the end of the span.");
+
+        MemoryMarshal.Write(_span.Slice(_pos, size), in val);
+        _pos += size;
+    }
 
     /// <summary>
     /// Writes a byte array from the current position.
@@ -55,21 +62,14 @@ public ref struct SpanWriter(Span<byte> span)
     }
 
     /// <summary>
-    /// Writes a value of the specified type from the current position.
+    /// Writes a UTF-8 encoded string from the current position.
     /// </summary>
-    /// <typeparam name="T">The unmanaged type to read (primitive or struct).</typeparam>
-    /// <remarks>Advances the position by <see cref="Unsafe.SizeOf{T}"/>.</remarks>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the size of <typeparamref name="T"/> exceeds the remaining capacity of the span.
+    /// Thrown if the string length exceeds the remaining capacity of the span.
     /// </exception>
-    public void Write<T>(T val)
-        where T : unmanaged
-    {
-        int size = Unsafe.SizeOf<T>();
-        if (_pos + size > _span.Length)
-            throw new ArgumentOutOfRangeException(nameof(T), "Attempted to write past the end of the span.");
-
-        MemoryMarshal.Write(_span.Slice(_pos, size), in val);
-        _pos += size;
-    }
+    /// <remarks>
+    /// Strings are prefixed with a 4-byte <see cref="Int32"/> length.
+    /// </remarks>
+    public void WriteString(string str)
+        => WriteBytes(Encoding.UTF8.GetBytes(str));
 }
