@@ -1,6 +1,6 @@
-﻿namespace ShadowWire.Shared.Protocols;
+﻿namespace ShadowWire.Shared.Protocol;
 
-public enum ProtocolId : byte
+public enum MessageKind : byte
 {
     Acknowledge = 0,
     Error = 1,
