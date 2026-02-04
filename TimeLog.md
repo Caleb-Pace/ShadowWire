@@ -21,7 +21,7 @@ Shared:
     - FingerprintComparer: 58m
     - Codec improvement: 43m
 - UsernameManager: 2h 2m
-- Protocols/: 10m
+- Protocols/ (Removed): 10m
     - Planning: 47m
         - Protcol List: 45m
     - IProtocol: 57m
@@ -30,7 +30,9 @@ Shared:
     - Protocols
         - Error: 57m
         - Identification: 22m
-    - Protocol Pattern correction: 8m
+    - Protocol Pattern correction: 10m
+- Protocol/
+    - MessageType: 48m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
