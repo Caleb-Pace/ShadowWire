@@ -32,7 +32,7 @@ Shared:
         - Identification: 22m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - MessageType: 48m
+    - MessageKind: 56m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
@@ -41,8 +41,11 @@ Shared:
 Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
-- RelayServer: 46m
-- SessionHandler: 13m
+- RelayServer: 53m
+- SessionHandler: 24m
+- Handlers/
+    - Planning: 12m
+    - IMessageHandler: 3m
 - User registry: 7m
 
 Client:

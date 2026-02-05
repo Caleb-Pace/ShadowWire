@@ -4,36 +4,38 @@ public enum MessageKind : byte
 {
     //~/ System
     Acknowledge = 0,
-    Error = 1,
-    //ServiceDenied      = 2, // <Later>
-    //ServerAnnouncement = 3, // <Later>
-    //UpdateAvailable    = 4, // <Later>
-    //RateLimitExceeded    = 5, // <Later>
-    //E2EIntegrityRequest  = 6, // <Later>
-    //E2EIntegrityResponse = 7, // <Later>
+    NegativeAcknowledge = 1, // <Later>
+    Error = 2,
+    //ServiceDenied       = 3, // <Later>
+    //ServerAnnouncement  = 4, // <Later>
+    //UpdateAvailable     = 5, // <Later>
+    //RateLimitExceeded    = 6, // <Later>
+    //E2EIntegrityRequest  = 7, // <Later>
+    //E2EIntegrityResponse = 8, // <Later>
 
     //~/ Authentication
-    IdentifyRequest = 10, // For connecting to the server
-    //IdentificationChallengePhrase   = 11, // <Later>
-    //IdentificationChallengeResponse = 12, // <Later>
+    IdentifyRequest = 20, // For connecting to the server
+    //IdentificationChallengePhrase   = 21, // <Later>
+    //IdentificationChallengeResponse = 22, // <Later>
 
     //~/ User lookup
-    LookupRequest  = 13,
-    LookupResponse = 14,
+    LookupRequest = 30,
+    LookupResponse = 31,
 
     //~/ Username Exchange
-    //UsernameRequest  = 15, // <Later>
-    //UsernameResponse = 16, // <Later>
+    //UsernameRequest  = 32, // <Later>
+    //UsernameResponse = 33, // <Later>
 
     //~/ Messages
-    Message = 20,
-    //CompositeMessage = 21, // <Later>
-    //File = 22, // <Later>
-    OfflineMessagesRequest  = 23,  // Retrieve stored messages
-    OfflineMessagesResponse = 24,
+    Message = 40,
+    //CompositeMessage = 41, // <Later>
+    OfflineMessagesRequest  = 42,  // Retrieve stored messages
+    OfflineMessagesResponse = 43,
+    //File      = 44, // <Later>
+    //FileBlock = 45, // <Later>
 
     //~/ Status
-    //HeartBeat      = 30, // <Later>
-    //Status         = 31, // <Later>
-    //IndicateTyping = 32, // <Later>
+    //HeartBeat      = 60, // <Later>
+    //Status         = 61, // <Later>
+    //IndicateTyping = 62, // <Later>
 }
