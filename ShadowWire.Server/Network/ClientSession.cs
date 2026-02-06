@@ -12,18 +12,16 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
     private readonly Func<byte[], byte[], Task> _routeMessageAsync = config.routeMessageAsync; // (Fingerprint, Binary)
     private readonly ContactManager _userRegistry = config.userRegistry;
 
-    private static Dictionary<byte, IMessageHandler> MessageHandlers => new();
-
 
     public async Task ReceiveMessageAsync(byte[] buffer)
     {
         var messageKind = buffer[0];
-        if (MessageHandlers.TryGetValue(messageKind, out IMessageHandler messageHandler))
-        {
-            await messageHandler.HandleAsync(this, buffer);
-            return;
-        }
-
+        var messageHandler = MessageHandlerRegistry.Get(messageKind);
         // TODO: Implement logging - Unknown message kind
+        if (messageHandler == null)
+            return; // Early exit: Unmapped/unsupported message kind
+
+        await messageHandler.HandleAsync(this, buffer);
+
     }
 }

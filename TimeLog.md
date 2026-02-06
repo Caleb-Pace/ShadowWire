@@ -43,10 +43,10 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - RelayServer: 56m
-    - ClientSession: 25m
+    - ClientSession: 26m
     - ClientSessionConfig: 7m
 - Handlers/
-    - Planning: 32m 1m
+    - Planning: 33m
     - IMessageHandler: 5m
     - MessageHandlerRegistry: 8m
 - User registry: 7m
