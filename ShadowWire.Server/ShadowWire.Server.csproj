@@ -11,8 +11,4 @@
     <ProjectReference Include="..\ShadowWire.Shared\ShadowWire.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Handlers\" />
-  </ItemGroup>
-
 </Project>
