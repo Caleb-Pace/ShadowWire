@@ -75,8 +75,9 @@ public class ContactManager
 
     private bool TryAddCore(Contact newContact)
     {
-        if (contactsByFingerprint.ContainsKey(newContact.Fingerprint)
-            || contactsByName.ContainsKey(newContact.Nickname))
+        // Duplication check
+        if (contactsByFingerprint.ContainsKey(newContact.Fingerprint) ||
+            contactsByName.ContainsKey(newContact.Nickname))
             return false; // Early exit: duplicate detected
 
         // Add contact
@@ -92,28 +93,27 @@ public class ContactManager
 
 
     //=/ Get Contact methods
-    public Contact? Get(byte[] fingerprint)
+    public Contact? GetByFingerprint(byte[] fingerprint)
     {
         bool isValid = contactsByFingerprint.TryGetValue(fingerprint, out int index);
         if (!isValid) return null;
 
-        return Get(index);
+        return GetByIndex(index);
     }
 
-    public Contact? Get(string nickname)
+    public Contact? GetByNickname(string nickname)
     {
         bool isValid = contactsByName.TryGetValue(nickname, out int index);
         if (!isValid) return null;
 
-        return Get(index);
+        return GetByIndex(index);
     }
 
-    private Contact? Get(int index)
+    private Contact? GetByIndex(int index)
     {
-        if (contacts.Count <= index)
+        if (index >= contacts.Count)
         {
             // TODO: Implement logging (error)
-
             return null; // Invalid index
         }
 
