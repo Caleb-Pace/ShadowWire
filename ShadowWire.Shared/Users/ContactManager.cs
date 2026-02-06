@@ -58,27 +58,40 @@ public class ContactManager
     }
 
     //=/ Add methods
-    private bool TryAddCore(Contact newContact)
+    private bool IsContactIndexed(Contact contact)
     {
-        // Duplication check
-        if (contactsByFingerprint.ContainsKey(newContact.Fingerprint) ||
-            contactsByName.ContainsKey(newContact.Nickname))
-            return false; // Early exit: duplicate detected
+        return contactsByFingerprint.ContainsKey(contact.Fingerprint) ||
+               contactsByName.ContainsKey(contact.Nickname);
+    }
 
-        // Add contact
+    private int AddContactToList(Contact newContact)
+    {
         int index = contacts.Count;
         contacts.Add(newContact);
+        return index;
+    }
 
-        // Index contact
+    private void IndexContact(int index, Contact newContact)
+    {
         contactsByName.Add(newContact.Nickname, index);
         contactsByFingerprint.Add(newContact.Fingerprint, index);
+    }
+
+    private bool TryAddCore(Contact newContact)
+    {
+        if (IsContactIndexed(newContact))
+            return false; // Early exit: Duplicate detected
+
+        int index = AddContactToList(newContact);
+        IndexContact(index, newContact);
 
         return true;
     }
 
     public bool TryAdd(Contact newContact)
     {
-        if (!TryAddCore(newContact)) return false;
+        if (!TryAddCore(newContact))
+            return false; // Early exit: Duplicate detected
 
         // Persist contacts list
         SaveContacts();
@@ -88,7 +101,7 @@ public class ContactManager
     public bool TryAddFromBytes(byte[] encodedContact)
     {
         if (!ContactBinaryCodec.TryDecode(encodedContact, out Contact contact))
-            return false;
+            return false; // Early exit: Decoding failed
         return TryAdd(contact);
     }
 
@@ -96,11 +109,9 @@ public class ContactManager
     //=/ Get Contact methods
     private Contact? GetByIndex(int index)
     {
+        // TODO: Implement logging (error)
         if (index >= contacts.Count)
-        {
-            // TODO: Implement logging (error)
-            return null; // Invalid index
-        }
+            return null; // Early exit: Invalid index
 
         return contacts[index];
     }
@@ -108,7 +119,8 @@ public class ContactManager
     public Contact? GetByFingerprint(byte[] fingerprint)
     {
         bool isValid = contactsByFingerprint.TryGetValue(fingerprint, out int index);
-        if (!isValid) return null;
+        if (!isValid)
+            return null; // Early exit: Fingerprint not indexed
 
         return GetByIndex(index);
     }
@@ -116,7 +128,8 @@ public class ContactManager
     public Contact? GetByNickname(string nickname)
     {
         bool isValid = contactsByName.TryGetValue(nickname, out int index);
-        if (!isValid) return null;
+        if (!isValid)
+            return null; // Early exit: Nickname not indexed
 
         return GetByIndex(index);
     }
