@@ -23,6 +23,8 @@ internal class RelayServer(ContactManager userRegistry)
         // TODO: Remove, for debugging
         Console.WriteLine($"WebSocket server started on \"{URI}\"!");
 
+        var clientSessionConfig = new ClientSessionConfig(RouteMessageAsync, userRegistry);
+
         while (true)
         {
             var context = await listener.GetContextAsync(); // Wait for incoming requests
@@ -34,7 +36,7 @@ internal class RelayServer(ContactManager userRegistry)
                     var socket = context.Request.RemoteEndPoint;
 
                     var wsContext = await context.AcceptWebSocketAsync(SUB_PROTOCOL);
-                    var session = new ClientSession(wsContext.WebSocket, RouteMessageAsync, _userRegistry);
+                    var session = new ClientSession(wsContext.WebSocket, clientSessionConfig);
                     _sessions.TryAdd(session.Id, session);
 
                     // TODO: Implement logging

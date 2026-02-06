@@ -41,10 +41,12 @@ Shared:
 Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
-- RelayServer: 53m
-- ClientSession: 25m
+- Network/
+    - RelayServer: 56m
+    - ClientSession: 25m
+    - ClientSessionConfig: 7m
 - Handlers/
-    - Planning: 27m
+    - Planning: 32m
     - IMessageHandler: 5m
 - User registry: 7m
 
