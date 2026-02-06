@@ -47,9 +47,10 @@ Server:
     - ClientSession: 28m
     - ClientSessionConfig: 7m
 - Handlers/
-    - Planning: 33m
+    - Planning: 42m
     - IMessageHandler: 5m
     - MessageHandlerRegistry: 8m
+    - IdentificationHandler: 43m
 - User registry: 7m
 
 Client:
