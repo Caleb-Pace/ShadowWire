@@ -19,7 +19,6 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
     {
         var messageKind = buffer[0];
         var messageHandler = MessageHandlerRegistry.Get(messageKind);
-        // TODO: Implement logging - Unknown message kind
         if (messageHandler == null)
             return; // Unmapped/unsupported message kind
 

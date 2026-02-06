@@ -21,6 +21,7 @@ public static class MessageHandlerRegistry
         if (_handlers.TryGetValue(messageKind, out var handler))
             return handler;
 
+        // TODO: Implement logging - Warning: Unmapped message kind
         return null; // Unmapped message kind
     }
 }
