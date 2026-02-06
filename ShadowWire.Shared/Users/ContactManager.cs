@@ -58,11 +58,12 @@ public class ContactManager
     }
 
     //=/ Add methods
-    // TODO: Implement
-    //public bool TryAdd(byte[] serializedContact)
-    //{
-    //    return TryAdd();
-    //}
+    public bool TryAddFromBytes(byte[] encodedContact)
+    {
+        if (!ContactBinaryCodec.TryDecode(encodedContact, out Contact contact))
+            return false;
+        return TryAdd(contact);
+    }
 
     public bool TryAdd(Contact newContact)
     {
