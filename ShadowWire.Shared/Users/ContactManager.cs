@@ -58,22 +58,6 @@ public class ContactManager
     }
 
     //=/ Add methods
-    public bool TryAddFromBytes(byte[] encodedContact)
-    {
-        if (!ContactBinaryCodec.TryDecode(encodedContact, out Contact contact))
-            return false;
-        return TryAdd(contact);
-    }
-
-    public bool TryAdd(Contact newContact)
-    {
-        if (!TryAddCore(newContact)) return false;
-
-        // Persist contacts list
-        SaveContacts();
-        return true;
-    }
-
     private bool TryAddCore(Contact newContact)
     {
         // Duplication check
@@ -92,8 +76,35 @@ public class ContactManager
         return true;
     }
 
+    public bool TryAdd(Contact newContact)
+    {
+        if (!TryAddCore(newContact)) return false;
+
+        // Persist contacts list
+        SaveContacts();
+        return true;
+    }
+
+    public bool TryAddFromBytes(byte[] encodedContact)
+    {
+        if (!ContactBinaryCodec.TryDecode(encodedContact, out Contact contact))
+            return false;
+        return TryAdd(contact);
+    }
+
 
     //=/ Get Contact methods
+    private Contact? GetByIndex(int index)
+    {
+        if (index >= contacts.Count)
+        {
+            // TODO: Implement logging (error)
+            return null; // Invalid index
+        }
+
+        return contacts[index];
+    }
+
     public Contact? GetByFingerprint(byte[] fingerprint)
     {
         bool isValid = contactsByFingerprint.TryGetValue(fingerprint, out int index);
@@ -108,16 +119,5 @@ public class ContactManager
         if (!isValid) return null;
 
         return GetByIndex(index);
-    }
-
-    private Contact? GetByIndex(int index)
-    {
-        if (index >= contacts.Count)
-        {
-            // TODO: Implement logging (error)
-            return null; // Invalid index
-        }
-
-        return contacts[index];
     }
 }
