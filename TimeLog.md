@@ -44,8 +44,8 @@ Server:
 - RelayServer: 53m
 - SessionHandler: 24m
 - Handlers/
-    - Planning: 12m
-    - IMessageHandler: 3m
+    - Planning: 27m
+    - IMessageHandler: 5m
 - User registry: 7m
 
 Client:
