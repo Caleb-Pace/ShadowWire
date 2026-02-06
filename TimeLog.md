@@ -44,7 +44,7 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - RelayServer: 56m
-    - ClientSession: 26m
+    - ClientSession: 28m
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 33m

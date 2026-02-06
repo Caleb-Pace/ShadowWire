@@ -9,6 +9,8 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
     public Guid Id { get; private set; } = Guid.NewGuid(); // Create ID for new conneciton
     public WebSocket WebSocket { get; private set; } = webSocket;
 
+    public Contact? ClientIdentity { get; private set; } = null;
+
     private readonly Func<byte[], byte[], Task> _routeMessageAsync = config.routeMessageAsync; // (Fingerprint, Binary)
     private readonly ContactManager _userRegistry = config.userRegistry;
 
@@ -19,9 +21,12 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
         var messageHandler = MessageHandlerRegistry.Get(messageKind);
         // TODO: Implement logging - Unknown message kind
         if (messageHandler == null)
-            return; // Early exit: Unmapped/unsupported message kind
+            return; // Unmapped/unsupported message kind
 
         await messageHandler.HandleAsync(this, buffer);
 
     }
+
+    public void IdentifyClient(Contact identity)
+        => ClientIdentity = identity;
 }
