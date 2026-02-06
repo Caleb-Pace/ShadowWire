@@ -4,7 +4,7 @@ using System.Net.WebSockets;
 
 namespace ShadowWire.Server.Network;
 
-public class SessionHandler(WebSocket webSocket, Func<byte[], byte[], Task> routeMessageAsync, ContactManager userRegistry)
+public class ClientSession(WebSocket webSocket, Func<byte[], byte[], Task> routeMessageAsync, ContactManager userRegistry)
 {
     public Guid Id { get; private set; } = Guid.NewGuid(); // Create ID for new conneciton
     public WebSocket WebSocket { get; private set; } = webSocket;

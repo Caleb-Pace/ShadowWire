@@ -42,7 +42,7 @@ Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - RelayServer: 53m
-- SessionHandler: 24m
+- ClientSession: 25m
 - Handlers/
     - Planning: 27m
     - IMessageHandler: 5m

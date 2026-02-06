@@ -4,5 +4,5 @@ namespace ShadowWire.Server.Handlers;
 
 public interface IMessageHandler
 {
-    Task HandleAsync(SessionHandler session, byte[] messageInBytes);
+    Task HandleAsync(ClientSession session, byte[] messageInBytes);
 }

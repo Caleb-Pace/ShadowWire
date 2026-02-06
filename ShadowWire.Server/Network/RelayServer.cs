@@ -7,7 +7,7 @@ namespace ShadowWire.Server.Network;
 
 internal class RelayServer(ContactManager userRegistry)
 {
-    private ConcurrentDictionary<Guid, SessionHandler> _sessions = new();
+    private ConcurrentDictionary<Guid, ClientSession> _sessions = new();
     private readonly ContactManager _userRegistry = userRegistry;
 
 
@@ -34,7 +34,7 @@ internal class RelayServer(ContactManager userRegistry)
                     var socket = context.Request.RemoteEndPoint;
 
                     var wsContext = await context.AcceptWebSocketAsync(SUB_PROTOCOL);
-                    var session = new SessionHandler(wsContext.WebSocket, RouteMessageAsync, _userRegistry);
+                    var session = new ClientSession(wsContext.WebSocket, RouteMessageAsync, _userRegistry);
                     _sessions.TryAdd(session.Id, session);
 
                     // TODO: Implement logging
