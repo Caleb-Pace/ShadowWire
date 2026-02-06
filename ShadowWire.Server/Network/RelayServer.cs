@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.WebSockets;
-using System.Text;
 
 namespace ShadowWire.Server.Network;
 
@@ -62,6 +61,7 @@ internal class RelayServer(ContactManager userRegistry)
             }
         }
     }
+
     private async void HandleConnection(Guid sessionId)
     {
         var buffer = new byte[1024 * 4]; // 4 MB
@@ -75,28 +75,8 @@ internal class RelayServer(ContactManager userRegistry)
 
                 if (result.MessageType == WebSocketMessageType.Close)
                     break;
-                if (result.MessageType == WebSocketMessageType.Text)
-                {
-                    // TODO: Remove, for debugging
-                    var msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    Console.WriteLine($"<{sessionId}> sent \"{msg}\" (Echoed back)");
-
-                    await ws.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
-                }
                 if (result.MessageType == WebSocketMessageType.Binary)
-                {
-                    // TODO: Remove, for debugging
-                    if (!ContactBinaryCodec.TryDecode(buffer, out Contact identity))
-                    {
-                        Console.WriteLine($"<{sessionId}> sent unknown binary data");
-
-                        // Terminate connection.
-                        await ws.CloseAsync(WebSocketCloseStatus.InvalidPayloadData, null, CancellationToken.None);
-                        break;
-                    }
-
-                    Console.WriteLine($"<{sessionId}> \"{identity.Nickname}\" connected! ({Convert.ToBase64String(identity.Fingerprint)})"); // TODO: Remove, for debugging
-                }
+                    await _sessions[sessionId].ReceiveMessageAsync(buffer);
             }
         }
         catch (Exception ex)
