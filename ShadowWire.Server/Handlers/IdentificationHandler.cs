@@ -18,7 +18,7 @@ public class IdentificationHandler : IMessageHandler
     private void AttachClientIdentityToSession(ClientSession session, ReadOnlySpan<byte> contactBinary)
     {
         if (ContactBinaryCodec.TryDecode(contactBinary, out var contact))
-            session.IdentifyClient(contact);
+            session.AssignClientIdentity(contact);
     }
 
     /// <summary>

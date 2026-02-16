@@ -26,6 +26,6 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
 
     }
 
-    public void IdentifyClient(Contact identity)
+    public void AssignClientIdentity(Contact identity)
         => ClientIdentity = identity;
 }
