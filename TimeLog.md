@@ -30,10 +30,10 @@ Shared:
     - ProtocolHeader: 1h 14m
     - Protocols
         - Error: 57m
-        - Identification: 22m
+        - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - MessageKind: 56m
+    - MessageKind: 1h 4m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
@@ -59,3 +59,5 @@ Client:
 - Cryptography: 33m
     - Research: 12m
 - Register with Server: 15m
+- Services/
+    - Planning: m

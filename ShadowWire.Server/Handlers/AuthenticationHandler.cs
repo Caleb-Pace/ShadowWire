@@ -10,9 +10,9 @@ namespace ShadowWire.Server.Handlers;
 /// <remarks>
 /// Follows the singleton design pattern and implements <see cref="IMessageHandler"/>.
 /// </remarks>
-public class IdentificationHandler : IMessageHandler
+public class AuthenticationHandler : IMessageHandler
 {
-    public static IdentificationHandler Instance => new();
+    public static AuthenticationHandler Instance => new();
 
 
     private void AttachClientIdentityToSession(ClientSession session, ReadOnlySpan<byte> contactBinary)
@@ -43,7 +43,7 @@ public class IdentificationHandler : IMessageHandler
         ReadOnlySpan<byte> content = messageInBytes.AsSpan(1); // Skip message kind
         switch (kind)
         {
-            case (byte)MessageKind.IdentifyRequest:
+            case (byte)MessageKind.AuthenticationRequest:
                 AttachClientIdentityToSession(session, content); 
                 break;
             default:

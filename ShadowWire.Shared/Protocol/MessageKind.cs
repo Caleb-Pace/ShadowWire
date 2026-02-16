@@ -14,9 +14,11 @@ public enum MessageKind : byte
     //E2EIntegrityResponse = 8, // <Later>
 
     //~/ Authentication
-    IdentifyRequest = 20, // For connecting to the server
-    //IdentificationChallengePhrase   = 21, // <Later>
-    //IdentificationChallengeResponse = 22, // <Later>
+    AuthenticationRequest = 20, // For connecting to the server
+    //AuthenticationChallenge   = 21, // <Later>
+    //AuthenticationResponse = 22, // <Later>
+    AuthSuccess = 23,
+    AuthFailure = 24,
 
     //~/ User lookup
     LookupRequest = 30,
