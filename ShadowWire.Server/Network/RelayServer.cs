@@ -23,7 +23,7 @@ internal class RelayServer(ContactManager userRegistry)
         // TODO: Remove, for debugging
         Console.WriteLine($"WebSocket server started on \"{URI}\"!");
 
-        var clientSessionConfig = new ClientSessionConfig(RouteMessageAsync, userRegistry);
+        var clientSessionConfig = new ClientSessionConfig(RouteMessageAsync, _userRegistry);
 
         while (true)
         {
