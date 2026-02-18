@@ -33,9 +33,9 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 25m
+    - Planning: 1h 9m
     - MessageKind: 1h 7m
-    - MessageHandlerRegistry: 9m 4m 5m 3m 4m 1m
+    - MessageHandlerRegistry: 1h 1m
     - IMessageHandler: 12m
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
@@ -54,11 +54,11 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - RelayServer: 56m
-    - ClientSession: 29m
+    - ClientSession: 32m
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 42m
-    - ServerMessageHandlerRegistry: 10m
+    - ServerMessageHandlerRegistry: 11m
     - AuthenticationHandler: 49m
 - User registry: 7m
 
@@ -71,4 +71,4 @@ Client:
 - Services/
     - Planning: 16m
 - Handlers/
-    - ClientMessageHandlerRegistry: 1m
+    - ClientMessageHandlerRegistry: 6m
