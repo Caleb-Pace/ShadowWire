@@ -33,16 +33,19 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 10m
+    - Planning: 13m
     - MessageKind: 1h 7m
-    - MessageHandlerRegistry: 4m
-    - IMessageHandler: 7m
-    - IMessageHandlerAdapter: 5m
+    - MessageHandlerRegistry: 9m
+    - IMessageHandler: 12m
+    - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
+    - Packets/
+      - AuthenticationRequest: 10m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
     - SpanWriter: 22m
+    - ByteArrayUtils: 29m
 
 Server:
 - WebSocket (echo) server setup: 45m
@@ -53,9 +56,7 @@ Server:
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 42m
-    - IMessageHandler: 5m
-    - MessageHandlerRegistry: 8m
-    - IdentificationHandler: 43m
+    - AuthenticationHandler: 44m
 - User registry: 7m
 
 Client:
