@@ -2,7 +2,7 @@
 
 public interface IMessageHandler<TContext, TRequest>
     where TContext : class
-    where TRequest : struct
+    where TRequest : struct, IEncodable
 {
-    public Task<IEncodable> HandleAsync(TContext context, TRequest request);
+    Task<IEncodable> HandleAsync(TContext context, TRequest request);
 }
