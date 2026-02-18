@@ -40,7 +40,7 @@ Shared:
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
     - Packets/
-      - AuthenticationRequest: 12m
+      - AuthenticationRequest: 19m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
@@ -56,7 +56,7 @@ Server:
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 42m
-    - AuthenticationHandler: 45m
+    - AuthenticationHandler: 47m
 - User registry: 7m
 
 Client:

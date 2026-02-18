@@ -14,9 +14,12 @@ public readonly struct AuthenticationRequest : IEncodable
         => this.contact = contact;
 
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
-    public AuthenticationRequest(ReadOnlySpan<byte> messageInBytes)
+    public AuthenticationRequest(ReadOnlySpan<byte> packetBytes)
     {
-        if (!ContactBinaryCodec.TryDecode(messageInBytes[1..], out var contact))
+        ArgumentOutOfRangeException.ThrowIfLessThan(packetBytes.Length, 2, nameof(packetBytes));
+
+        ReadOnlySpan<byte> payloadBytes = packetBytes[1..]; // Skip message kind
+        if (!ContactBinaryCodec.TryDecode(payloadBytes, out var contact))
             throw new ArgumentException("Invalid contact!");
 
         this.contact = contact;
