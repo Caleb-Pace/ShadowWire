@@ -35,7 +35,7 @@ Shared:
 - Protocol/
     - Planning: 25m
     - MessageKind: 1h 7m
-    - MessageHandlerRegistry: 9m
+    - MessageHandlerRegistry: 9m 4m
     - IMessageHandler: 12m
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
@@ -58,7 +58,7 @@ Server:
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 42m
-    - AuthenticationHandler: 47m
+    - AuthenticationHandler: 49m
 - User registry: 7m
 
 Client:
