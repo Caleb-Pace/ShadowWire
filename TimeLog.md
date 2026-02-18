@@ -38,7 +38,7 @@ Shared:
     - MessageHandlerRegistry: 4m
     - IMessageHandler: 6m
     - IMessageHandlerAdapter: 5m
-    - ITransformer: 3m
+    - IEncodable: 8m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
