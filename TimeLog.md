@@ -41,6 +41,7 @@ Shared:
     - IEncodable: 8m
     - Packets/
       - AuthenticationRequest: 19m
+      - AuthenticationSuccess: 4m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
