@@ -58,7 +58,7 @@ Server:
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 42m
-    - ServerMessageHandlerRegistry: 11m
+    - ServerMessageHandlerRegistry: 24m
     - AuthenticationHandler: 49m
 - User registry: 7m
 
