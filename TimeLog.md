@@ -39,8 +39,8 @@ Shared:
     - IMessageHandler: 12m
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
-    - Packets/
-      - AuthenticationRequest: 19m
+    - Messages/
+      - AuthenticationRequest: 20m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
 - BinaryEncoding/
