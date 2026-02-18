@@ -1,4 +1,5 @@
 ﻿using ShadowWire.Server.Handlers;
+using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
 using System.Net.WebSockets;
 
@@ -15,15 +16,14 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
     private readonly ContactManager _userRegistry = config.userRegistry;
 
 
-    public async Task ReceiveMessageAsync(byte[] buffer)
+    public async Task<IEncodable?> ReceiveMessageAsync(byte[] buffer)
     {
         var messageKind = buffer[0];
-        var messageHandler = MessageHandlerRegistry.Get(messageKind);
+        var messageHandler = ServerMessageHandlerRegistry.Instance.Get(messageKind);
         if (messageHandler == null)
-            return; // Unmapped/unsupported message kind
+            return null; // Unmapped/unsupported message kind
 
-        await messageHandler.HandleAsync(this, buffer);
-
+        return await messageHandler(this, buffer);
     }
 
     public void AssignClientIdentity(Contact identity)
