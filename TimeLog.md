@@ -35,7 +35,10 @@ Shared:
 - Protocol/
     - Planning: 10m
     - MessageKind: 1h 7m
+    - MessageHandlerRegistry: 4m
     - IMessageHandler: 6m
+    - IMessageHandlerAdapter: 5m
+    - ITransformer: 3m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
