@@ -36,7 +36,7 @@ Shared:
     - Planning: 10m
     - MessageKind: 1h 7m
     - MessageHandlerRegistry: 4m
-    - IMessageHandler: 6m
+    - IMessageHandler: 7m
     - IMessageHandlerAdapter: 5m
     - IEncodable: 8m
 - BinaryEncoding/
