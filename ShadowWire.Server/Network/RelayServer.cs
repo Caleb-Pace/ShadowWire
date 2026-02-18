@@ -64,6 +64,7 @@ internal class RelayServer(ContactManager userRegistry)
         }
     }
 
+    // TODO: later - add timeout cancellation system
     private async void HandleConnection(Guid sessionId)
     {
         var buffer = new byte[1024 * 4]; // 4 MB
