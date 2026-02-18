@@ -15,10 +15,10 @@ public enum MessageKind : byte
 
     //~/ Authentication
     AuthenticationRequest = 20, // For connecting to the server
-    //AuthenticationChallenge   = 21, // <Later>
-    //AuthenticationResponse = 22, // <Later>
-    AuthSuccess = 23,
-    AuthFailure = 24,
+    //AuthenticationChallenge = 21, // <Later>
+    //AuthenticationChallengeResponse = 22, // <Later>
+    AuthenticationSuccess = 23,
+    AuthenticationFailure = 24,
 
     //~/ User lookup
     LookupRequest = 30,

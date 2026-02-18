@@ -33,7 +33,8 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - MessageKind: 1h 4m
+    - Planning: 4m
+    - MessageKind: 1h 7m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
@@ -60,4 +61,4 @@ Client:
     - Research: 12m
 - Register with Server: 15m
 - Services/
-    - Planning: m
+    - Planning: 15m
