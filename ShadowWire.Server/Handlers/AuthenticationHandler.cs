@@ -1,6 +1,6 @@
 ﻿using ShadowWire.Server.Network;
 using ShadowWire.Shared.Protocol;
-using ShadowWire.Shared.Protocol.Packets;
+using ShadowWire.Shared.Protocol.Messages;
 
 namespace ShadowWire.Server.Handlers;
 

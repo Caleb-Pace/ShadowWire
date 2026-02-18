@@ -1,4 +1,4 @@
-﻿namespace ShadowWire.Shared.Protocol.Packets;
+﻿namespace ShadowWire.Shared.Protocol.Messages;
 
 public readonly struct AuthenticationFailure : IEncodable
 {

@@ -1,7 +1,7 @@
 ﻿using ShadowWire.Shared.BinaryEncoding;
 using ShadowWire.Shared.Users;
 
-namespace ShadowWire.Shared.Protocol.Packets;
+namespace ShadowWire.Shared.Protocol.Messages;
 
 public readonly struct AuthenticationRequest : IEncodable
 {
