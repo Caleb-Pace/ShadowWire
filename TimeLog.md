@@ -33,7 +33,7 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 17m
+    - Planning: 25m
     - MessageKind: 1h 7m
     - MessageHandlerRegistry: 9m
     - IMessageHandler: 12m
@@ -56,7 +56,7 @@ Server:
     - ClientSessionConfig: 7m
 - Handlers/
     - Planning: 42m
-    - AuthenticationHandler: 44m
+    - AuthenticationHandler: 45m
 - User registry: 7m
 
 Client:
