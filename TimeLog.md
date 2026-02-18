@@ -42,6 +42,7 @@ Shared:
     - Packets/
       - AuthenticationRequest: 19m
       - AuthenticationSuccess: 4m
+      - AuthenticationFailure: 1m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
