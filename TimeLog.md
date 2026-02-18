@@ -70,3 +70,5 @@ Client:
 - Register with Server: 15m
 - Services/
     - Planning: 16m
+- Handlers/
+    - ClientMessageHandlerRegistry: 1m
