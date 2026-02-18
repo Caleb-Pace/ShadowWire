@@ -1,0 +1,27 @@
+﻿using ShadowWire.Shared.BinaryEncoding;
+using ShadowWire.Shared.Users;
+
+namespace ShadowWire.Shared.Protocol.Packets;
+
+public readonly struct AuthenticationRequest : IEncodable
+{
+    private const MessageKind MESSAGE_KIND = MessageKind.AuthenticationRequest;
+
+    public readonly Contact contact;
+
+
+    public AuthenticationRequest(Contact contact)
+        => this.contact = contact;
+
+    /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
+    public AuthenticationRequest(ReadOnlySpan<byte> messageInBytes)
+    {
+        if (!ContactBinaryCodec.TryDecode(messageInBytes[1..], out var contact))
+            throw new ArgumentException("Invalid contact!");
+
+        this.contact = contact;
+    }
+
+    public byte[] Encode()
+        => ByteArrayUtils.PrependMessageKind(MESSAGE_KIND, ContactBinaryCodec.Encode(contact));
+}

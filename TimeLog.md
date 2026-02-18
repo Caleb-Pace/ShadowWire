@@ -40,7 +40,7 @@ Shared:
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
     - Packets/
-      - AuthenticationRequest: 11m
+      - AuthenticationRequest: 12m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
