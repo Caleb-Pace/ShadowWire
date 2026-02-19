@@ -61,13 +61,28 @@ public class SessionManager()
     }
 
     /// <summary>
+    /// Attempts to get a session by its ID.
+    /// </summary>
+    /// <param name="sessionId">The session ID to lookup.</param>
+    /// <param name="session">The matching session, if found.</param>
+    /// <returns><see langword="true"/> if the session was found; otherwise <see langword="false"/>.</returns>
+    public bool TryGetSessionById(Guid sessionId, out ClientSession session)
+    {
+        session = default;
+
+        if (!_sessionsById.TryGetValue(sessionId, out var _session))
+            return false;
+
+        session = _session;
+        return true;
+    }
+
+    /// <summary>
     /// Attempts to get a session by fingerprint.
     /// </summary>
     /// <param name="fingerprint">The fingerprint to lookup.</param>
     /// <param name="session">The matching session, if found.</param>
-    /// <returns>
-    /// <see langword="true"/> if a session was found; otherwise <see langword="false"/>.<br/>
-    /// </returns>
+    /// <returns><see langword="true"/> if the session was found; otherwise <see langword="false"/>.</returns>
     public bool TryGetSessionByFingerprint(byte[] fingerprint, out ClientSession session)
     {
         session = default;
@@ -75,8 +90,10 @@ public class SessionManager()
         if (!_sessionIdByFingerprint.TryGetValue(fingerprint, out var guid))
             return false;
 
+        var sessionExists = TryGetSessionById(guid, out var _session);
+
         // Sanity check: Fingerprint should always map to a tracked session
-        if (!_sessionsById.TryGetValue(guid, out var _session))
+        if (!sessionExists)
             return false; // TODO: Implement logging - Warning, shouldn't occur (fingerprint maps to old/untracked session).
 
         session = _session;

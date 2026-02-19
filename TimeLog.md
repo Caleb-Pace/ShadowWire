@@ -54,11 +54,11 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - Planning: 38m
-    - RelayServer: 57m
-    - ClientSession: 32m
-    - ClientSessionConfig: 7m
+    - RelayServer: 1h
+    - ClientSession: 33m
+    - ClientSessionConfig: 13m
     - MessageRouter:
-    - SessionManager: 47m
+    - SessionManager: 58m
 - Handlers/
     - Planning: 42m
     - ServerMessageHandlerRegistry: 24m
