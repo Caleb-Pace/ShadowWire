@@ -1,5 +1,4 @@
 ﻿using ShadowWire.Shared.Users;
-using System.Collections.Concurrent;
 using System.Net;
 using System.Net.WebSockets;
 
@@ -7,7 +6,7 @@ namespace ShadowWire.Server.Network;
 
 internal class RelayServer(ContactManager userRegistry)
 {
-    private ConcurrentDictionary<Guid, ClientSession> _sessions = new();
+    private readonly SessionManager _sessionManager = new();
     private readonly ContactManager _userRegistry = userRegistry;
 
 
@@ -23,7 +22,7 @@ internal class RelayServer(ContactManager userRegistry)
         // TODO: Remove, for debugging
         Console.WriteLine($"WebSocket server started on \"{URI}\"!");
 
-        var clientSessionConfig = new ClientSessionConfig(RouteMessageAsync, _userRegistry);
+        var clientSessionConfig = new ClientSessionConfig();
 
         while (true)
         {
@@ -37,12 +36,12 @@ internal class RelayServer(ContactManager userRegistry)
 
                     var wsContext = await context.AcceptWebSocketAsync(SUB_PROTOCOL);
                     var session = new ClientSession(wsContext.WebSocket, clientSessionConfig);
-                    _sessions.TryAdd(session.Id, session);
+                    _sessionManager.TryAdd(session);
 
                     // TODO: Implement logging
                     Console.WriteLine($"<{session.Id}> connected to {wsContext.RequestUri}! (Socket: {socket.Address}:{socket.Port})"); // TODO: Remove, for debugging
 
-                    HandleConnection(session.Id);
+                    HandleConnection(session);
                 }
                 catch (WebSocketException ex)
                 {
@@ -65,10 +64,10 @@ internal class RelayServer(ContactManager userRegistry)
     }
 
     // TODO: later - add timeout cancellation system
-    private async void HandleConnection(Guid sessionId)
+    private async void HandleConnection(ClientSession session)
     {
         var buffer = new byte[1024 * 4]; // 4 MB
-        WebSocket ws = _sessions[sessionId].WebSocket;
+        WebSocket ws = session.WebSocket;
 
         try
         {
@@ -79,7 +78,7 @@ internal class RelayServer(ContactManager userRegistry)
                 if (result.MessageType == WebSocketMessageType.Close)
                     break;
                 if (result.MessageType == WebSocketMessageType.Binary)
-                    await _sessions[sessionId].ReceiveMessageAsync(buffer);
+                    await session.ReceiveMessageAsync(buffer);
             }
         }
         catch (Exception ex)
@@ -88,11 +87,11 @@ internal class RelayServer(ContactManager userRegistry)
         }
         finally
         {
-            _sessions.TryRemove(sessionId, out _);
+            _sessionManager.TryRemove(session);
             await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
 
             // TODO: Implement logging
-            Console.WriteLine($"<{sessionId}> disconnected!"); // TODO: Remove, for debugging
+            Console.WriteLine($"<{session.Id}> disconnected!"); // TODO: Remove, for debugging
         }
     }
 
