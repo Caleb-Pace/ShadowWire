@@ -12,8 +12,7 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
 
     public Contact? ClientIdentity { get; private set; } = null;
 
-    private readonly Func<byte[], byte[], Task> _routeMessageAsync = config.routeMessageAsync; // (Fingerprint, Binary)
-    private readonly ContactManager _userRegistry = config.userRegistry;
+    private readonly ClientSessionConfig sessionConfig = config;
 
 
     public async Task<IEncodable?> ReceiveMessageAsync(byte[] buffer)
@@ -27,5 +26,8 @@ public class ClientSession(WebSocket webSocket, ClientSessionConfig config)
     }
 
     public void AssignClientIdentity(Contact identity)
-        => ClientIdentity = identity;
+    {
+        ClientIdentity = identity;
+        sessionConfig.OnFingerprintChanged(Id, identity.Fingerprint);
+    }
 }

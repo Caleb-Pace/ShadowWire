@@ -1,9 +1,6 @@
-﻿using ShadowWire.Shared.Users;
+﻿namespace ShadowWire.Server.Network;
 
-namespace ShadowWire.Server.Network;
-
-public readonly struct ClientSessionConfig(Func<byte[], byte[], Task> routeMessageAsync, ContactManager userRegistry)
+public readonly struct ClientSessionConfig(Action<Guid, byte[]> onFingerprintChanged)
 {
-    public readonly Func<byte[], byte[], Task> routeMessageAsync = routeMessageAsync;
-    public readonly ContactManager userRegistry = userRegistry;
+    public readonly Action<Guid, byte[]> OnFingerprintChanged { get; init; } = onFingerprintChanged;
 }
