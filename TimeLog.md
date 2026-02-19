@@ -53,9 +53,12 @@ Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - Network/
-    - RelayServer: 56m
+    - Planning: 38m
+    - RelayServer: 57m
     - ClientSession: 32m
     - ClientSessionConfig: 7m
+    - MessageRouter:
+    - SessionManager: 47m
 - Handlers/
     - Planning: 42m
     - ServerMessageHandlerRegistry: 24m
