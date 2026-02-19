@@ -8,6 +8,8 @@ internal class RelayServer(ContactManager userRegistry)
 {
     private readonly SessionManager _sessionManager = new();
     private readonly ContactManager _userRegistry = userRegistry;
+    
+    private const int BUFFER_SIZE = 4 * 1024; // 4 MB
 
 
     public async Task StartAsync()
@@ -66,7 +68,7 @@ internal class RelayServer(ContactManager userRegistry)
     // TODO: later - add timeout cancellation system
     private async void HandleConnection(ClientSession session)
     {
-        var buffer = new byte[1024 * 4]; // 4 MB
+        var buffer = new byte[BUFFER_SIZE]; // 4 MB
         WebSocket ws = session.WebSocket;
 
         try
@@ -95,8 +97,16 @@ internal class RelayServer(ContactManager userRegistry)
         }
     }
 
-    private async Task RouteMessageAsync(byte[] destFingerprint, byte[] messageBinary)
+    public async Task SendToAsync(byte[] destFingerprint, byte[] messageBinary, CancellationToken cancellationToken)
     {
+        ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(messageBinary.Length, BUFFER_SIZE, nameof(messageBinary));
+        
+        if (!_sessionManager.TryGetSessionByFingerprint(destFingerprint, out var session))
+        {
+            // TODO: Implement message storing system
+            return; // Temporary Early exit: User not active
+        }
 
+        await session.WebSocket.SendAsync(new ArraySegment<byte>(messageBinary), WebSocketMessageType.Binary, true, cancellationToken);
     }
 }
