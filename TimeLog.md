@@ -54,7 +54,7 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - Planning: 47m
-    - RelayServer: 1h 11m
+    - RelayServer: 1h 12m
     - ClientSession: 34m
     - ClientSessionConfig: 13m
     - MessageRouter: 5m

@@ -1,4 +1,5 @@
-﻿using ShadowWire.Shared.Users;
+﻿using ShadowWire.Shared.Protocol;
+using ShadowWire.Shared.Users;
 using System.Net;
 using System.Net.WebSockets;
 
@@ -96,6 +97,9 @@ internal class RelayServer(ContactManager userRegistry)
             Console.WriteLine($"<{session.Id}> disconnected!"); // TODO: Remove, for debugging
         }
     }
+
+    public async Task SendToAsync(byte[] destFingerprint, IEncodable message, CancellationToken cancellationToken)
+        => await SendToAsync(destFingerprint, message.Encode(), cancellationToken);
 
     public async Task SendToAsync(byte[] destFingerprint, byte[] messageBinary, CancellationToken cancellationToken)
     {
