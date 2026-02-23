@@ -111,6 +111,15 @@ internal class RelayServer
         await ws.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
     }
 
+    private static async Task HandleBinaryRequestAsync(ClientSession session, byte[] buffer)
+    {
+        IEncodable? response = await GetResponseAsync(session, buffer);
+        if (response == null)
+            return; // No operation
+
+        await SendResponseAsync(session.WebSocket, response);
+    }
+
     private static async Task ServeClientAsync(ClientSession session)
     {
         var buffer = new byte[BUFFER_SIZE]; // 4 MB
@@ -123,13 +132,7 @@ internal class RelayServer
             if (result.MessageType == WebSocketMessageType.Close)
                 break;
             if (result.MessageType == WebSocketMessageType.Binary)
-            {
-                IEncodable? response = await GetResponseAsync(session, buffer);
-                if (response == null)
-                    continue; // No operation
-
-                await SendResponseAsync(ws, response);
-            }
+                await HandleBinaryRequestAsync(session, buffer);
         }
     }
 
