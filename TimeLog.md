@@ -34,7 +34,7 @@ Shared:
     - Protocol Pattern correction: 10m
 - Protocol/
     - Planning: 1h 19m
-    - MessageKind: 1h 7m
+    - MessageKind: 1h 9m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
     - IMessageHandlerAdapter: 13m
@@ -56,7 +56,7 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - Planning: 55m
-    - RelayServer: 1h 21m
+    - RelayServer: 1h 22m
     - ClientSession: 34m
     - ClientSessionConfig: 13m
     - MessageRouter: 5m

@@ -6,12 +6,13 @@ public enum MessageKind : byte
     Acknowledge = 0,
     NegativeAcknowledge = 1, // <Later>
     Error = 2,
-    //ServiceDenied       = 3, // <Later>
-    //ServerAnnouncement  = 4, // <Later>
-    //UpdateAvailable     = 5, // <Later>
-    //RateLimitExceeded    = 6, // <Later>
+    BadRequest = 3,
+    //ServiceDenied        = 4, // <Later>
+    //RateLimitExceeded    = 5, // <Later>
+    //UpdateAvailable      = 6, // <Later>
     //E2EIntegrityRequest  = 7, // <Later>
     //E2EIntegrityResponse = 8, // <Later>
+    //ServerAnnouncement   = 9, // <Later>
 
     //~/ Authentication
     AuthenticationRequest = 20, // For connecting to the server
