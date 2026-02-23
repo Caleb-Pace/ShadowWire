@@ -41,11 +41,11 @@ Shared:
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
-      - BadRequest: 4m
-      - AuthenticationRequest: 20m
+      - BadRequest: 5m
+      - AuthenticationRequest: 21m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
-      - Message: 23m
+      - Message: 24m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m

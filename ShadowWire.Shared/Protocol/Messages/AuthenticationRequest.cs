@@ -16,7 +16,9 @@ public readonly struct AuthenticationRequest : IEncodable
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
     public AuthenticationRequest(ReadOnlySpan<byte> messageBytes)
     {
-        ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, 2, nameof(messageBytes));
+        const int MINIMUM_LENGTH = 1 + (3 * sizeof(Int32));
+
+        ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, MINIMUM_LENGTH, nameof(messageBytes));
 
         ReadOnlySpan<byte> payloadBytes = messageBytes[1..]; // Skip message kind
         if (!ContactBinaryCodec.TryDecode(payloadBytes, out var contact))

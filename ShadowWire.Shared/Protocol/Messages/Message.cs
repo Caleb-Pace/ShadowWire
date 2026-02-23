@@ -19,7 +19,9 @@ public readonly struct Message : IEncodable
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
     public Message(ReadOnlySpan<byte> messageBytes)
     {
-        ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, 2, nameof(messageBytes));
+        const int MINIMUM_LENGTH = 1 + (2 * sizeof(Int32));
+
+        ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, MINIMUM_LENGTH, nameof(messageBytes));
 
         ReadOnlySpan<byte> payloadBytes = messageBytes[1..]; // Skip message kind
         var reader = new SpanReader(payloadBytes);
