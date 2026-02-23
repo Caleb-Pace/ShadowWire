@@ -103,12 +103,12 @@ internal class RelayServer
         }
     }
 
-    private static async Task SendResponseAsync(ClientSession session, IEncodable response)
+    private static async Task SendResponseAsync(WebSocket ws, IEncodable response)
     {
         var responseBinary = response.Encode();
         ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(responseBinary.Length, BUFFER_SIZE, nameof(responseBinary));
         
-        await session.WebSocket.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
+        await ws.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
     }
 
     private static async Task ServeClientAsync(ClientSession session)
@@ -128,7 +128,7 @@ internal class RelayServer
                 if (response == null)
                     continue; // No operation
 
-                await SendResponseAsync(session, response);
+                await SendResponseAsync(ws, response);
             }
         }
     }
