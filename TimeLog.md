@@ -43,7 +43,7 @@ Shared:
       - AuthenticationRequest: 20m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
-      - Message: 19m
+      - Message: 23m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m

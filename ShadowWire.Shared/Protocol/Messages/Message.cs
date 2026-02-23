@@ -6,8 +6,8 @@ public readonly struct Message : IEncodable
 {
     private const MessageKind MESSAGE_KIND = MessageKind.Message;
 
-    public readonly byte[] destFingerprint;
-    public readonly byte[] data;
+    public readonly ReadOnlyMemory<byte> destFingerprint;
+    public readonly ReadOnlyMemory<byte> data;
 
 
     public Message(byte[] destFingerprint, byte[] data)
@@ -39,8 +39,8 @@ public readonly struct Message : IEncodable
         var writer = new SpanWriter(new Span<byte>(buffer));
 
         writer.Write<byte>((byte)MESSAGE_KIND);
-        writer.WriteBytes(destFingerprint);
-        writer.WriteBytes(data);
+        writer.WriteBytes(destFingerprint.Span);
+        writer.WriteBytes(data.Span);
 
         return buffer;
     }
