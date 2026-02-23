@@ -23,8 +23,8 @@ public static class ContactBinaryCodec
         var writer = new SpanWriter(new Span<byte>(buffer));
 
         writer.WriteString(contact.Nickname);
-        writer.WriteBytes(contact.Fingerprint);
-        writer.WriteBytes(contact.PublicKeyDer);
+        writer.WriteBytes(contact.Fingerprint.Span);
+        writer.WriteBytes(contact.PublicKeyDer.Span);
 
         return buffer;
     }

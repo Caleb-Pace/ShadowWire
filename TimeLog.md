@@ -17,7 +17,7 @@ Shared:
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
-    - Contact Packaging: 20m
+    - Contact Packaging: 22m
     - FingerprintComparer: 58m
     - Codec improvement: 43m
     - Manager updates: 23m

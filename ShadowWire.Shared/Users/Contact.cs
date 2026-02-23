@@ -2,7 +2,7 @@
 
 public readonly struct Contact(string nickname, byte[] fingerprint, byte[] publicKeyDer)
 {
-    public string Nickname { get; init; } = nickname;
-    public byte[] Fingerprint { get; init; } = fingerprint;
-    public byte[] PublicKeyDer { get; init; } = publicKeyDer;
+    public readonly string Nickname { get; init; } = nickname;
+    public ReadOnlyMemory<byte> Fingerprint { get; init; } = fingerprint;
+    public ReadOnlyMemory<byte> PublicKeyDer { get; init; } = publicKeyDer;
 }
