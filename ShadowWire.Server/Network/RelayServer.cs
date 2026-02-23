@@ -9,7 +9,7 @@ internal class RelayServer(ContactManager userRegistry)
 {
     private readonly SessionManager _sessionManager = new();
     private readonly ContactManager _userRegistry = userRegistry;
-    
+
     private const int BUFFER_SIZE = 4 * 1024; // 4 MB
 
 
@@ -81,7 +81,16 @@ internal class RelayServer(ContactManager userRegistry)
                 if (result.MessageType == WebSocketMessageType.Close)
                     break;
                 if (result.MessageType == WebSocketMessageType.Binary)
-                    await session.ReceiveMessageAsync(buffer);
+                {
+                    var response = await MessageRouter.ProcessMessageAsync(session, buffer);
+                    if (response == null)
+                        continue;
+                 
+                    var responseBinary = response.Encode();
+
+                    ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(responseBinary.Length, BUFFER_SIZE, nameof(responseBinary));
+                    await ws.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
+                }
             }
         }
         catch (Exception ex)
@@ -104,7 +113,7 @@ internal class RelayServer(ContactManager userRegistry)
     public async Task SendToAsync(byte[] destFingerprint, byte[] messageBinary, CancellationToken cancellationToken)
     {
         ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(messageBinary.Length, BUFFER_SIZE, nameof(messageBinary));
-        
+
         if (!_sessionManager.TryGetSessionByFingerprint(destFingerprint, out var session))
         {
             // TODO: Implement message storing system
