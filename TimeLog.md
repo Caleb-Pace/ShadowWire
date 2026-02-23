@@ -33,9 +33,9 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 1h 9m
+    - Planning: 1h 19m
     - MessageKind: 1h 7m
-    - MessageHandlerRegistry: 1h 1m
+    - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 12m
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
@@ -43,6 +43,7 @@ Shared:
       - AuthenticationRequest: 20m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
+      - Message: 19m
 - BinaryEncoding/
     - Planning: 40m
     - SpanReader: 38m
@@ -53,16 +54,17 @@ Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - Network/
-    - Planning: 47m
+    - Planning: 55m
     - RelayServer: 1h 12m
     - ClientSession: 34m
     - ClientSessionConfig: 13m
     - MessageRouter: 5m
     - SessionManager: 58m
 - Handlers/
-    - Planning: 42m
+    - Planning: 53m
     - ServerMessageHandlerRegistry: 24m
     - AuthenticationHandler: 49m
+    - MessageHandler: 1m
 - User registry: 7m
 
 Client:
