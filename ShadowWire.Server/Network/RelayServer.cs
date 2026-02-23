@@ -91,7 +91,7 @@ internal class RelayServer
         await AcceptConnectionsAsync(listener, SUB_PROTOCOL);
     }
 
-    private async Task<IEncodable?> GetResponseAsync(ClientSession session, byte[] buffer)
+    private static async Task<IEncodable?> GetResponseAsync(ClientSession session, byte[] buffer)
     {
         try
         {
@@ -103,7 +103,7 @@ internal class RelayServer
         }
     }
 
-    private async Task SendResponseAsync(ClientSession session, IEncodable response)
+    private static async Task SendResponseAsync(ClientSession session, IEncodable response)
     {
         var responseBinary = response.Encode();
         ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(responseBinary.Length, BUFFER_SIZE, nameof(responseBinary));
@@ -111,7 +111,7 @@ internal class RelayServer
         await session.WebSocket.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
     }
 
-    private async Task ServeClientAsync(ClientSession session)
+    private static async Task ServeClientAsync(ClientSession session)
     {
         var buffer = new byte[BUFFER_SIZE]; // 4 MB
         WebSocket ws = session.WebSocket;
