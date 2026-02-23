@@ -2,18 +2,79 @@
 using ShadowWire.Shared.Protocol.Messages;
 using ShadowWire.Shared.Users;
 using System.Net;
+using System.Net.Sockets;
 using System.Net.WebSockets;
 using static System.Collections.Specialized.BitVector32;
 
 namespace ShadowWire.Server.Network;
 
-internal class RelayServer(ContactManager userRegistry)
+internal class RelayServer
 {
-    private readonly SessionManager _sessionManager = new();
-    private readonly ContactManager _userRegistry = userRegistry;
-
     private const int BUFFER_SIZE = 4 * 1024; // 4 MB
 
+    private readonly SessionManager _sessionManager;
+    private readonly ContactManager _userRegistry;
+
+    private readonly ClientSessionConfig _clientSessionConfig;
+
+
+    public RelayServer(ContactManager userRegistry)
+    {
+        _sessionManager = new();
+        _userRegistry = userRegistry;
+        _clientSessionConfig = new ClientSessionConfig(_sessionManager.SetFingerprint);
+    }
+
+    public async Task InitializeClientSessionAsync(HttpListenerWebSocketContext webSocketContext, IPEndPoint socket)
+    {
+        var session = new ClientSession(webSocketContext.WebSocket, _clientSessionConfig);
+        _sessionManager.TryAdd(session);
+
+        // TODO: Implement logging
+        Console.WriteLine($"<{session.Id}> connected to {webSocketContext.RequestUri}! (Socket: {socket.Address}:{socket.Port})"); // TODO: Remove, for debugging
+
+        OnClientConnected(session);
+    }
+
+    public async Task HandleWebSocketRequestAsync(HttpListenerContext context, string subProtocol)
+    {
+        try
+        {
+            var wsContext = await context.AcceptWebSocketAsync(subProtocol);
+            var socket = context.Request.RemoteEndPoint;
+
+            await InitializeClientSessionAsync(wsContext, socket);
+        }
+        catch (WebSocketException ex)
+        {
+            Console.WriteLine($"An Excecption Occured: \"{ex.Message}\""); // TODO: Remove, for debugging
+
+            // TODO: Implement logging
+
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Response.Close();
+        }
+    }
+    
+    private static void HandleNonWebSocketRequest(HttpListenerContext context)
+    {
+        // TODO: Implement logging
+
+        context.Response.Close(); // Ignore other requests
+    }
+
+    public async Task AcceptConnectionsAsync(HttpListener listener, string subProtocol)
+    {
+        while (true)
+        {
+            var context = await listener.GetContextAsync(); // Wait for incoming requests
+
+            if (context.Request.IsWebSocketRequest)
+                await HandleWebSocketRequestAsync(context, subProtocol);
+            else
+                HandleNonWebSocketRequest(context);
+        }
+    }
 
     public async Task StartAsync()
     {
@@ -27,45 +88,7 @@ internal class RelayServer(ContactManager userRegistry)
         // TODO: Remove, for debugging
         Console.WriteLine($"WebSocket server started on \"{URI}\"!");
 
-        var clientSessionConfig = new ClientSessionConfig(_sessionManager.SetFingerprint);
-
-        while (true)
-        {
-            var context = await listener.GetContextAsync(); // Wait for incoming requests
-
-            if (context.Request.IsWebSocketRequest)
-            {
-                try
-                {
-                    var socket = context.Request.RemoteEndPoint;
-
-                    var wsContext = await context.AcceptWebSocketAsync(SUB_PROTOCOL);
-                    var session = new ClientSession(wsContext.WebSocket, clientSessionConfig);
-                    _sessionManager.TryAdd(session);
-
-                    // TODO: Implement logging
-                    Console.WriteLine($"<{session.Id}> connected to {wsContext.RequestUri}! (Socket: {socket.Address}:{socket.Port})"); // TODO: Remove, for debugging
-
-                    OnClientConnected(session);
-                }
-                catch (WebSocketException ex)
-                {
-                    Console.WriteLine($"An Excecption Occured: \"{ex.Message}\""); // TODO: Remove, for debugging
-
-                    // TODO: Implement logging
-
-                    context.Response.StatusCode = 400;
-                    context.Response.Close();
-                }
-            }
-            else
-            {
-                // TODO: Implement logging
-
-                // Ignore other requests
-                context.Response.Close();
-            }
-        }
+        await AcceptConnectionsAsync(listener, SUB_PROTOCOL);
     }
 
     private async Task<IEncodable?> GetResponseAsync(ClientSession session, byte[] buffer)
