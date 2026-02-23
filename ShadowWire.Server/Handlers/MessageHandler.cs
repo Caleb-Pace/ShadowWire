@@ -26,7 +26,7 @@ public class MessageHandler : IMessageHandler<ClientSession, Message>
         _instance = new MessageHandler(sendTo);
     }
 
-    public async Task<IEncodable?> HandleAsync(ClientSession context, Message request)
+    public async Task<IEncodable> HandleAsync(ClientSession context, Message request)
     {
         await _sendTo.Invoke(request.destFingerprint.ToArray(), request, CancellationToken.None);
         return new Acknowledge();

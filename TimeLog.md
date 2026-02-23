@@ -36,7 +36,7 @@ Shared:
     - Planning: 1h 19m
     - MessageKind: 1h 7m
     - MessageHandlerRegistry: 1h 3m
-    - IMessageHandler: 13m
+    - IMessageHandler: 15m
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
     - Messages/
