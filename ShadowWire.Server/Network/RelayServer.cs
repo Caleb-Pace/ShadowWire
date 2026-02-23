@@ -1,4 +1,5 @@
 ﻿using ShadowWire.Shared.Protocol;
+using ShadowWire.Shared.Protocol.Messages;
 using ShadowWire.Shared.Users;
 using System.Net;
 using System.Net.WebSockets;
@@ -82,10 +83,17 @@ internal class RelayServer(ContactManager userRegistry)
                     break;
                 if (result.MessageType == WebSocketMessageType.Binary)
                 {
-                    var response = await MessageRouter.ProcessMessageAsync(session, buffer);
+                    IEncodable? response;
+                    try
+                    {
+                        response = await MessageRouter.ProcessMessageAsync(session, buffer);
+                    } catch (Exception ex)
+                    {
+                        response = new BadRequest(ex.Message);
+                    }
                     if (response == null)
-                        continue;
-                 
+                        continue; // No operation
+
                     var responseBinary = response.Encode();
 
                     ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(responseBinary.Length, BUFFER_SIZE, nameof(responseBinary));
