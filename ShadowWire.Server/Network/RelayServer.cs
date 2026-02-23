@@ -11,8 +11,6 @@ internal class RelayServer
     private const int BUFFER_SIZE = 4 * 1024; // 4 MB
 
     private readonly SessionManager _sessionManager;
-    private readonly ContactManager _userRegistry;
-
     private readonly ClientSessionConfig _clientSessionConfig;
 
 
