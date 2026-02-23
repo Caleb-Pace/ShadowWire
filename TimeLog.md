@@ -37,7 +37,7 @@ Shared:
     - MessageKind: 1h 9m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
-    - IMessageHandlerAdapter: 13m
+    - ~~IMessageHandlerAdapter~~: 13m
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
@@ -57,7 +57,7 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - Planning: 55m
-    - RelayServer: 1h 25m
+    - RelayServer: 1h 44m
     - ClientSession: 34m
     - ClientSessionConfig: 13m
     - MessageRouter: 5m

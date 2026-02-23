@@ -3,6 +3,7 @@ using ShadowWire.Shared.Protocol.Messages;
 using ShadowWire.Shared.Users;
 using System.Net;
 using System.Net.WebSockets;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ShadowWire.Server.Network;
 
@@ -45,7 +46,7 @@ internal class RelayServer(ContactManager userRegistry)
                     // TODO: Implement logging
                     Console.WriteLine($"<{session.Id}> connected to {wsContext.RequestUri}! (Socket: {socket.Address}:{socket.Port})"); // TODO: Remove, for debugging
 
-                    HandleConnection(session);
+                    OnClientConnected(session);
                 }
                 catch (WebSocketException ex)
                 {
@@ -67,39 +68,54 @@ internal class RelayServer(ContactManager userRegistry)
         }
     }
 
-    // TODO: later - add timeout cancellation system
-    private async void HandleConnection(ClientSession session)
+    private async Task<IEncodable?> GetResponseAsync(ClientSession session, byte[] buffer)
+    {
+        try
+        {
+            return await MessageRouter.ProcessMessageAsync(session, buffer);
+        }
+        catch (Exception ex)
+        {
+            return new BadRequest(ex.Message);
+        }
+    }
+
+    private async Task SendResponseAsync(ClientSession session, IEncodable response)
+    {
+        var responseBinary = response.Encode();
+        ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(responseBinary.Length, BUFFER_SIZE, nameof(responseBinary));
+        
+        await session.WebSocket.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
+    }
+
+    private async Task ServeClientAsync(ClientSession session)
     {
         var buffer = new byte[BUFFER_SIZE]; // 4 MB
         WebSocket ws = session.WebSocket;
 
+        while (ws.State == WebSocketState.Open)
+        {
+            var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+            if (result.MessageType == WebSocketMessageType.Close)
+                break;
+            if (result.MessageType == WebSocketMessageType.Binary)
+            {
+                IEncodable? response = await GetResponseAsync(session, buffer);
+                if (response == null)
+                    continue; // No operation
+
+                await SendResponseAsync(session, response);
+            }
+        }
+    }
+
+    // TODO: later - add timeout cancellation system
+    private async void OnClientConnected(ClientSession session)
+    {
         try
         {
-            while (ws.State == WebSocketState.Open)
-            {
-                var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-                if (result.MessageType == WebSocketMessageType.Close)
-                    break;
-                if (result.MessageType == WebSocketMessageType.Binary)
-                {
-                    IEncodable? response;
-                    try
-                    {
-                        response = await MessageRouter.ProcessMessageAsync(session, buffer);
-                    } catch (Exception ex)
-                    {
-                        response = new BadRequest(ex.Message);
-                    }
-                    if (response == null)
-                        continue; // No operation
-
-                    var responseBinary = response.Encode();
-
-                    ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(responseBinary.Length, BUFFER_SIZE, nameof(responseBinary));
-                    await ws.SendAsync(new ArraySegment<byte>(responseBinary), WebSocketMessageType.Binary, true, CancellationToken.None);
-                }
-            }
+            await ServeClientAsync(session);
         }
         catch (Exception ex)
         {
@@ -108,7 +124,7 @@ internal class RelayServer(ContactManager userRegistry)
         finally
         {
             _sessionManager.TryRemove(session);
-            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
+            await session.WebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
 
             // TODO: Implement logging
             Console.WriteLine($"<{session.Id}> disconnected!"); // TODO: Remove, for debugging
