@@ -41,6 +41,7 @@ Shared:
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
+      - BadRequest: 4m
       - AuthenticationRequest: 20m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
@@ -56,7 +57,7 @@ Server:
 - Identity retrieval test: 12m
 - Network/
     - Planning: 55m
-    - RelayServer: 1h 22m
+    - RelayServer: 1h 23m
     - ClientSession: 34m
     - ClientSessionConfig: 13m
     - MessageRouter: 5m
