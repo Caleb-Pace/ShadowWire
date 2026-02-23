@@ -40,6 +40,7 @@ Shared:
     - IMessageHandlerAdapter: 13m
     - IEncodable: 8m
     - Messages/
+      - Acknowledge: 1m
       - AuthenticationRequest: 20m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
@@ -62,9 +63,9 @@ Server:
     - SessionManager: 58m
 - Handlers/
     - Planning: 53m
-    - ServerMessageHandlerRegistry: 24m
+    - ServerMessageHandlerRegistry: 25m
     - AuthenticationHandler: 49m
-    - MessageHandler: 3m
+    - MessageHandler: 16m
 - User registry: 7m
 
 Client:

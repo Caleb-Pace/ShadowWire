@@ -13,6 +13,10 @@ public sealed class ServerMessageHandlerRegistry : MessageHandlerRegistry<Client
         {
             (byte)MessageKind.AuthenticationRequest, (session, messageBytes) =>
                 AuthenticationHandler.Instance.HandleAsync(session, new AuthenticationRequest(messageBytes))
+        },
+        {
+            (byte)MessageKind.Message, (session, messageBytes) =>
+                MessageHandler.Instance.HandleAsync(session, new Message(messageBytes))
         }
     };
 

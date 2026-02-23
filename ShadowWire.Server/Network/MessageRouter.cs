@@ -5,8 +5,6 @@ namespace ShadowWire.Server.Network;
 
 internal class MessageRouter
 {
-    // TODO: Needs SentToAsync ref
-
     public static async Task<IEncodable?> ProcessMessageAsync(ClientSession session, byte[] buffer)
     {
         ArgumentOutOfRangeException.ThrowIfZero(buffer.Length, nameof(buffer));
