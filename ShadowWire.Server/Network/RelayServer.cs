@@ -2,9 +2,7 @@
 using ShadowWire.Shared.Protocol.Messages;
 using ShadowWire.Shared.Users;
 using System.Net;
-using System.Net.Sockets;
 using System.Net.WebSockets;
-using static System.Collections.Specialized.BitVector32;
 
 namespace ShadowWire.Server.Network;
 
@@ -157,9 +155,6 @@ internal class RelayServer
         }
     }
 
-    public async Task SendToAsync(byte[] destFingerprint, IEncodable message, CancellationToken cancellationToken)
-        => await SendToAsync(destFingerprint, message.Encode(), cancellationToken);
-
     public async Task SendToAsync(byte[] destFingerprint, byte[] messageBinary, CancellationToken cancellationToken)
     {
         ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(messageBinary.Length, BUFFER_SIZE, nameof(messageBinary));
@@ -172,4 +167,7 @@ internal class RelayServer
 
         await session.WebSocket.SendAsync(new ArraySegment<byte>(messageBinary), WebSocketMessageType.Binary, true, cancellationToken);
     }
+
+    public async Task SendToAsync(byte[] destFingerprint, IEncodable message, CancellationToken cancellationToken)
+        => await SendToAsync(destFingerprint, message.Encode(), cancellationToken);
 }
