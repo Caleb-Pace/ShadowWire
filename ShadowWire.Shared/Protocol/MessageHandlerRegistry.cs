@@ -9,7 +9,7 @@
 /// <br/>
 /// It does <b>not</b> execute the handler itself.
 /// </remarks>
-public delegate Task<IEncodable> MessageAdapter<TContext>(TContext context, byte[] messageBytes);
+public delegate Task<IEncodable?> MessageAdapter<TContext>(TContext context, byte[] messageBytes);
 
 /// <summary>
 /// Registry of message adapters keyed by message kind.

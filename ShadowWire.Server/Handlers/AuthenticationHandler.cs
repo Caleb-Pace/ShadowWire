@@ -15,7 +15,7 @@ public class AuthenticationHandler : IMessageHandler<ClientSession, Authenticati
     public static AuthenticationHandler Instance => new();
 
 
-    public async Task<IEncodable> HandleAsync(ClientSession context, AuthenticationRequest request)
+    public async Task<IEncodable?> HandleAsync(ClientSession context, AuthenticationRequest request)
     {
         context.AssignClientIdentity(request.contact);
 
