@@ -63,7 +63,7 @@ Server:
     - SessionManager: 1h
 - Handlers/
     - Planning: 53m
-    - ServerMessageHandlerRegistry: 25m
+    - ServerMessageHandlerRegistry: 28m
     - AuthenticationHandler: 49m
     - MessageHandler: 16m
 - User registry: 7m

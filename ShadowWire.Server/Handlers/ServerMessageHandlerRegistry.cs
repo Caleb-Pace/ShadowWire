@@ -6,8 +6,6 @@ namespace ShadowWire.Server.Handlers;
 
 public sealed class ServerMessageHandlerRegistry : MessageHandlerRegistry<ClientSession>
 {
-    public static readonly ServerMessageHandlerRegistry Instance = new();
-
     private static readonly Dictionary<byte, MessageAdapter<ClientSession>> _handlers = new()
     {
         {
@@ -20,6 +18,7 @@ public sealed class ServerMessageHandlerRegistry : MessageHandlerRegistry<Client
         }
     };
 
+    public static readonly ServerMessageHandlerRegistry Instance = new();
 
 
     private ServerMessageHandlerRegistry() : base(_handlers) { }
