@@ -10,6 +10,7 @@ internal class Program
         var userRegistry = new ContactManager("registry.bin");
         var relayServer = new RelayServer();
         
+        Handlers.AuthenticationHandler.Initialize(userRegistry);
         Handlers.MessageHandler.Initialize(relayServer.SendToAsync);
 
         relayServer.StartAsync().GetAwaiter().GetResult();

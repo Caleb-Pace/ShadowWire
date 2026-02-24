@@ -21,7 +21,6 @@ Shared:
     - FingerprintComparer: 1h 6m
     - Codec improvement: 43m
     - Manager updates: 23m
-    - New implementation: 1m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -53,6 +52,7 @@ Shared:
     - ByteArrayUtils: 36m
 
 Server:
+- Testing: 2m
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - Network/
@@ -65,11 +65,12 @@ Server:
 - Handlers/
     - Planning: 53m
     - ServerMessageHandlerRegistry: 28m
-    - AuthenticationHandler: 49m
+    - AuthenticationHandler: 49m 12m
     - MessageHandler: 16m
-- User registry: 7m
+- User registry (ContactManager): 7m
 
 Client:
+- Testing: 1m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Connection: 35m
