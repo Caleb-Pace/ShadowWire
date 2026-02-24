@@ -18,10 +18,10 @@ Shared:
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
-    - FingerprintComparer: 1h 8m
+    - FingerprintComparer: 1h 10m
     - Codec improvement: 43m
     - Manager updates: 23m
-    - Fingerprint: 35m
+    - Fingerprint: 39m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m

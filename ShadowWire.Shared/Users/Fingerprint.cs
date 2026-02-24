@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Buffers.Binary;
+using System.Runtime.InteropServices;
 
 namespace ShadowWire.Shared.Users;
 
@@ -28,11 +29,11 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     public override int GetHashCode()
     {
         // Split fingerprint into 64-bit chunks
-        ulong accumulator = MemoryMarshal.Read<ulong>(_value.Span.Slice(0, 8));
+        ulong accumulator = BinaryPrimitives.ReadUInt64LittleEndian(_value.Span.Slice(0, 8));
         for (int i = 8; i < Fingerprint.LENGTH; i += 8)
         {
             // XOR each 64-bit chunk into the accumulator
-            accumulator ^= MemoryMarshal.Read<ulong>(_value.Span.Slice(i, 8));
+            accumulator ^= BinaryPrimitives.ReadUInt64LittleEndian(_value.Span.Slice(i, 8));
         }
 
         // Fold 64-bit accumulator into 32-bit hash
