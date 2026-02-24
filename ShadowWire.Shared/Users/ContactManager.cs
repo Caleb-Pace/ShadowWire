@@ -4,7 +4,7 @@ public class ContactManager
 {
     private List<Contact> contacts = new();
     private Dictionary<string, int> contactsByName = new();
-    private Dictionary<byte[], int> contactsByFingerprint = new(new FingerprintComparer());
+    private Dictionary<ReadOnlyMemory<byte>, int> contactsByFingerprint = new(new FingerprintComparer());
 
     private readonly string contactsFile;
 
@@ -56,6 +56,7 @@ public class ContactManager
             }
         }
     }
+
 
     //=/ Add methods
     private bool IsContactIndexed(Contact contact)
