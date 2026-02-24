@@ -14,10 +14,9 @@ internal class RelayServer
     private readonly ClientSessionConfig _clientSessionConfig;
 
 
-    public RelayServer(ContactManager userRegistry)
+    public RelayServer()
     {
         _sessionManager = new();
-        _userRegistry = userRegistry;
         _clientSessionConfig = new ClientSessionConfig(_sessionManager.SetFingerprint);
     }
 

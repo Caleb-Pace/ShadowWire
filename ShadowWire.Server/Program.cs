@@ -8,7 +8,7 @@ internal class Program
     static void Main(string[] args)
     {
         var userRegistry = new ContactManager("registry.bin");
-        var relayServer = new RelayServer(userRegistry);
+        var relayServer = new RelayServer();
         
         Handlers.MessageHandler.Initialize(relayServer.SendToAsync);
 
