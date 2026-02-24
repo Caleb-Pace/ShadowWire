@@ -2,9 +2,9 @@
 
 public class ContactManager
 {
-    private List<Contact> contacts = new();
-    private Dictionary<string, int> contactsByName = new();
-    private Dictionary<Fingerprint, int> contactsByFingerprint = new();
+    private readonly List<Contact> contacts = new();
+    private readonly Dictionary<string, int> contactsByName = new();
+    private readonly Dictionary<Fingerprint, int> contactsByFingerprint = new();
 
     private readonly string contactsFile;
 
