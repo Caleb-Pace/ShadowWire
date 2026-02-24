@@ -39,6 +39,8 @@ public class AuthenticationHandler : IMessageHandler<ClientSession, Authenticati
     {
         context.AssignClientIdentity(request.contact);
 
+        _userRegistry.TryAdd(request.contact);
+
         return new AuthenticationSuccess();
     }
 }

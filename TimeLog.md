@@ -65,7 +65,7 @@ Server:
 - Handlers/
     - Planning: 53m
     - ServerMessageHandlerRegistry: 28m
-    - AuthenticationHandler: 49m 12m
+    - AuthenticationHandler: 1h 3m
     - MessageHandler: 16m
 - User registry (ContactManager): 7m
 
