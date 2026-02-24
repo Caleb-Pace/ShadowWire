@@ -13,7 +13,7 @@ namespace ShadowWire.Server.Network;
 public class SessionManager()
 {
     private readonly ConcurrentDictionary<Guid, ClientSession> _sessionsById = new();
-    private readonly ConcurrentDictionary<byte[], Guid> _sessionIdByFingerprint = new(new FingerprintComparer());
+    private readonly ConcurrentDictionary<ReadOnlyMemory<byte>, Guid> _sessionIdByFingerprint = new(new FingerprintComparer());
 
 
     /// <summary>
@@ -47,15 +47,15 @@ public class SessionManager()
     /// <remarks>
     /// Removes the previous fingerprint mapping if one existed.
     /// </remarks>
-    public void SetFingerprint(Guid sessionId, byte[] fingerprint)
+    public void SetFingerprint(Guid sessionId, ReadOnlyMemory<byte> fingerprint)
     {
         if (!_sessionsById.TryGetValue(sessionId, out var session))
             return;
 
         // Cleanup old fingerprint (Edge case)
         var previousFingerprint = session.ClientIdentity?.Fingerprint;
-        if (previousFingerprint != null)
-            _sessionIdByFingerprint.TryRemove(previousFingerprint, out var _);
+        if (previousFingerprint.HasValue)
+            _sessionIdByFingerprint.TryRemove(previousFingerprint.Value, out var _);
 
         _sessionIdByFingerprint[fingerprint] = sessionId;
     }

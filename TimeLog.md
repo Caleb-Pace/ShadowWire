@@ -58,9 +58,9 @@ Server:
     - Planning: 55m
     - RelayServer: 2h 18m
     - ClientSession: 34m
-    - ClientSessionConfig: 13m
+    - ClientSessionConfig: 14m
     - MessageRouter: 5m
-    - SessionManager: 58m
+    - SessionManager: 1h
 - Handlers/
     - Planning: 53m
     - ServerMessageHandlerRegistry: 25m
