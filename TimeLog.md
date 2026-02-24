@@ -13,14 +13,15 @@ Protocol structure research: 20m
 Shared:
 - Moving & setup: 8m
 - Contacts: 49m
-    - Planning: 15m
+    - Planning: 20m
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
-    - FingerprintComparer: 1h 6m
+    - FingerprintComparer: 1h 8m
     - Codec improvement: 43m
     - Manager updates: 23m
+    - Fingerprint: 35m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -40,10 +41,11 @@ Shared:
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
-      - BadRequest: 5m
       - AuthenticationRequest: 21m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
+      - BadRequest: 5m
+      - LookupRequest: 4m
       - Message: 24m
 - BinaryEncoding/
     - Planning: 40m
@@ -52,7 +54,7 @@ Shared:
     - ByteArrayUtils: 36m
 
 Server:
-- Testing: 2m
+- Testing: 3m
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - Network/
