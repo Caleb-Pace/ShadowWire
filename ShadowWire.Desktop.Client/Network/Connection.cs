@@ -2,7 +2,7 @@
 
 namespace ShadowWire.Desktop.Client.Network;
 
-internal class Connection
+public class Connection
 {
     private ClientWebSocket ws = new();
 
