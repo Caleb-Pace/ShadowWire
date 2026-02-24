@@ -75,6 +75,7 @@ Client:
     - Research: 12m
 - Register with Server: 15m
 - Services/
-    - Planning: 16m
+    - Planning: 21m
+    - IMessageService: 2m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
