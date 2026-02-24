@@ -62,7 +62,7 @@ Server:
     - ClientSession: 34m
     - ClientSessionConfig: 14m
     - MessageRouter: 5m
-    - SessionManager: 1h 2m
+    - SessionManager: 1h 15m
 - Handlers/
     - Planning: 53m
     - ServerMessageHandlerRegistry: 28m

@@ -1,5 +1,6 @@
 ﻿using ShadowWire.Shared.Users;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShadowWire.Server.Network;
 
@@ -66,14 +67,14 @@ public class SessionManager()
     /// <param name="sessionId">The session ID to lookup.</param>
     /// <param name="session">The matching session, if found.</param>
     /// <returns><see langword="true"/> if the session was found; otherwise <see langword="false"/>.</returns>
-    public bool TryGetSessionById(Guid sessionId, out ClientSession session)
+    public bool TryGetSessionById(Guid sessionId, [NotNullWhen(true)] out ClientSession? session)
     {
         session = default;
 
-        if (!_sessionsById.TryGetValue(sessionId, out var _session))
+        if (!_sessionsById.TryGetValue(sessionId, out var foundSession))
             return false;
 
-        session = _session;
+        session = foundSession;
         return true;
     }
 
@@ -83,20 +84,18 @@ public class SessionManager()
     /// <param name="fingerprint">The fingerprint to lookup.</param>
     /// <param name="session">The matching session, if found.</param>
     /// <returns><see langword="true"/> if the session was found; otherwise <see langword="false"/>.</returns>
-    public bool TryGetSessionByFingerprint(Fingerprint fingerprint, out ClientSession session)
+    public bool TryGetSessionByFingerprint(Fingerprint fingerprint, [NotNullWhen(true)] out ClientSession? session)
     {
         session = default;
 
         if (!_sessionIdByFingerprint.TryGetValue(fingerprint, out var guid))
             return false;
 
-        var sessionExists = TryGetSessionById(guid, out var _session);
+        if (!TryGetSessionById(guid, out var foundSession))
+            return false; // Sanity check: Fingerprint should always map to a tracked session
+                          // TODO: Implement logging - Warning, shouldn't occur (fingerprint maps to old/untracked session).
 
-        // Sanity check: Fingerprint should always map to a tracked session
-        if (!sessionExists)
-            return false; // TODO: Implement logging - Warning, shouldn't occur (fingerprint maps to old/untracked session).
-
-        session = _session;
+        session = foundSession;
         return true;
     }
 }
