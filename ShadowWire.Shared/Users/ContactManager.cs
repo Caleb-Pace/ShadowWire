@@ -4,7 +4,7 @@ public class ContactManager
 {
     private List<Contact> contacts = new();
     private Dictionary<string, int> contactsByName = new();
-    private Dictionary<ReadOnlyMemory<byte>, int> contactsByFingerprint = new(new FingerprintComparer());
+    private Dictionary<Fingerprint, int> contactsByFingerprint = new();
 
     private readonly string contactsFile;
 
@@ -117,7 +117,7 @@ public class ContactManager
         return contacts[index];
     }
 
-    public Contact? GetByFingerprint(byte[] fingerprint)
+    public Contact? GetByFingerprint(Fingerprint fingerprint)
     {
         bool isValid = contactsByFingerprint.TryGetValue(fingerprint, out int index);
         if (!isValid)

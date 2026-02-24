@@ -18,9 +18,9 @@ Shared:
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
-    - FingerprintComparer: 1h 13m
+    - ~~FingerprintComparer~~: 1h 16m
     - Codec improvement: 43m
-    - Manager updates: 23m
+    - Manager updates: 24m
     - Fingerprint: 39m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
@@ -63,7 +63,7 @@ Server:
     - ClientSession: 34m
     - ClientSessionConfig: 14m
     - MessageRouter: 5m
-    - SessionManager: 1h
+    - SessionManager: 1h 2m
 - Handlers/
     - Planning: 53m
     - ServerMessageHandlerRegistry: 28m
