@@ -3,6 +3,7 @@ using ShadowWire.Desktop.Client.Services;
 using ShadowWire.Shared;
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
+using System.Text;
 
 namespace ShadowWire.Desktop.Client;
 
@@ -25,7 +26,6 @@ internal class Program
         
         // Prepare identity
         var identity = new Contact(usernameManger.Username, crypto.Fingerprint, crypto.PublicKey);
-        var identityBin = ContactBinaryCodec.Encode(identity);
 
 
         // Connect to Server
@@ -36,7 +36,8 @@ internal class Program
 
         // Wait for auth response
         var respBin = await connection.ReceiveAsync();
-        Console.WriteLine($"Response from the server: '{respBin[0]}' ({(MessageKind)respBin[0]}) with length of {respBin.Length}");
+        var content = respBin.Length > 1 ? $"\"{Encoding.UTF8.GetString(respBin.AsSpan(1))}\"" : "";
+        Console.WriteLine($"Response from the server: ({respBin[0]}:{(MessageKind)respBin[0]}) with length of {respBin.Length}; {content}");
 
 
         // TODO: Remove, for testing

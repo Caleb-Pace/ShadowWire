@@ -21,6 +21,7 @@ Shared:
     - FingerprintComparer: 1h 6m
     - Codec improvement: 43m
     - Manager updates: 23m
+    - New implementation: 1m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -69,6 +70,7 @@ Server:
 - User registry: 7m
 
 Client:
+- Test setup: 3m
 - WebSocket setup: 15m
 - Connection: 35m
 - Cryptography: 33m
