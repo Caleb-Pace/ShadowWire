@@ -13,12 +13,12 @@ Protocol structure research: 20m
 Shared:
 - Moving & setup: 8m
 - Contacts: 49m
-    - Planning: 5m
+    - Planning: 15m
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 22m
-    - FingerprintComparer: 58m
+    - FingerprintComparer: 1h 6m
     - Codec improvement: 43m
     - Manager updates: 23m
 - UsernameManager: 2h 2m
