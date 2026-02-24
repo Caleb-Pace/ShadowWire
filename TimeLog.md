@@ -73,9 +73,10 @@ Client:
 - Connection: 35m
 - Cryptography: 33m
     - Research: 12m
-- Register with Server: 15m
+- Register with Server: 20m
 - Services/
     - Planning: 21m
     - IMessageService: 2m
+    - AuthenticationService: 3m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m

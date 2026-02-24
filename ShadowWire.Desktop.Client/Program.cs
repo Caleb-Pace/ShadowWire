@@ -1,7 +1,8 @@
 ﻿using ShadowWire.Desktop.Client.Network;
+using ShadowWire.Desktop.Client.Services;
 using ShadowWire.Shared;
+using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
-using System.Text;
 
 namespace ShadowWire.Desktop.Client;
 
@@ -29,10 +30,13 @@ internal class Program
 
         // Connect to Server
         var connection = new Connection(URI);
-        await connection.SendAsync(identityBin); // Register identity
 
+        // Register connection
+        AuthenticationService.SendAsync(connection, identity).GetAwaiter().GetResult();
+
+        // Wait for auth response
         var respBin = await connection.ReceiveAsync();
-        Console.WriteLine($"Response from the server: \"{Encoding.UTF8.GetString(respBin)}\"");
+        Console.WriteLine($"Response from the server: '{respBin[0]}' ({(MessageKind)respBin[0]}) with length of {respBin.Length}");
 
 
         // TODO: Remove, for testing
