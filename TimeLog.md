@@ -18,7 +18,6 @@ Shared:
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
-    - ~~FingerprintComparer~~: 1h 16m
     - Codec improvement: 43m
     - Manager updates: 24m
     - Fingerprint: 39m
