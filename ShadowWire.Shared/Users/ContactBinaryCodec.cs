@@ -1,4 +1,5 @@
 ﻿using ShadowWire.Shared.BinaryEncoding;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShadowWire.Shared.Users;
 
@@ -39,7 +40,7 @@ public static class ContactBinaryCodec
     /// <returns>
     /// <see langword="true"/> if decoding was successful; <see langword="false"/> if the input was invalid or corrupted.
     /// </returns>
-    public static bool TryDecode(ReadOnlySpan<byte> contactBinary, out Contact contact)
+    public static bool TryDecode(ReadOnlySpan<byte> contactBinary, [NotNullWhen(true)] out Contact? contact)
     {
         try
         {
@@ -54,7 +55,7 @@ public static class ContactBinaryCodec
         }
         catch
         {
-            contact = default; // Invalid
+            contact = default; // Invalid contact binary
             return false;
         }
     }
