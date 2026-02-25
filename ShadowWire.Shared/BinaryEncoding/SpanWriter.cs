@@ -6,10 +6,12 @@ namespace ShadowWire.Shared.BinaryEncoding;
 /// <summary>
 /// Write sequential data to a <see cref="Span{byte}"/>.
 /// </summary>
-/// <param name="span">The target span to write into.</param>
-/// <remarks>
-/// <b>Ensure</b> <see cref="span"/> is allocated enough memory.<br/>
+/// <param name="span">
+/// The target span to write into.<br/>
 /// <br/>
+/// <b>Ensure</b> <see cref="span"/> has sufficient capacity.
+/// </param>
+/// <remarks>
 /// Writes advance an internal position.<br/>
 /// <br/>
 /// Little-Endian byte ordering is used.<br/>

@@ -49,7 +49,7 @@ Shared:
 - BinaryEncoding/
     - Planning: 1h 21m
     - SpanReader: 54m
-    - SpanWriter: 2h 1m
+    - SpanWriter: 2h 4m
     - ByteArrayUtils: 36m
 
 Server:
