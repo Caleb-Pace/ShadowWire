@@ -33,19 +33,20 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 1h 19m
+    - Planning: 1h 24m
     - MessageKind: 1h 9m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 21m
+      - AuthenticationRequest: 23m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
+      - ContactMessageBase: 6m
       - LookupRequest: 10m
-      - LookupResponse: 1m
+      - LookupResponse: 3m
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
