@@ -20,7 +20,7 @@ Shared:
     - Contact Packaging: 23m
     - Codec improvement: 47m
     - Manager updates: 24m
-    - Fingerprint: 39m
+    - Fingerprint: 41m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m

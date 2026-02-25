@@ -10,23 +10,11 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     public const int LENGTH = 32; // 256-bit fingerprint
 
     private readonly ReadOnlyMemory<byte> _value;
+    private readonly int _hashCode;
     public ReadOnlySpan<byte> Span => _value.Span;
 
 
-    public Fingerprint(ReadOnlyMemory<byte> value)
-    {
-        ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, LENGTH, nameof(value));
-
-        _value = value;
-    }
-
-    public bool Equals(Fingerprint other)
-        => _value.Span.SequenceEqual(other.Span);
-
-    public override bool Equals(object? obj)
-        => obj is Fingerprint other && Equals(other);
-
-    public override int GetHashCode()
+    private int ComputeHashCode()
     {
         // Split fingerprint into 64-bit chunks
         ulong accumulator = BinaryPrimitives.ReadUInt64LittleEndian(_value.Span.Slice(0, 8));
@@ -41,6 +29,23 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
         // (int cast takes the lower 32-bits)
         return (int)(accumulator ^ (accumulator >> 32));
     }
+
+    public Fingerprint(ReadOnlyMemory<byte> value)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, LENGTH, nameof(value));
+
+        _value = value;
+        _hashCode = ComputeHashCode();
+    }
+
+    public bool Equals(Fingerprint other)
+        => _value.Span.SequenceEqual(other.Span);
+
+    public override bool Equals(object? obj)
+        => obj is Fingerprint other && Equals(other);
+
+    public override int GetHashCode()
+        => _hashCode;
 
     public static bool operator == (Fingerprint left, Fingerprint right) => left.Equals(right);
     public static bool operator != (Fingerprint left, Fingerprint right) => !left.Equals(right);
