@@ -44,7 +44,7 @@ Shared:
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
-      - LookupRequest: 9m
+      - LookupRequest: 10m
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
