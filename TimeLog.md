@@ -33,8 +33,8 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 1h 24m
-    - MessageKind: 1h 9m
+    - Planning: 1h 31m
+    - MessageKind: 1h 13m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
     - IEncodable: 8m
