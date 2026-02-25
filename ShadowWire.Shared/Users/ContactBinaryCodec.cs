@@ -15,7 +15,7 @@ public static class ContactBinaryCodec
     public static byte[] Encode(Contact contact)
     {
         var length = contact.Nickname.Length
-                   + contact.Fingerprint.Length
+                   + Fingerprint.LENGTH
                    + contact.PublicKeyDer.Length
                    + (3 * sizeof(Int32));
 
@@ -46,7 +46,7 @@ public static class ContactBinaryCodec
             var reader = new SpanReader(contactBinary);
 
             var nickname = reader.ReadString();
-            var fingerprint = reader.ReadBytes().ToArray();
+            var fingerprint = new Fingerprint(reader.ReadBytes().ToArray());
             var publicKeyDer = reader.ReadBytes().ToArray();
 
             contact = new Contact(nickname, fingerprint, publicKeyDer);
