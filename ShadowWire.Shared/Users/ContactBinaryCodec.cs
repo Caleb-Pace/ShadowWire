@@ -40,7 +40,7 @@ public static class ContactBinaryCodec
     /// <returns>
     /// <see langword="true"/> if decoding was successful; <see langword="false"/> if the input was invalid or corrupted.
     /// </returns>
-    public static bool TryDecode(ReadOnlySpan<byte> contactBinary, [NotNullWhen(true)] out Contact? contact)
+    public static bool TryDecode(ReadOnlySpan<byte> contactBinary, out Contact contact)
     {
         try
         {

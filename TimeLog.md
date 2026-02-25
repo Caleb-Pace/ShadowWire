@@ -18,7 +18,7 @@ Shared:
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
-    - Codec improvement: 47m
+    - Codec improvement: 53m
     - Manager updates: 24m
     - Fingerprint: 41m
 - UsernameManager: 2h 2m
@@ -45,6 +45,7 @@ Shared:
       - AuthenticationFailure: 1m
       - BadRequest: 5m
       - LookupRequest: 10m
+      - LookupResponse: 1m
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
