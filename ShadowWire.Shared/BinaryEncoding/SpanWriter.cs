@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Buffers.Binary;
 using System.Text;
 
 namespace ShadowWire.Shared.BinaryEncoding;
@@ -13,77 +12,94 @@ namespace ShadowWire.Shared.BinaryEncoding;
 /// <br/>
 /// Writes advance an internal position.<br/>
 /// <br/>
+/// Little-Endian byte ordering is used.<br/>
+/// <br/>
 /// <see langword="ref struct"/>: cannot be boxed or stored on the heap.
 /// </remarks>
 public ref struct SpanWriter(Span<byte> span)
 {
     private Span<byte> _span = span;
-    private int _pos = 0; // Current write position in bytes
+    private int _pos = 0;
+
+    /// <summary>
+    /// Current write position in bytes.
+    /// </summary>
+    public readonly int Position => _pos;
 
 
     /// <summary>
-    /// Writes a value of the specified type from the current position.
+    /// Ensures that <paramref name="newByteCount"/> bytes can be written at the current position.
     /// </summary>
-    /// <typeparam name="T">The unmanaged type to write (primitive or struct).</typeparam>
-    /// <remarks>Advances the position by <see cref="Unsafe.SizeOf{T}"/>.</remarks>
+    /// <param name="newByteCount">Number of bytes to write.</param>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the size of <typeparamref name="T"/> exceeds the remaining capacity of the span.
+    /// Thrown if the <paramref name="newByteCount"/> exceeds the remaining span capacity.
     /// </exception>
-    public void Write<T>(T val)
-        where T : unmanaged
+    public readonly void EnsureSpace(int newByteCount)
     {
-        int size = Unsafe.SizeOf<T>();
-        if ((uint)size > (uint)(_span.Length - _pos))
-            throw new ArgumentOutOfRangeException(nameof(T), "Attempted to write past the end of the span.");
+        if ((uint)newByteCount > (uint)(_span.Length - _pos))
+            throw new ArgumentOutOfRangeException(nameof(newByteCount), "Attempted to write past the end of the span.");
+    }
 
-        MemoryMarshal.Write(_span.Slice(_pos, size), in val);
-        _pos += size;
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public void WriteByte(byte val)
+    {
+        EnsureSpace(sizeof(byte));
+        _span[_pos++] = val;
+    }
+
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public void WriteInt32(Int32 val)
+    {
+        EnsureSpace(sizeof(Int32));
+
+        BinaryPrimitives.WriteInt32LittleEndian(_span.Slice(_pos), val);
+        _pos += sizeof(Int32);
     }
 
     /// <summary>
-    /// Writes a byte array from the current position.
+    /// Writes a byte array without a length prefix.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the length exceeds the remaining capacity of the span.
+    /// If there is not enough remaining span capacity.
     /// </exception>
-    /// <remarks>
-    /// <b>No length prefix</b>.
-    /// </remarks>
-    public void WriteRawBytes(ReadOnlySpan<byte> bytes)
+    public void WriteBytesNoPrefix(ReadOnlySpan<byte> bytes)
     {
         int length = bytes.Length;
-        if ((uint)length > (uint)(_span.Length - _pos))
-            throw new ArgumentOutOfRangeException(nameof(bytes), "Attempted to write past the end of the span.");
+        EnsureSpace(length);
 
-        // Copy bytes to the current position in the span
         bytes.CopyTo(_span.Slice(_pos));
         _pos += length;
     }
 
     /// <summary>
-    /// Writes a byte array from the current position.
+    /// Writes a byte array with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the length exceeds the remaining capacity of the span.
+    /// If there is not enough remaining span capacity.
     /// </exception>
-    /// <remarks>
-    /// Byte arrays are prefixed with a 4-byte <see cref="Int32"/> length.
-    /// </remarks>
     public void WriteBytes(ReadOnlySpan<byte> bytes)
     {
-        Write<Int32>(bytes.Length);
-        WriteRawBytes(bytes);
+        WriteInt32(bytes.Length);
+        WriteBytesNoPrefix(bytes);
     }
 
     /// <summary>
-    /// Writes a UTF-8 encoded string from the current position.
+    /// Writes a UTF-8 string with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the string length exceeds the remaining capacity of the span.
+    /// If there is not enough remaining span capacity.
     /// </exception>
-    /// <remarks>
-    /// Strings are prefixed with a 4-byte <see cref="Int32"/> length.
-    /// </remarks>
     public void WriteString(string str)
-        => WriteBytes(Encoding.UTF8.GetBytes(str));
+    {
+        int byteCount = Encoding.UTF8.GetByteCount(str);
+        WriteInt32(byteCount);
+        EnsureSpace(byteCount);
+
+        Encoding.UTF8.GetBytes(str, _span.Slice(_pos));
+        _pos += byteCount;
+    }
 }

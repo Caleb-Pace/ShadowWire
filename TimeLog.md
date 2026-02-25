@@ -47,9 +47,9 @@ Shared:
       - LookupRequest: 9m
       - Message: 24m
 - BinaryEncoding/
-    - Planning: 40m
+    - Planning: 1h 21m
     - SpanReader: 38m
-    - SpanWriter: 39m
+    - SpanWriter: 2h 1m
     - ByteArrayUtils: 36m
 
 Server:

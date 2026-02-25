@@ -34,7 +34,7 @@ public readonly struct BadRequest : IEncodable
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));
 
-        writer.Write<byte>((byte)MESSAGE_KIND);
+        writer.WriteByte((byte)MESSAGE_KIND);
         writer.WriteString(message);
 
         return buffer;

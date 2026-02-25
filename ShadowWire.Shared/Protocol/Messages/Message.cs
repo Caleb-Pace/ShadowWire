@@ -40,7 +40,7 @@ public readonly struct Message : IEncodable
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));
 
-        writer.Write<byte>((byte)MESSAGE_KIND);
+        writer.WriteByte((byte)MESSAGE_KIND);
         writer.WriteBytes(destFingerprint.Span);
         writer.WriteBytes(data.Span);
 
