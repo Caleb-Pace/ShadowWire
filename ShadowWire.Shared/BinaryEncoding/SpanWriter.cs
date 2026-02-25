@@ -24,7 +24,7 @@ public ref struct SpanWriter(Span<byte> span)
     /// <summary>
     /// Writes a value of the specified type from the current position.
     /// </summary>
-    /// <typeparam name="T">The unmanaged type to read (primitive or struct).</typeparam>
+    /// <typeparam name="T">The unmanaged type to write (primitive or struct).</typeparam>
     /// <remarks>Advances the position by <see cref="Unsafe.SizeOf{T}"/>.</remarks>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown if the size of <typeparamref name="T"/> exceeds the remaining capacity of the span.
@@ -33,7 +33,7 @@ public ref struct SpanWriter(Span<byte> span)
         where T : unmanaged
     {
         int size = Unsafe.SizeOf<T>();
-        if (_pos + size > _span.Length)
+        if ((uint)size > (uint)(_span.Length - _pos))
             throw new ArgumentOutOfRangeException(nameof(T), "Attempted to write past the end of the span.");
 
         MemoryMarshal.Write(_span.Slice(_pos, size), in val);
@@ -47,18 +47,32 @@ public ref struct SpanWriter(Span<byte> span)
     /// Thrown if the length exceeds the remaining capacity of the span.
     /// </exception>
     /// <remarks>
-    /// Byte arrays are prefixed with a 4-byte <see cref="Int32"/> length.
+    /// <b>No length prefix</b>.
     /// </remarks>
-    public void WriteBytes(ReadOnlySpan<byte> bytes)
+    public void WriteRawBytes(ReadOnlySpan<byte> bytes)
     {
         int length = bytes.Length;
-        Write<Int32>(length);
-        if (_pos + length > _span.Length)
-            throw new ArgumentOutOfRangeException(nameof(length), "Attempted to write past the end of the span.");
+        if ((uint)length > (uint)(_span.Length - _pos))
+            throw new ArgumentOutOfRangeException(nameof(bytes), "Attempted to write past the end of the span.");
 
         // Copy bytes to the current position in the span
         bytes.CopyTo(_span.Slice(_pos));
         _pos += length;
+    }
+
+    /// <summary>
+    /// Writes a byte array from the current position.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown if the length exceeds the remaining capacity of the span.
+    /// </exception>
+    /// <remarks>
+    /// Byte arrays are prefixed with a 4-byte <see cref="Int32"/> length.
+    /// </remarks>
+    public void WriteBytes(ReadOnlySpan<byte> bytes)
+    {
+        Write<Int32>(bytes.Length);
+        WriteRawBytes(bytes);
     }
 
     /// <summary>
