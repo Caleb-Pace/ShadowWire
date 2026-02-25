@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Buffers.Binary;
 using System.Text;
 
 namespace ShadowWire.Shared.BinaryEncoding;
@@ -10,50 +9,66 @@ namespace ShadowWire.Shared.BinaryEncoding;
 /// <remarks>
 /// Reads advance an internal position.<br/>
 /// <br/>
+/// Little-Endian byte ordering is used.<br/>
+/// <br/>
 /// <see langword="ref struct"/>: cannot be boxed or stored on the heap.
 /// </remarks>
 public ref struct SpanReader(ReadOnlySpan<byte> span)
 {
-    private ReadOnlySpan<byte> _span = span;
-    private int _pos = 0; // Current read position in bytes
+    private readonly ReadOnlySpan<byte> _span = span;
+    private int _pos = 0;
+
+    /// <summary>
+    /// Current read position in bytes.
+    /// </summary>
+    public readonly int Position => _pos;
 
 
     /// <summary>
-    /// Reads a value of the specified type from the current position.
+    /// Ensures that <paramref name="newByteCount"/> bytes can be read from the current position.
     /// </summary>
-    /// <typeparam name="T">The unmanaged type to read (primitive or struct).</typeparam>
-    /// <remarks>Advances the position by <see cref="Unsafe.SizeOf{T}"/>.</remarks>
-    /// <returns>The value read from the span.</returns>
+    /// <param name="newByteCount">Number of bytes to read.</param>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the size of <typeparamref name="T"/> exceeds the remaining span.
+    /// Thrown if the <paramref name="newByteCount"/> exceeds the remaining span capacity.
     /// </exception>
-    public T Read<T>()
-        where T : unmanaged
+    public readonly void EnsureSpace(int newByteCount)
     {
-        int size = Unsafe.SizeOf<T>();
-        if (_pos + size > _span.Length)
-            throw new ArgumentOutOfRangeException(nameof(T), "Attempted to read past the end of the span.");
+        if ((uint)newByteCount > (uint)(_span.Length - _pos))
+            throw new ArgumentOutOfRangeException(nameof(newByteCount), "Attempted to read past the end of the span.");
+    }
 
-        T val = MemoryMarshal.Read<T>(_span.Slice(_pos, size));
-        _pos += size;
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public byte ReadByte()
+    {
+        EnsureSpace(sizeof(byte));
+        return _span[_pos++];
+    }
+
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public Int32 ReadInt32()
+    {
+        EnsureSpace(sizeof(Int32));
+
+        var val = BinaryPrimitives.ReadInt32LittleEndian(_span.Slice(_pos));
+        _pos += sizeof(Int32);
         return val;
     }
 
     /// <summary>
-    /// Reads a byte array from the current position.
+    /// Reads a byte array that was written with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>
     /// <returns>A <see cref="ReadOnlySpan{Byte}"/> containing the bytes.</returns>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the length exceeds the remaining span.
+    /// If there is not enough remaining span capacity.
     /// </exception>
-    /// <remarks>
-    /// Byte arrays are assumed to be prefixed with a 4-byte <see cref="Int32"/> length.
-    /// </remarks>
     public ReadOnlySpan<byte> ReadBytes()
     {
-        int length = Read<Int32>();
-        if (_pos + length > _span.Length)
-            throw new ArgumentOutOfRangeException(nameof(length), "Attempted to read past the end of the span.");
+        int length = ReadInt32();
+        EnsureSpace(length);
 
         var bytes = _span.Slice(_pos, length);
         _pos += length;
@@ -61,15 +76,12 @@ public ref struct SpanReader(ReadOnlySpan<byte> span)
     }
 
     /// <summary>
-    /// Reads a UTF-8 encoded string from the current position.
+    /// Reads a UTF-8 string that was written with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>
     /// <returns>The decoded string.</returns>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// Thrown if the string length exceeds the remaining span.
+    /// If there is not enough remaining span capacity.
     /// </exception>
-    /// <remarks>
-    /// Strings are assumed to be prefixed with a 4-byte <see cref="Int32"/> length.
-    /// </remarks>
     public string ReadString()
         => Encoding.UTF8.GetString(ReadBytes());
 }

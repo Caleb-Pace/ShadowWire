@@ -48,7 +48,7 @@ Shared:
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
-    - SpanReader: 38m
+    - SpanReader: 54m
     - SpanWriter: 2h 1m
     - ByteArrayUtils: 36m
 
