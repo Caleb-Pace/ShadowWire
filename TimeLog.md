@@ -33,14 +33,14 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 1h 31m
+    - Planning: 1h 38m
     - MessageKind: 1h 13m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 23m
+      - AuthenticationRequest: 24m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
@@ -53,6 +53,7 @@ Shared:
     - SpanReader: 54m
     - SpanWriter: 2h 4m
     - ByteArrayUtils: 36m
+- Version: 41m
 
 Server:
 - Testing: 3m
