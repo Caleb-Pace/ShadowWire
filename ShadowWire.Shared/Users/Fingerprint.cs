@@ -47,6 +47,8 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     public override int GetHashCode()
         => _hashCode;
 
-    public static bool operator == (Fingerprint left, Fingerprint right) => left.Equals(right);
-    public static bool operator != (Fingerprint left, Fingerprint right) => !left.Equals(right);
+    public static bool operator ==(Fingerprint left, Fingerprint right)
+        => left.Equals(right);
+    public static bool operator !=(Fingerprint left, Fingerprint right)
+        => !left.Equals(right);
 }
