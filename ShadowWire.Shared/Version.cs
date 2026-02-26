@@ -2,9 +2,10 @@
 
 public readonly struct Version : IEquatable<Version>, IComparable<Version>
 {
+    public const int SIZE = sizeof(ulong);
+    
     private readonly ulong _value;
     public ulong Packed => _value;
-    public static int Size => sizeof(ulong);
 
     public ushort Major => (ushort)(_value >> 48);
     public ushort Minor => (ushort)(_value >> 32);

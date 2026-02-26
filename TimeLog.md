@@ -53,7 +53,7 @@ Shared:
     - SpanReader: 56m
     - SpanWriter: 2h 4m
     - ByteArrayUtils: 36m
-- Version: 41m
+- Version: 42m
 
 Server:
 - Testing: 3m
