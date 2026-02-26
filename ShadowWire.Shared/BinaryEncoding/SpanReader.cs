@@ -58,6 +58,18 @@ public ref struct SpanReader(ReadOnlySpan<byte> span)
         return val;
     }
 
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public UInt64 ReadUInt64()
+    {
+        EnsureSpace(sizeof(UInt64));
+
+        var val = BinaryPrimitives.ReadUInt64LittleEndian(_span.Slice(_pos));
+        _pos += sizeof(UInt64);
+        return val;
+    }
+
     /// <summary>
     /// Reads a byte array that was written with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>

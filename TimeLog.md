@@ -40,7 +40,7 @@ Shared:
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 24m
+      - AuthenticationRequest: 26m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
@@ -50,7 +50,7 @@ Shared:
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
-    - SpanReader: 54m
+    - SpanReader: 56m
     - SpanWriter: 2h 4m
     - ByteArrayUtils: 36m
 - Version: 41m
