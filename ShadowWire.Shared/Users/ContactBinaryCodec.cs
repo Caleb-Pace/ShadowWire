@@ -16,7 +16,7 @@ public static class ContactBinaryCodec
     public static byte[] Encode(Contact contact)
     {
         var length = contact.Nickname.Length
-                   + Fingerprint.LENGTH
+                   + Fingerprint.SIZE
                    + contact.PublicKeyDer.Length
                    + (3 * sizeof(Int32));
 

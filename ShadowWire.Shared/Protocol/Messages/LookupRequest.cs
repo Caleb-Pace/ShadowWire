@@ -6,7 +6,7 @@ namespace ShadowWire.Shared.Protocol.Messages;
 public class LookupRequest : IEncodable
 {
     private const MessageKind MESSAGE_KIND = MessageKind.LookupRequest;
-    private const int REQUEST_LENGTH = 1 + Fingerprint.LENGTH;
+    private const int REQUEST_LENGTH = 1 + Fingerprint.SIZE;
 
     public readonly ReadOnlyMemory<byte> fingerprint;
 

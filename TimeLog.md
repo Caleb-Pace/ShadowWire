@@ -20,7 +20,7 @@ Shared:
     - Contact Packaging: 23m
     - Codec improvement: 53m
     - Manager updates: 24m
-    - Fingerprint: 41m
+    - Fingerprint: 43m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -40,7 +40,7 @@ Shared:
     - IEncodable: 8m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 26m
+      - AuthenticationRequest: 32m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
