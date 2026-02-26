@@ -62,6 +62,17 @@ public ref struct SpanWriter(Span<byte> span)
         _pos += sizeof(Int32);
     }
 
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public void WriteUInt64(UInt64 val)
+    {
+        EnsureSpace(sizeof(UInt64));
+
+        BinaryPrimitives.WriteUInt64LittleEndian(_span.Slice(_pos), val);
+        _pos += sizeof(UInt64);
+    }
+
     /// <summary>
     /// Writes a byte array without a length prefix.
     /// </summary>
