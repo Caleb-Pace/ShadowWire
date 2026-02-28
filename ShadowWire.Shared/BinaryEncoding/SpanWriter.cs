@@ -20,6 +20,8 @@ namespace ShadowWire.Shared.BinaryEncoding;
 /// </remarks>
 public ref struct SpanWriter(Span<byte> span)
 {
+    private static Encoder utf8Encoder = Encoding.UTF8.GetEncoder();
+
     private Span<byte> _span = span;
     private int _pos = 0;
 
@@ -100,6 +102,34 @@ public ref struct SpanWriter(Span<byte> span)
         WriteBytesNoPrefix(bytes);
     }
 
+    /// <returns>The UTF-8 byte count of <paramref name="str"/>.</returns>
+    public static int GetStringSize(string str)
+        => Encoding.UTF8.GetByteCount(str);
+
+    /// <summary>
+    /// Writes a UTF-8 string with a 4-byte <see cref="Int32"/> length prefix.
+    /// </summary>
+    /// <param name="str">The string to write.</param>
+    /// <param name="byteCount">The exact number of UTF-8 bytes to write.</param>
+    /// <remarks>
+    /// This overload allows writing a string without recomputing its UTF-8 byte count.<br/>
+    /// <br/>
+    /// It is the <b>caller's responsibility</b> to ensure that <paramref name="byteCount"/> accurately<br/>
+    /// reflects the UTF-8 encoding of <paramref name="str"/>.<br/>
+    /// An incorrect <paramref name="byteCount"/> may result in truncated or corrupted output.
+    /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public void WriteString(string str, int byteCount)
+    {
+        WriteInt32(byteCount);
+        EnsureSpace(byteCount);
+
+        utf8Encoder.GetBytes(str, _span.Slice(_pos, byteCount), flush: true);
+        _pos += byteCount;
+    }
+
     /// <summary>
     /// Writes a UTF-8 string with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>
@@ -108,7 +138,7 @@ public ref struct SpanWriter(Span<byte> span)
     /// </exception>
     public void WriteString(string str)
     {
-        int byteCount = Encoding.UTF8.GetByteCount(str);
+        int byteCount = GetStringSize(str);
         WriteInt32(byteCount);
         EnsureSpace(byteCount);
 
