@@ -6,6 +6,7 @@ namespace ShadowWire.Shared.Protocol.Messages;
 public class LookupRequest : IEncodable, IProtocolMessage
 {
     private const MessageKind MESSAGE_KIND = MessageKind.LookupRequest;
+    
     private const int REQUEST_LENGTH = 1 + Fingerprint.SIZE;
 
     public readonly ReadOnlyMemory<byte> fingerprint;
@@ -17,7 +18,6 @@ public class LookupRequest : IEncodable, IProtocolMessage
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
     public LookupRequest(ReadOnlySpan<byte> messageBytes)
     {
-
         ArgumentOutOfRangeException.ThrowIfNotEqual(messageBytes.Length, REQUEST_LENGTH, nameof(messageBytes));
 
         this.fingerprint = messageBytes[1..].ToArray(); // Skip message kind
