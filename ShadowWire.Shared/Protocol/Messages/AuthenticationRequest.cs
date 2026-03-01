@@ -11,8 +11,11 @@ public readonly struct AuthenticationRequest : IEncodable, IProtocolMessage
     public readonly Contact contact;
 
 
-    public AuthenticationRequest(Contact contact)
-        => this.contact = contact;
+    public AuthenticationRequest(Version version, Contact contact)
+    {
+        this.version = version;
+        this.contact = contact;
+    }
 
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
     public AuthenticationRequest(ReadOnlySpan<byte> messageBytes)
@@ -34,14 +37,14 @@ public readonly struct AuthenticationRequest : IEncodable, IProtocolMessage
     {
         var length = 1
                    + Version.SIZE
-                   + sizeof(Int32);
+                   + contact.GetSize(out int nicknameSizeInBytes);
 
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));
 
         writer.WriteByte((byte)MESSAGE_KIND);
         writer.WriteUInt64(version.Packed);
-        contact.Encode(writer);
+        contact.Encode(writer, nicknameSizeInBytes);
 
         return buffer;
     }

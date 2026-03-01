@@ -42,7 +42,7 @@ Shared:
     - IProtocolMessage: 1m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 39m
+      - AuthenticationRequest: 40m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
