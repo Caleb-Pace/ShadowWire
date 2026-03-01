@@ -63,11 +63,11 @@ Server:
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - Network/
-    - Planning: 55m
+    - Planning: 1h 1m
     - RelayServer: 2h 24m
     - ClientSession: 34m
     - ClientSessionConfig: 15m
-    - MessageRouter: 5m
+    - MessageRouter: 13m
     - SessionManager: 1h 15m
 - Handlers/
     - Planning: 53m
