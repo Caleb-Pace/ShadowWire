@@ -49,7 +49,7 @@ Shared:
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 10m
       - LookupResponse: 8m
-      - Message: 27m
+      - Message: 30m
 - BinaryEncoding/
     - Planning: 1h 21m
     - SpanReader: 1h 2m
