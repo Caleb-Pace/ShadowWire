@@ -6,6 +6,8 @@ public readonly struct BadRequest : IEncodable, IProtocolMessage
 {
     private const MessageKind MESSAGE_KIND = MessageKind.BadRequest;
 
+    private const int MessageLengthFieldSize = sizeof(Int32);
+
     public readonly string message;
 
 
@@ -15,7 +17,7 @@ public readonly struct BadRequest : IEncodable, IProtocolMessage
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
     public BadRequest(ReadOnlySpan<byte> messageBytes)
     {
-        const int MINIMUM_LENGTH = 1 + sizeof(Int32);
+        const int MINIMUM_LENGTH = 1 + MessageLengthFieldSize;
 
         ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, MINIMUM_LENGTH, nameof(messageBytes));
 
@@ -27,15 +29,16 @@ public readonly struct BadRequest : IEncodable, IProtocolMessage
 
     public byte[] Encode()
     {
+        var messageSizeInBytes = SpanWriter.GetStringSize(message);
         var length = 1
-                   + sizeof(Int32)
-                   + message.Length;
+                   + MessageLengthFieldSize
+                   + messageSizeInBytes;
 
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));
 
         writer.WriteByte((byte)MESSAGE_KIND);
-        writer.WriteString(message);
+        writer.WriteString(message, messageSizeInBytes);
 
         return buffer;
     }

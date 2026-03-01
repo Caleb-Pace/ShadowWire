@@ -45,7 +45,7 @@ Shared:
       - AuthenticationRequest: 40m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
-      - BadRequest: 5m
+      - BadRequest: 7m
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 10m
       - LookupResponse: 5m
