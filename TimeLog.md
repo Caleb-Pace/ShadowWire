@@ -49,10 +49,10 @@ Shared:
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 10m
       - LookupResponse: 8m
-      - Message: 24m
+      - Message: 27m
 - BinaryEncoding/
     - Planning: 1h 21m
-    - SpanReader: 56m
+    - SpanReader: 1h 2m
     - SpanWriter: 2h 46m
     - ByteArrayUtils: 36m
 - Version: 44m

@@ -71,6 +71,23 @@ public ref struct SpanReader(ReadOnlySpan<byte> span)
     }
 
     /// <summary>
+    /// Reads a sequence of <paramref name="length"/> bytes from the current position.
+    /// </summary>
+    /// <param name="length">The number of bytes to read.</param>
+    /// <returns>A <see cref="ReadOnlySpan{Byte}"/> containing the bytes.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public ReadOnlySpan<byte> ReadBytes(int length)
+    {
+        EnsureSpace(length);
+
+        var bytes = _span.Slice(_pos, length);
+        _pos += length;
+        return bytes;
+    }
+
+    /// <summary>
     /// Reads a byte array that was written with a 4-byte <see cref="Int32"/> length prefix.
     /// </summary>
     /// <returns>A <see cref="ReadOnlySpan{Byte}"/> containing the bytes.</returns>
@@ -80,11 +97,7 @@ public ref struct SpanReader(ReadOnlySpan<byte> span)
     public ReadOnlySpan<byte> ReadBytes()
     {
         int length = ReadInt32();
-        EnsureSpace(length);
-
-        var bytes = _span.Slice(_pos, length);
-        _pos += length;
-        return bytes;
+        return ReadBytes(length);
     }
 
     /// <summary>
