@@ -19,7 +19,7 @@ Shared:
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
     - Codec improvement: 53m
-    - Contact Codec consolidation: 6m
+    - Contact Codec consolidation: 13m
     - Manager updates: 24m
     - Fingerprint: 43m
 - UsernameManager: 2h 2m
