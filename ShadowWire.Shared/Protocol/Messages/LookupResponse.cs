@@ -17,13 +17,11 @@ public sealed class LookupResponse : IEncodable, IProtocolMessage
     public LookupResponse(ReadOnlySpan<byte> messageBytes)
     {
         const int MINIMUM_LENGTH = 1
-                                 + Version.SIZE
                                  + Contact.MINIMUM_SIZE;
 
         ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, MINIMUM_LENGTH, nameof(messageBytes));
 
         ReadOnlySpan<byte> payloadBytes = messageBytes[1..]; // Skip message kind
-        var reader = new SpanReader(payloadBytes);
 
         this.contact = new Contact(payloadBytes);
     }
@@ -31,13 +29,13 @@ public sealed class LookupResponse : IEncodable, IProtocolMessage
     public byte[] Encode()
     {
         var length = 1
-                   + Contact.MINIMUM_SIZE;
+                   + contact.GetSize(out int nicknameSizeInBytes);
 
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));
 
         writer.WriteByte((byte)MESSAGE_KIND);
-        contact.Encode(writer);
+        contact.Encode(writer, nicknameSizeInBytes);
 
         return buffer;
     }

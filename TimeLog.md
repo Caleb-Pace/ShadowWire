@@ -48,7 +48,7 @@ Shared:
       - BadRequest: 7m
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 10m
-      - LookupResponse: 5m
+      - LookupResponse: 8m
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
