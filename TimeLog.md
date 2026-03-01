@@ -50,6 +50,7 @@ Shared:
       - LookupRequest: 10m
       - LookupResponse: 8m
       - Message: 30m
+      - Unauthenticated: 1m
 - BinaryEncoding/
     - Planning: 1h 21m
     - SpanReader: 1h 2m
