@@ -4,7 +4,16 @@ namespace ShadowWire.Shared.Users;
 
 public readonly struct Contact
 {
-    public const int MINIMUM_SIZE = 1 + Fingerprint.SIZE + (2 * sizeof(Int32));
+    private const int NicknameLengthFieldSize = sizeof(Int32);
+    private const int PublicKeyLengthFieldSize = sizeof(Int32);
+
+    /// <summary>
+    /// The smallest possible valid encoded <see cref="Contact"/> in bytes.
+    /// <para>
+    /// Consists of a fingerprint and the length fields for the nickname and public key.
+    /// </para>
+    /// </summary>
+    public const int MINIMUM_SIZE = NicknameLengthFieldSize + Fingerprint.SIZE + PublicKeyLengthFieldSize;
 
     public readonly string Nickname { get; init; }
     public Fingerprint Fingerprint { get; init; }
@@ -30,6 +39,21 @@ public readonly struct Contact
         PublicKeyDer = reader.ReadBytes().ToArray();
     }
 
+    /// <summary>
+    /// Calculates the exact byte size of this contact when encoded.
+    /// </summary>
+    /// <param name="nicknameSizeInBytes">Outputs the UTF-8 byte count of <see cref="Nickname"/>.</param>
+    public int GetSize(out int nicknameSizeInBytes)
+    {
+        nicknameSizeInBytes = SpanWriter.GetStringSize(Nickname);
+
+        return NicknameLengthFieldSize
+             + nicknameSizeInBytes
+             + Fingerprint.SIZE
+             + PublicKeyLengthFieldSize
+             + PublicKeyDer.Length;
+    }
+
     public void Encode(SpanWriter writer, int? nicknameSizeInBytes = null)
     {
         if (nicknameSizeInBytes.HasValue)
@@ -43,11 +67,7 @@ public readonly struct Contact
 
     public byte[] Encode()
     {
-        var nicknameSizeInBytes = SpanWriter.GetStringSize(Nickname);
-        var length = nicknameSizeInBytes
-                   + Fingerprint.SIZE
-                   + PublicKeyDer.Length
-                   + (3 * sizeof(Int32));
+        int length = GetSize(out int nicknameSizeInBytes);
 
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));

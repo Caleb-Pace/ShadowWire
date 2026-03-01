@@ -12,7 +12,7 @@ Protocol structure research: 20m
 
 Shared:
 - Moving & setup: 8m
-- Contacts: 49m
+- Contacts: 1h 6m
     - Planning: 20m
     - Persistence: 35m
         - Bson issue: 41m
@@ -42,13 +42,13 @@ Shared:
     - IProtocolMessage: 1m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 38m
+      - AuthenticationRequest: 39m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 10m
-      - LookupResponse: 3m 2m
+      - LookupResponse: 5m
       - Message: 24m
 - BinaryEncoding/
     - Planning: 1h 21m
