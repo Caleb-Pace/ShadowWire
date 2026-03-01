@@ -81,7 +81,7 @@ Client:
 - Test setup: 3m
 - WebSocket setup: 15m
 - Connection: 35m
-- Cryptography: 33m
+- Cryptography: 36m
     - Research: 12m
 - Register with Server: 20m
 - Services/

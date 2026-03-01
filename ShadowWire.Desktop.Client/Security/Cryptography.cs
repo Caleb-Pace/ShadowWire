@@ -1,11 +1,12 @@
-﻿using System.Security.Cryptography;
+﻿using ShadowWire.Shared.Users;
+using System.Security.Cryptography;
 
 namespace ShadowWire.Desktop.Client.Security;
 
 internal class Cryptography
 {
-    public byte[] Fingerprint { get { return fingerprint; } }
-    private byte[] fingerprint = [];   // SHA-256 hash of public key
+    public Fingerprint Fingerprint { get { return fingerprint; } }
+    private Fingerprint fingerprint = default; // SHA-256 hash of public key
 
     public byte[] PublicKey { get { return publicKeyDer; } }
     private byte[] publicKeyDer = [];  // X.509 format
@@ -47,7 +48,7 @@ internal class Cryptography
         }
 
         // Create fingerprint
-        fingerprint = SHA256.HashData(publicKeyDer);
+        fingerprint = new Fingerprint(SHA256.HashData(publicKeyDer));
     }
 
     // TODO: (Later) include key encryption options
