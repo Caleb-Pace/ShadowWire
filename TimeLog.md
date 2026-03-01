@@ -34,12 +34,12 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 2h 3m
+    - Planning: 2h 6m
     - MessageKind: 1h 13m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
     - IEncodable: 8m
-    - IProtocolMessage: 1m
+    - IProtocolMessage: 6m
     - Messages/
       - Acknowledge: 1m
       - AuthenticationRequest: 40m

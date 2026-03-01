@@ -1,6 +1,6 @@
 ﻿namespace ShadowWire.Shared.Protocol.Messages;
 
-public readonly struct Acknowledge : IEncodable
+public readonly struct Acknowledge : IEncodable, IProtocolMessage
 {
     private const MessageKind MESSAGE_KIND = MessageKind.Acknowledge;
 

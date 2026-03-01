@@ -2,7 +2,7 @@
 
 namespace ShadowWire.Shared.Protocol.Messages;
 
-public readonly struct BadRequest : IEncodable
+public readonly struct BadRequest : IEncodable, IProtocolMessage
 {
     private const MessageKind MESSAGE_KIND = MessageKind.BadRequest;
 

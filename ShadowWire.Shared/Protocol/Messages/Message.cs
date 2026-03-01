@@ -2,7 +2,7 @@
 
 namespace ShadowWire.Shared.Protocol.Messages;
 
-public readonly struct Message : IEncodable
+public readonly struct Message : IEncodable, IProtocolMessage
 {
     private const MessageKind MESSAGE_KIND = MessageKind.Message;
 

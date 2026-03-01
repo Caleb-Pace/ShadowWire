@@ -1,6 +1,6 @@
 ﻿namespace ShadowWire.Shared.Protocol.Messages;
 
-public readonly struct AuthenticationSuccess : IEncodable
+public readonly struct AuthenticationSuccess : IEncodable, IProtocolMessage
 {
     private const MessageKind MESSAGE_KIND = MessageKind.AuthenticationSuccess;
 
