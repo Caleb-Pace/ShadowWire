@@ -7,12 +7,13 @@ public enum MessageKind : byte
     //NegativeAcknowledge = 1, // <Later>
     //ServerAnnouncement  = 2, // <Later>
     BadRequest = 3,
-    //ServiceDenied        = 4, // <Later>
+    Unauthenticated = 4,
     //RateLimitExceeded    = 5, // <Later>
-    //UpdateAvailable      = 6, // <Later>
-    //E2EIntegrityRequest  = 8, // <Later>
-    //E2EIntegrityResponse = 9, // <Later>
+    //ServiceDenied        = 9, // <Later>
     //ErrorReport          = 10, // <Later>
+    //UpdateAvailable      = 11, // <Later>
+    //E2EIntegrityRequest  = 12, // <Later>
+    //E2EIntegrityResponse = 13, // <Later>
 
     //~/ Authentication
     AuthenticationRequest = 20, // For connecting to the server
