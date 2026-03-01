@@ -1,8 +1,9 @@
 ﻿using ShadowWire.Shared.BinaryEncoding;
+using ShadowWire.Shared.Protocol;
 
 namespace ShadowWire.Shared.Users;
 
-public readonly struct Contact
+public readonly struct Contact : IEncodable
 {
     private const int NicknameLengthFieldSize = sizeof(Int32);
     private const int PublicKeyLengthFieldSize = sizeof(Int32);
