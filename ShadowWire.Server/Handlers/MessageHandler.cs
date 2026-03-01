@@ -1,10 +1,11 @@
 ﻿using ShadowWire.Server.Network;
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Protocol.Messages;
+using ShadowWire.Shared.Users;
 
 namespace ShadowWire.Server.Handlers;
 
-public delegate Task SendToAsync(byte[] destFingerprint, IEncodable message, CancellationToken cancellationToken);
+public delegate Task SendToAsync(Fingerprint destFingerprint, IEncodable message, CancellationToken cancellationToken);
 
 public class MessageHandler : IMessageHandler<ClientSession, Message>
 {
@@ -28,7 +29,7 @@ public class MessageHandler : IMessageHandler<ClientSession, Message>
 
     public async Task<IEncodable> HandleAsync(ClientSession context, Message request)
     {
-        await _sendTo.Invoke(request.destFingerprint.ToArray(), request, CancellationToken.None);
+        await _sendTo.Invoke(request.destFingerprint, request, CancellationToken.None);
         return new Acknowledge();
     }
 }

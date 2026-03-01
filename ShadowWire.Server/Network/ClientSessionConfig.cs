@@ -1,6 +1,8 @@
-﻿namespace ShadowWire.Server.Network;
+﻿using ShadowWire.Shared.Users;
 
-public readonly struct ClientSessionConfig(Action<Guid, ReadOnlyMemory<byte>> onFingerprintChanged)
+namespace ShadowWire.Server.Network;
+
+public readonly struct ClientSessionConfig(Action<Guid, Fingerprint> onFingerprintChanged)
 {
-    public readonly Action<Guid, ReadOnlyMemory<byte>> OnFingerprintChanged { get; init; } = onFingerprintChanged;
+    public readonly Action<Guid, Fingerprint> OnFingerprintChanged { get; init; } = onFingerprintChanged;
 }

@@ -152,7 +152,7 @@ internal class RelayServer
         }
     }
 
-    public async Task SendToAsync(byte[] destFingerprint, byte[] messageBinary, CancellationToken cancellationToken)
+    public async Task SendToAsync(Fingerprint destFingerprint, byte[] messageBinary, CancellationToken cancellationToken)
     {
         ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(messageBinary.Length, BUFFER_SIZE, nameof(messageBinary));
 
@@ -165,6 +165,6 @@ internal class RelayServer
         await session.WebSocket.SendAsync(new ArraySegment<byte>(messageBinary), WebSocketMessageType.Binary, true, cancellationToken);
     }
 
-    public async Task SendToAsync(byte[] destFingerprint, IEncodable message, CancellationToken cancellationToken)
+    public async Task SendToAsync(Fingerprint destFingerprint, IEncodable message, CancellationToken cancellationToken)
         => await SendToAsync(destFingerprint, message.Encode(), cancellationToken);
 }
