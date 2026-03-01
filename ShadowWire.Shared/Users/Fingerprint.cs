@@ -39,6 +39,8 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     }
 
 
+    public byte[] ToArray() => _value.ToArray();
+
     public bool Equals(Fingerprint other)
         => _value.Span.SequenceEqual(other.Span);
 

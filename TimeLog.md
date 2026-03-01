@@ -21,7 +21,7 @@ Shared:
     - Codec improvement: 53m
     - Contact Codec consolidation: 20m
     - Manager updates: 24m
-    - Fingerprint: 43m
+    - Fingerprint: 46m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -72,7 +72,7 @@ Server:
     - Planning: 53m
     - ServerMessageHandlerRegistry: 28m
     - AuthenticationHandler: 1h 3m
-    - MessageHandler: 16m
+    - MessageHandler: 17m
 - User registry (ContactManager): 7m
 
 Client:
