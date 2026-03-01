@@ -19,7 +19,7 @@ Shared:
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
     - Codec improvement: 53m
-    - Contact Codec consolidation: 13m
+    - Contact Codec consolidation: 20m
     - Manager updates: 24m
     - Fingerprint: 43m
 - UsernameManager: 2h 2m
@@ -34,14 +34,15 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 1h 55m
+    - Planning: 2h 3m
     - MessageKind: 1h 13m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
     - IEncodable: 8m
+    - IProtocolMessage: 1m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 35m
+      - AuthenticationRequest: 37m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 5m

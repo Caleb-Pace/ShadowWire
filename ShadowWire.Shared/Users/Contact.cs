@@ -30,6 +30,17 @@ public readonly struct Contact
         PublicKeyDer = reader.ReadBytes().ToArray();
     }
 
+    public void Encode(SpanWriter writer, int? nicknameSizeInBytes = null)
+    {
+        if (nicknameSizeInBytes.HasValue)
+            writer.WriteString(Nickname, nicknameSizeInBytes.Value);
+        else
+            writer.WriteString(Nickname);
+
+        writer.WriteBytes(Fingerprint.Span);
+        writer.WriteBytes(PublicKeyDer.Span);
+    }
+
     public byte[] Encode()
     {
         var nicknameSizeInBytes = SpanWriter.GetStringSize(Nickname);
@@ -41,9 +52,7 @@ public readonly struct Contact
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));
 
-        writer.WriteString(Nickname, nicknameSizeInBytes);
-        writer.WriteBytes(Fingerprint.Span);
-        writer.WriteBytes(PublicKeyDer.Span);
+        Encode(writer, nicknameSizeInBytes);
 
         return buffer;
     }
