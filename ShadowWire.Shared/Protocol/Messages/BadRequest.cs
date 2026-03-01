@@ -17,7 +17,8 @@ public readonly struct BadRequest : IEncodable, IProtocolMessage
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
     public BadRequest(ReadOnlySpan<byte> messageBytes)
     {
-        const int MINIMUM_LENGTH = 1 + MessageLengthFieldSize;
+        const int MINIMUM_LENGTH = 1
+                                 + MessageLengthFieldSize;
 
         ArgumentOutOfRangeException.ThrowIfLessThan(messageBytes.Length, MINIMUM_LENGTH, nameof(messageBytes));
 
