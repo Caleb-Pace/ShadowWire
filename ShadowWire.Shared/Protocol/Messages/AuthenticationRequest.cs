@@ -5,7 +5,7 @@ namespace ShadowWire.Shared.Protocol.Messages;
 
 public readonly struct AuthenticationRequest : IEncodable, IProtocolMessage
 {
-    private const MessageKind MESSAGE_KIND = MessageKind.AuthenticationSuccess;
+    private const MessageKind MESSAGE_KIND = MessageKind.AuthenticationRequest;
 
     public readonly Version version;
     public readonly Contact contact;
