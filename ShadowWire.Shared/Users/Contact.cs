@@ -36,7 +36,8 @@ public readonly struct Contact : IEncodable
         var reader = new SpanReader(contactBytes);
 
         Nickname = reader.ReadString();
-        Fingerprint = new Fingerprint(reader.ReadBytes().ToArray());
+        var fingerprintBinary = reader.ReadBytes(Fingerprint.SIZE);
+        Fingerprint = new Fingerprint(fingerprintBinary.ToArray());
         PublicKeyDer = reader.ReadBytes().ToArray();
     }
 
@@ -62,7 +63,7 @@ public readonly struct Contact : IEncodable
         else
             writer.WriteString(Nickname);
 
-        writer.WriteBytes(Fingerprint.Span);
+        writer.WriteBytesNoPrefix(Fingerprint.Span);
         writer.WriteBytes(PublicKeyDer.Span);
     }
 
