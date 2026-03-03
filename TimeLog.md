@@ -19,7 +19,7 @@ Shared:
         - Fingerprint lookup issue: 6m
     - Contact Packaging: 23m
     - Codec improvement: 53m
-    - Contact Codec consolidation: 20m
+    - Contact Codec consolidation: 33m
     - Manager updates: 24m
     - Fingerprint: 46m
 - UsernameManager: 2h 2m
@@ -42,7 +42,7 @@ Shared:
     - IProtocolMessage: 6m
     - Messages/
       - Acknowledge: 1m
-      - AuthenticationRequest: 40m
+      - AuthenticationRequest: 42m
       - AuthenticationSuccess: 4m
       - AuthenticationFailure: 1m
       - BadRequest: 7m
@@ -56,10 +56,11 @@ Shared:
     - SpanReader: 1h 2m
     - SpanWriter: 2h 46m
     - ByteArrayUtils: 36m
-- Version: 44m
+- Version: 45m
+    - Research: 15m
 
 Server:
-- Testing: 3m
+- Testing: 6m
 - WebSocket (echo) server setup: 45m
 - Identity retrieval test: 12m
 - Network/
@@ -77,7 +78,7 @@ Server:
 - User registry (ContactManager): 7m
 
 Client:
-- Testing: 1m
+- Testing: 6m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Connection: 35m
@@ -87,6 +88,8 @@ Client:
 - Services/
     - Planning: 21m
     - IMessageService: 2m
-    - AuthenticationService: 3m
+    - AuthenticationService: 5m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
+- ClientContext: 8m
+- Version setup: 1m

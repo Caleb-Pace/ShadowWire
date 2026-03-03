@@ -4,11 +4,14 @@ using ShadowWire.Shared;
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
 using System.Text;
+using Version = ShadowWire.Shared.Version;
 
 namespace ShadowWire.Desktop.Client;
 
 internal class Program
 {
+    internal static Version version = new(0, 1, 0, 0);
+
     static async Task Main(string[] args)
     {
         const string URI = "ws://127.0.0.1:4960/ws/";
@@ -30,9 +33,10 @@ internal class Program
 
         // Connect to Server
         var connection = new Connection(URI);
+        var context = new ClientContext(version, identity, connection);
 
         // Register connection
-        AuthenticationService.SendAsync(connection, identity).GetAwaiter().GetResult();
+        AuthenticationService.SendAsync(context).GetAwaiter().GetResult();
 
         // Wait for auth response
         var respBin = await connection.ReceiveAsync();

@@ -1,16 +1,14 @@
-﻿using ShadowWire.Desktop.Client.Network;
-using ShadowWire.Shared.Protocol.Messages;
-using ShadowWire.Shared.Users;
+﻿using ShadowWire.Shared.Protocol.Messages;
 
 namespace ShadowWire.Desktop.Client.Services;
 
 public class AuthenticationService
 {
-    public static async Task SendAsync(Connection connection, Contact contact)
+    public static async Task SendAsync(ClientContext context)
     {
-        var request = new AuthenticationRequest(contact);
+        var request = new AuthenticationRequest(context.Version, context.ClientIdentity);
         var requestBinary = request.Encode();
 
-        await connection.SendAsync(requestBinary);
+        await context.Connection.SendAsync(requestBinary);
     }
 }
