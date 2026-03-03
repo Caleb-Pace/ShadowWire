@@ -38,7 +38,7 @@ public readonly struct Version : IEquatable<Version>, IComparable<Version>
         => _value.GetHashCode();
 
     public override string ToString()
-        => $"{Major}.{Minor}.{Patch}.{Build}";
+        => $"{Major}.{Minor}.{Patch}+{Build}";
 
 
     public static bool operator ==(Version left, Version right)
