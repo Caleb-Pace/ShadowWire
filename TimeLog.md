@@ -90,7 +90,7 @@ Client:
         - Asymmetric/
             - IAsymmetricAlgorithm: 23m
         - Symmetric/
-            - ISymmetricAlgorithm: 
+            - ISymmetricAlgorithm: 4m
         - Hashing/
             - IHashingAlgorithm: 
     - Cryptography: 36m
