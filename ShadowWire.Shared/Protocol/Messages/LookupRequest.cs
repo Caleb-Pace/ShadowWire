@@ -9,10 +9,10 @@ public class LookupRequest : IEncodable, IProtocolMessage
     
     private const int REQUEST_LENGTH = 1 + Fingerprint.SIZE;
 
-    public readonly ReadOnlyMemory<byte> fingerprint;
+    public readonly Fingerprint fingerprint;
 
 
-    public LookupRequest(ReadOnlyMemory<byte> fingerprint)
+    public LookupRequest(Fingerprint fingerprint)
         => this.fingerprint = fingerprint;
 
     /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
@@ -20,7 +20,7 @@ public class LookupRequest : IEncodable, IProtocolMessage
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual(messageBytes.Length, REQUEST_LENGTH, nameof(messageBytes));
 
-        this.fingerprint = messageBytes[1..].ToArray(); // Skip message kind
+        this.fingerprint = new Fingerprint(messageBytes[1..].ToArray()); // Skip message kind
     }
 
     public byte[] Encode()
