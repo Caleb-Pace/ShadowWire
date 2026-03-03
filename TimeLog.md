@@ -79,11 +79,22 @@ Server:
 
 Client:
 - Testing: 6m
+- Planning: 2h 3m
 - Test setup: 3m
 - WebSocket setup: 15m
+- Version setup: 1m
 - Connection: 35m
-- Cryptography: 36m
-    - Research: 12m
+- Security/
+    - Planning: 31m
+    - Algorithms/
+        - Asymmetric/
+            - IAsymmetricAlgorithm: 23m
+        - Symmetric/
+            - ISymmetricAlgorithm: 
+        - Hashing/
+            - IHashingAlgorithm: 
+    - Cryptography: 36m
+        - Research: 12m
 - Register with Server: 20m
 - Services/
     - Planning: 21m
@@ -92,4 +103,4 @@ Client:
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
 - ClientContext: 8m
-- Version setup: 1m
+- EventBus: 7m
