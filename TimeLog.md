@@ -96,7 +96,7 @@ Client:
     - Cryptography: 36m
         - Research: 12m
     - DerKeyPair: 14m
-    - KeyResolver: 19m
+    - KeyResolver: 22m
     - IKeyStorage: 2m
     - BasicKeyStorage: 6m
 - Register with Server: 20m

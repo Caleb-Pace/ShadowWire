@@ -2,20 +2,28 @@
 
 namespace ShadowWire.Desktop.Client.Security;
 
-public class KeyResolver(IAsymmetricAlgorithm asymmetricAlgorithm, IKeyStorage keyPairStorage)
+public class KeyResolver
 {
-    private readonly IAsymmetricAlgorithm _asymmetric = asymmetricAlgorithm;
-    private readonly IKeyStorage _keyStorage = keyPairStorage;
+    private readonly IAsymmetricAlgorithm _asymmetric;
+    private readonly IKeyStorage _keyStorage;
 
+
+    public KeyResolver(IAsymmetricAlgorithm asymmetricAlgorithm, IKeyStorage keyPairStorage)
+    {
+        _asymmetric = asymmetricAlgorithm;
+        _keyStorage = keyPairStorage;
+    }
 
     public DerKeyPair ResolveKeyPair()
     {
-        var existingKey = _keyStorage.LoadKeyPair();
-        if (existingKey.HasValue)
-            return existingKey.Value;
+        DerKeyPair? keyPair = _keyStorage.LoadKeyPair();
 
-        var newKey = _asymmetric.GenerateKeyPair();
-        _keyStorage.SaveKeyPair(newKey);
-        return newKey;
+        if (keyPair == null)
+        {
+            keyPair = _asymmetric.GenerateKeyPair();
+            _keyStorage.SaveKeyPair(keyPair.Value);
+        }
+
+        return keyPair.Value;
     }
 }
