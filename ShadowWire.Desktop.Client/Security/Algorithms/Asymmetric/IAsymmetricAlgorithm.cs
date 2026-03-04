@@ -6,10 +6,10 @@
 public interface IAsymmetricAlgorithm
 {
     /// <summary>
-    /// Generates a new public/private key pair.
+    /// Generates a new public/private key pair in the DER format.
     /// </summary>
     /// <returns>A tuple containing the public and private keys.</returns>
-    (ReadOnlyMemory<byte> publicKey, ReadOnlyMemory<byte> privateKey) GenerateKeyPair();
+    DerKeyPair GenerateKeyPair();
 
 
     /// <summary>
@@ -18,6 +18,7 @@ public interface IAsymmetricAlgorithm
     /// <param name="data">The data to encrypt.</param>
     /// <param name="publicKey">The public key used for encryption.</param>
     /// <returns>The encrypted data.</returns>
+    /// <exception cref="System.Security.Cryptography.CryptographicException">Thrown if the key is invalid or data is too large.</exception>
     ReadOnlyMemory<byte> Encrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> publicKey);
 
     /// <summary>
@@ -32,16 +33,17 @@ public interface IAsymmetricAlgorithm
     /// <summary>
     /// Signs the <paramref name="data"/> using the provided <paramref name="privateKey"/>.
     /// </summary>
-    /// <param name="data">The data to sign.</param>
+    /// <param name="data">The raw data to sign.</param>
     /// <param name="privateKey">The private key used for signing.</param>
-    /// <returns>The generated signature.</returns>
+    /// <returns>The generated digital signature.</returns>
     ReadOnlyMemory<byte> Sign(ReadOnlySpan<byte> data, ReadOnlySpan<byte> privateKey);
 
     /// <summary>
-    /// Verifies the <paramref name="signature"/> using the provided <paramref name="publicKey"/>.
+    /// Verifies the digital <paramref name="signature"/> using the provided <paramref name="publicKey"/>.
     /// </summary>
-    /// <param name="signature">The signature to verify.</param>
+    /// <param name="data">The original data that was signed.</param>
+    /// <param name="signature">The digital signature to verify.</param>
     /// <param name="publicKey">The public key used for verification.</param>
     /// <returns><see langword="true"/> if the signature is valid; otherwise, <see langword="false"/>.</returns>
-    bool VerifySignature(ReadOnlySpan<byte> signature, ReadOnlySpan<byte> publicKey);
+    bool VerifySignature(ReadOnlySpan<byte> data, ReadOnlySpan<byte> signature, ReadOnlySpan<byte> publicKey);
 }

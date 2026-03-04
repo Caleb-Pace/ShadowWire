@@ -88,7 +88,7 @@ Client:
     - Planning: 38m
     - Algorithms/
         - Asymmetric/
-            - IAsymmetricAlgorithm: 23m
+            - IAsymmetricAlgorithm: 42m
         - Symmetric/
             - ISymmetricAlgorithm: 4m
         - Hashing/
