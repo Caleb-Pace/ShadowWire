@@ -93,7 +93,7 @@ Client:
             - ISymmetricAlgorithm: 4m
         - Hashing/
             - IHashingAlgorithm: 14m
-    - Cryptography: 41m
+    - Cryptography: 48m
         - Research: 12m
     - CryptoAlgorithms: 2m
     - DerKeyPair: 14m

@@ -1,80 +1,42 @@
-﻿using ShadowWire.Shared.Users;
-using System.Security.Cryptography;
+﻿using ShadowWire.Desktop.Client.Security.Algorithms.Asymmetric;
+using ShadowWire.Desktop.Client.Security.Algorithms.Hashing;
+using ShadowWire.Desktop.Client.Security.Algorithms.Symmetric;
 
 namespace ShadowWire.Desktop.Client.Security;
 
-internal class Cryptography
+/// <summary>
+/// Facade for asymmetric, symmetric, and hashing cryptographic operations.
+/// </summary>
+public sealed class Cryptography(CryptoAlgorithms algorithms) : IAsymmetricAlgorithm, ISymmetricAlgorithm, IHashingAlgorithm
 {
-    public Fingerprint Fingerprint { get { return fingerprint; } }
-    private Fingerprint fingerprint = default; // SHA-256 hash of public key
-
-    public byte[] PublicKey { get { return publicKeyDer; } }
-    private byte[] publicKeyDer = [];  // X.509 format
-    private byte[] privateKeyDer = []; // PKCS#1 format
-
-    private readonly string publicKeyFile;
-    private readonly string privateKeyFile;
+    private readonly CryptoAlgorithms _algorithms = algorithms;
 
 
-    public Cryptography(string publicKeyFile, string privateKeyFile)
-    {
-        this.publicKeyFile = publicKeyFile;
-        this.privateKeyFile = privateKeyFile;
+    //=/ Asymmetric operations
+    public ReadOnlyMemory<byte> AsymmetricDecrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> privateKey)
+        => _algorithms.Asymmetric.AsymmetricDecrypt(data, privateKey);
+    public ReadOnlyMemory<byte> AsymmetricEncrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> publicKey)
+        => _algorithms.Asymmetric.AsymmetricEncrypt(data, publicKey);
+    public DerKeyPair GenerateKeyPair()
+        => _algorithms.Asymmetric.GenerateKeyPair();
+    public ReadOnlyMemory<byte> Sign(ReadOnlySpan<byte> data, ReadOnlySpan<byte> privateKey)
+        => _algorithms.Asymmetric.Sign(data, privateKey);
+    public bool VerifySignature(ReadOnlySpan<byte> data, ReadOnlySpan<byte> signature, ReadOnlySpan<byte> publicKey)
+        => _algorithms.Asymmetric.VerifySignature(data, signature, publicKey);
 
-        ResolveKeyPair();
-    }
+
+    //=/ Symmetric operations
+    public ReadOnlyMemory<byte> Encrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
+        => _algorithms.Symmetric.Encrypt(data, key);
+    public ReadOnlyMemory<byte> GenerateSymmetricKey()
+        => _algorithms.Symmetric.GenerateSymmetricKey();
+    public ReadOnlyMemory<byte> Decrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
+        => _algorithms.Symmetric.Decrypt(data, key);
 
 
-    //=/ Key handling
-    private void ResolveKeyPair()
-    {
-        // Generate key pair if not saved
-        if (!(File.Exists(privateKeyFile) && File.Exists(publicKeyFile)))
-        {
-            // TODO: Remove, for debugging
-            char pubKeyFound = File.Exists(publicKeyFile) ? 'T' : 'F';
-            char privKeyFound = File.Exists(privateKeyFile) ? 'T' : 'F';
-            Console.WriteLine($"Key pair not found, generating...    (pub? {pubKeyFound}; priv? {privKeyFound})");
-
-            GenerateRsaKeyPair();
-
-            Console.WriteLine($"New RSA key pair, generated!"); // TODO: Remove, for debugging
-        }
-        else
-        {
-            LoadKeyPair();
-            
-            Console.WriteLine($"Found RSA key pair!"); // TODO: Remove, for debugging
-        }
-
-        // Create fingerprint
-        fingerprint = new Fingerprint(SHA256.HashData(publicKeyDer));
-    }
-
-    // TODO: (Later) include key encryption options
-    private void GenerateRsaKeyPair()
-    {
-        const int KEY_SIZE = 2048; // In bits
-
-        // Generate keys
-        using (var rsa = RSA.Create(KEY_SIZE))
-        {
-            privateKeyDer = rsa.ExportPkcs8PrivateKey();
-            publicKeyDer = rsa.ExportSubjectPublicKeyInfo();
-        }
-
-        SaveKeyPair();
-    }
-
-    private void SaveKeyPair()
-    {
-        File.WriteAllBytes(publicKeyFile, publicKeyDer);
-        File.WriteAllBytes(privateKeyFile, privateKeyDer);
-    }
-
-    private void LoadKeyPair()
-    {
-        publicKeyDer = File.ReadAllBytes(publicKeyFile);
-        privateKeyDer = File.ReadAllBytes(privateKeyFile);
-    }
+    //=/ Hashing operations
+    public ReadOnlyMemory<byte> Hash(ReadOnlySpan<byte> data)
+        => _algorithms.Hashing.Hash(data);
+    public ReadOnlyMemory<byte> GenerateHMAC(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
+        => _algorithms.Hashing.GenerateHMAC(data, key);
 }
