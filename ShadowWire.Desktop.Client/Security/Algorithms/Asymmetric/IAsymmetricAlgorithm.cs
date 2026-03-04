@@ -19,7 +19,7 @@ public interface IAsymmetricAlgorithm
     /// <param name="publicKey">The public key used for encryption.</param>
     /// <returns>The encrypted data.</returns>
     /// <exception cref="System.Security.Cryptography.CryptographicException">Thrown if the key is invalid or data is too large.</exception>
-    ReadOnlyMemory<byte> Encrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> publicKey);
+    ReadOnlyMemory<byte> AsymmetricEncrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> publicKey);
 
     /// <summary>
     /// Decrypts the specified <paramref name="data"/> using the provided <paramref name="privateKey"/>.
@@ -27,7 +27,7 @@ public interface IAsymmetricAlgorithm
     /// <param name="data">The data to decrypt.</param>
     /// <param name="privateKey">The private key used for decryption.</param>
     /// <returns>The decrypted data.</returns>
-    ReadOnlyMemory<byte> Decrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> privateKey);
+    ReadOnlyMemory<byte> AsymmetricDecrypt(ReadOnlySpan<byte> data, ReadOnlySpan<byte> privateKey);
 
 
     /// <summary>

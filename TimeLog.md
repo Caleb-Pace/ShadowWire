@@ -85,15 +85,15 @@ Client:
 - Version setup: 1m
 - Connection: 35m
 - Security/
-    - Planning: 38m 8m
+    - Planning: 46m
     - Algorithms/
         - Asymmetric/
-            - IAsymmetricAlgorithm: 42m
+            - IAsymmetricAlgorithm: 43m
         - Symmetric/
             - ISymmetricAlgorithm: 4m
         - Hashing/
             - IHashingAlgorithm: 14m
-    - Cryptography: 36m
+    - Cryptography: 41m
         - Research: 12m
     - CryptoAlgorithms: 2m
     - DerKeyPair: 14m
