@@ -19,10 +19,10 @@ public sealed class Cryptography(CryptoAlgorithms algorithms) : IAsymmetricAlgor
         => _algorithms.Asymmetric.AsymmetricEncrypt(data, publicKey);
     public DerKeyPair GenerateKeyPair()
         => _algorithms.Asymmetric.GenerateKeyPair();
-    public ReadOnlyMemory<byte> Sign(ReadOnlySpan<byte> data, ReadOnlySpan<byte> privateKey)
-        => _algorithms.Asymmetric.Sign(data, privateKey);
-    public bool VerifySignature(ReadOnlySpan<byte> data, ReadOnlySpan<byte> signature, ReadOnlySpan<byte> publicKey)
-        => _algorithms.Asymmetric.VerifySignature(data, signature, publicKey);
+    public ReadOnlyMemory<byte> Sign(ReadOnlySpan<byte> hash, ReadOnlySpan<byte> privateKey)
+        => _algorithms.Asymmetric.Sign(hash, privateKey);
+    public bool VerifySignature(ReadOnlySpan<byte> hash, ReadOnlySpan<byte> signature, ReadOnlySpan<byte> publicKey)
+        => _algorithms.Asymmetric.VerifySignature(hash, signature, publicKey);
 
 
     //=/ Symmetric operations
