@@ -88,7 +88,7 @@ Client:
 - Network/
     - Connection: 35m
 - Security/
-    - Planning: 46m
+    - Planning: 50m
     - Algorithms/
         - Asymmetric/
             - IAsymmetricAlgorithm: 48m
@@ -96,7 +96,8 @@ Client:
         - Symmetric/
             - ISymmetricAlgorithm: 4m
         - Hashing/
-            - IHashingAlgorithm: 14m
+            - IHashingAlgorithm: 18m
+            - Sha256Hasher: 6m
     - Cryptography: 48m
         - Research: 12m
     - CryptoAlgorithms: 2m
