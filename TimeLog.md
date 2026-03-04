@@ -92,7 +92,7 @@ Client:
         - Symmetric/
             - ISymmetricAlgorithm: 4m
         - Hashing/
-            - IHashingAlgorithm: 
+            - IHashingAlgorithm: 14m
     - Cryptography: 36m
         - Research: 12m
 - Register with Server: 20m
