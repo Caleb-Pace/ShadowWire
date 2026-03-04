@@ -12,11 +12,17 @@ public class BasicKeyStorage(string publicKeyFilePath, string privateKeyFilePath
         File.WriteAllBytes(_privateKeyFilePath, derKeyPair.PrivateKey.Span);
     }
 
-    public DerKeyPair LoadKeyPair()
+    public DerKeyPair? LoadKeyPair()
     {
-        return new DerKeyPair(
-            publicKey: File.ReadAllBytes(_publicKeyFilePath),
-            privateKey: File.ReadAllBytes(_privateKeyFilePath)
-        );
+        bool keyFilesExist = File.Exists(_publicKeyFilePath) && File.Exists(_privateKeyFilePath);
+        if (keyFilesExist)
+        {
+            return new DerKeyPair(
+                publicKey: File.ReadAllBytes(_publicKeyFilePath),
+                privateKey: File.ReadAllBytes(_privateKeyFilePath)
+            );
+        }
+
+        return null;
     }
 }

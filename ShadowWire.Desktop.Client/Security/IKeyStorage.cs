@@ -2,6 +2,6 @@
 
 public interface IKeyStorage
 {
-    DerKeyPair LoadKeyPair();
+    DerKeyPair? LoadKeyPair();
     void SaveKeyPair(DerKeyPair derKeyPair);
 }
