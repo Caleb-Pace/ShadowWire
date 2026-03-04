@@ -83,12 +83,16 @@ Client:
 - Test setup: 3m
 - WebSocket setup: 15m
 - Version setup: 1m
-- Connection: 35m
+- Register with Server: 20m
+- Security refactor re-implementation: 6m
+- Network/
+    - Connection: 35m
 - Security/
     - Planning: 46m
     - Algorithms/
         - Asymmetric/
-            - IAsymmetricAlgorithm: 43m
+            - IAsymmetricAlgorithm: 48m
+            - RsaAlgorithm: 38m
         - Symmetric/
             - ISymmetricAlgorithm: 4m
         - Hashing/
@@ -100,7 +104,6 @@ Client:
     - KeyResolver: 22m
     - IKeyStorage: 2m
     - BasicKeyStorage: 6m
-- Register with Server: 20m
 - Services/
     - Planning: 21m
     - IMessageService: 2m
