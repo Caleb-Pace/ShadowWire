@@ -79,7 +79,7 @@ Server:
 
 Client:
 - Testing: 6m
-- Planning: 2h 3m
+- Planning: 2h 5m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Version setup: 1m
@@ -88,19 +88,21 @@ Client:
 - Network/
     - Connection: 35m
 - Security/
-    - Planning: 50m
+    - Planning: 54m
     - Algorithms/
         - Asymmetric/
             - IAsymmetricAlgorithm: 48m
             - RsaAlgorithm: 38m
         - Symmetric/
             - ISymmetricAlgorithm: 4m
+            - Aes256GcmAlgorithm: 47m
         - Hashing/
             - IHashingAlgorithm: 18m
             - Sha256Hasher: 6m
-    - Cryptography: 48m
-        - Research: 12m
-    - CryptoAlgorithms: 2m
+    - ~~Cryptography~~: 48m
+    - CryptoAlgorithmSuite: 5m
+        - Research: 17m
+        - Implementation: 1m
     - DerKeyPair: 14m
     - KeyResolver: 22m
     - IKeyStorage: 2m
