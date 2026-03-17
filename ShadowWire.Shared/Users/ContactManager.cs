@@ -13,7 +13,9 @@ public class ContactManager
     {
         contactsFile = file;
         LoadContacts();
-        Console.WriteLine($"{contacts.Count} contacts loaded! (lN: {contactsByName.Count}| lF: {contactsByFingerprint.Count})"); // TODO: Remove, for debugging
+
+        // TODO: Remove, for debugging
+        Console.WriteLine($"{contacts.Count} contacts loaded! (ByName count: {contactsByName.Count}| ByFingerprint count: {contactsByFingerprint.Count})");
     }
 
 
