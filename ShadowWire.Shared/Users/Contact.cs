@@ -21,7 +21,7 @@ public readonly struct Contact : IEncodable
     public ReadOnlyMemory<byte> PublicKeyDer { get; init; }
 
 
-    public Contact(string nickname, Fingerprint fingerprint, byte[] publicKeyDer)
+    public Contact(string nickname, Fingerprint fingerprint, ReadOnlyMemory<byte> publicKeyDer)
     {
         Nickname = nickname;
         Fingerprint = fingerprint;
