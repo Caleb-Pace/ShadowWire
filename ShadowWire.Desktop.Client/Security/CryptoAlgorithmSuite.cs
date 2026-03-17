@@ -4,7 +4,7 @@ using ShadowWire.Desktop.Client.Security.Algorithms.Symmetric;
 
 namespace ShadowWire.Desktop.Client.Security;
 
-public readonly record struct CryptoAlgorithms
+public readonly record struct CryptoAlgorithmSuite
 (
     IAsymmetricAlgorithm Asymmetric,
     ISymmetricAlgorithm Symmetric,
