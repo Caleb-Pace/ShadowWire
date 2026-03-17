@@ -12,7 +12,7 @@ Protocol structure research: 20m
 
 Shared:
 - Moving & setup: 8m
-- Contacts: 1h 6m
+- Contacts: 1h 7m
     - Planning: 20m
     - Persistence: 35m
         - Bson issue: 41m
@@ -84,7 +84,7 @@ Client:
 - WebSocket setup: 15m
 - Version setup: 1m
 - Register with Server: 20m
-- Security refactor re-implementation: 6m
+- Security refactor re-implementation: 10m
 - Network/
     - Connection: 35m
 - Security/
@@ -102,7 +102,6 @@ Client:
     - ~~Cryptography~~: 48m
     - CryptoAlgorithmSuite: 5m
         - Research: 17m
-        - Implementation: 1m
     - DerKeyPair: 14m
     - KeyResolver: 22m
     - IKeyStorage: 2m
