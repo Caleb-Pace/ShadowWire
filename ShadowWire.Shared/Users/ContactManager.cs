@@ -37,10 +37,7 @@ public class ContactManager
                 int length = binReader.ReadInt32();
                 byte[] data = binReader.ReadBytes(length);
 
-                if (!ContactBinaryCodec.TryDecode(data, out Contact contact)) continue;
-
-                // Add & index contact
-                TryAddCore(contact);
+                TryAddFromBytes(data);
             }
         }
     }
@@ -50,9 +47,10 @@ public class ContactManager
         using (var fileStream = File.Open(contactsFile, FileMode.Create))
         using (var binWriter = new BinaryWriter(fileStream))
         {
+
             foreach (var contact in contacts)
             {
-                var data = ContactBinaryCodec.Encode(contact);
+                var data = contact.Encode();
                 binWriter.Write(data.Length);
                 binWriter.Write(data);
             }
@@ -103,9 +101,15 @@ public class ContactManager
 
     public bool TryAddFromBytes(byte[] encodedContact)
     {
-        if (!ContactBinaryCodec.TryDecode(encodedContact, out Contact contact))
-            return false; // Early exit: Decoding failed
-        return TryAdd(contact);
+        try
+        {
+            var contact = new Contact(encodedContact);
+            return TryAdd(contact);
+        }
+        catch
+        {
+            return false; // Decoding failed
+        }
     }
 
 
