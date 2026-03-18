@@ -181,7 +181,7 @@ def total_times(time_log_filepath: str, total_filepath: str, parent_directory: s
 
 def main():
     parent_directory = os.getcwd()
-    time_log_filepath = os.path.join(parent_directory, "TimeLog.md")
+    time_log_filepath = os.path.join(parent_directory, "docs", "TimeLog.md")
     total_filepath = os.path.join(parent_directory, "README.md")
 
     total_times(time_log_filepath, total_filepath, parent_directory)

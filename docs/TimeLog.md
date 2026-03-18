@@ -1,8 +1,11 @@
 Project setup: 20m
 Brainstorm: 3h 1m
-- Comms Sequence Diagrams: 2h 2m
+    - Comms Sequence Diagrams: 2h 2m
 Planning:
-- MVP: 14m
+    - MVP: 15m
+README updates: 2h 47m
+docs/:
+    - Restructure: 5m
 
 Websocket library research: 9m
 Project structure planning: 27m
