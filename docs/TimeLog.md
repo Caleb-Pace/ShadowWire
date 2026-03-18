@@ -3,7 +3,7 @@ Brainstorm: 3h 1m
     - Comms Sequence Diagrams: 2h 2m
 Planning:
     - MVP: 15m
-ReadMe updates: 8m
+README updates: 2h 47m
 docs/:
     - Restructure: 5m
 
