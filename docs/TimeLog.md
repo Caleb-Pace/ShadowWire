@@ -82,7 +82,7 @@ Server:
 
 Client:
 - Testing: 6m
-- Planning: 2h 37m
+- Planning: 2h 41m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Version setup: 1m
@@ -117,8 +117,16 @@ Client:
     - ClientMessageHandlerRegistry: 6m
 - ClientContext: 8m
 - EventBus: 7m
-- CLI: 6m
-- Scenes/
-    - BaseScene: 9m
-    - Home: 2m
-    - Chat: 
+- CLI/
+    - Planning: 54m
+    - Cli: 9m
+    - KeyReader:
+    - Components/
+        - TextInput: 25m
+    - Events/
+        - UiEvent: 6m
+        - IEventSink: 1m
+    - Scenes/
+        - BaseScene: 9m
+        - Home: 3m
+        - Chat: 

@@ -1,0 +1,15 @@
+﻿namespace ShadowWire.Desktop.Client.CLI.Events;
+
+public abstract record UiEvent();
+
+// Core UI
+public record Redraw : UiEvent;
+public record Quit : UiEvent;
+public record ChangeScene(Scenes.BaseScene NewScene) : UiEvent;
+
+// Input
+public record KeyEvent(ConsoleKeyInfo KeyInfo) : UiEvent;
+public record PasteEvent(string Text) : UiEvent;
+
+// Messages
+public record MessageReceived(string Text) : UiEvent;
