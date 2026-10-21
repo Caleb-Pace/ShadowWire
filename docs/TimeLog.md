@@ -120,7 +120,7 @@ Client:
 - CLI/
     - Planning: 57m
     - Cli: 25m
-    - KeyReader:
+    - KeyReader: 7m
     - Components/
         - TextInput: 25m
     - Events/
