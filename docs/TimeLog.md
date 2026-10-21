@@ -118,8 +118,8 @@ Client:
 - ClientContext: 8m
 - EventBus: 7m
 - CLI/
-    - Planning: 54m
-    - Cli: 9m
+    - Planning: 57m
+    - Cli: 25m
     - KeyReader:
     - Components/
         - TextInput: 25m
