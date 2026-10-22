@@ -119,11 +119,11 @@ Client:
 - EventBus: 7m
 - CLI/
     - Planning: 57m
-    - Cli: 25m
+    - Cli: 30m
     - KeyReader: 16m
     - Components/
-        - BaseComponent: 5m
-        - TextInput: 1h 10m
+        - BaseComponent: 9m
+        - TextInput: 1h 14m
         - MultilineTextInput: 21m
     - Events/
         - UiEvent: 6m
