@@ -122,7 +122,9 @@ Client:
     - Cli: 25m
     - KeyReader: 11m
     - Components/
-        - TextInput: 53m
+        - BaseComponent: 5m
+        - TextInput: 50m
+        - MultilineTextInput: 20m
     - Events/
         - UiEvent: 6m
         - IEventSink: 1m
