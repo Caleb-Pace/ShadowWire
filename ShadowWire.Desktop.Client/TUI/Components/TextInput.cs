@@ -9,7 +9,7 @@ public class TextInput : BaseComponent
     protected readonly StringBuilder _buffer = new();
 
     public Func<char, bool> Allowed { get; init; } = _ => true;
-    public int MinLength { get; init; } = 1;
+    public int MinLength { get; init; } = 0;
     public int MaxLength { get; init; } = int.MaxValue;
 
     protected int _hiddenAmount = 0;
@@ -61,7 +61,11 @@ public class TextInput : BaseComponent
         }
 
         if (consumed)
+        {
             Reflow();
+            Invalidate(); // Redraw
+        }
+
         return consumed;
     }
 
@@ -136,7 +140,8 @@ public class TextInput : BaseComponent
         else if (_index - _hiddenAmount > w - 1)
             _hiddenAmount = _index - (w - 1);
 
-        Cursor = new Point(_index - _hiddenAmount, 0);
+        // Absolute screen position.
+        Cursor = new Point(X + _index - _hiddenAmount, Y);
     }
 
 
@@ -146,10 +151,14 @@ public class TextInput : BaseComponent
         Reflow();
     }
 
-    public override void Draw()
+    protected override void Draw()
     {
+        // Draw the text from the field's origin, padded so deleted characters get erased.
+        Console.SetCursorPosition(X, Y);
+        Console.Write(VisibleText.PadRight(Math.Max(1, Width)));
+
+        // Put the terminal cursor where the user is typing.
         Console.SetCursorPosition(Cursor.X, Cursor.Y);
-        Console.Write(VisibleText);
     }
 
 
@@ -180,6 +189,10 @@ public class TextInput : BaseComponent
     public void Clear()
     {
         _buffer.Clear();
+        _index = 0;
+        _hiddenAmount = 0;
         Cursor = Origin;
+
+        Invalidate(); // Redraw
     }
 }
