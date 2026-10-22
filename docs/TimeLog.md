@@ -123,8 +123,8 @@ Client:
     - KeyReader: 16m
     - Components/
         - BaseComponent: 15m
-        - TextInput: 1h 31m
-        - MultilineTextInput: 39m
+        - TextInput: 1h 33m
+        - MultilineTextInput: 45m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m

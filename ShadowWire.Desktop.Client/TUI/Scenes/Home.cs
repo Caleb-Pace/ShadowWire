@@ -6,7 +6,7 @@ namespace ShadowWire.Desktop.Client.TUI.Scenes;
 
 public class Home : IScene
 {
-    protected MultilineTextInput _input = new MultilineTextInput(new Point(0, 0), new(5, 3))
+    protected TextInput _input = new MultilineTextInput(new Point(0, 1), new(5, 3))
     {
         AllowNewlines = true,
     };
@@ -47,6 +47,11 @@ public class Home : IScene
             Console.CursorVisible = false; // Hide cursor during draws to avoid flashing.
 
         // Redraw
+        if (anyDirty)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("01234567890123456789");
+        }
         _input.Render();
 
         if (anyDirty && _inputEnabled)

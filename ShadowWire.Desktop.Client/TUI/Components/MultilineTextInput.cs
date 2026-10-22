@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 
 namespace ShadowWire.Desktop.Client.TUI.Components;
+
 public class MultilineTextInput(Point origin, Size size) : TextInput(origin, size)
 {
     /// <summary>
@@ -8,7 +9,6 @@ public class MultilineTextInput(Point origin, Size size) : TextInput(origin, siz
     /// </summary>
     public bool AllowNewlines { get; init; } = false;
 
-    //VisibleText
     protected readonly List<int> _lineStarts = new() { 0 }; // Buffer index where each wrapped line begins.
 
 
@@ -51,8 +51,8 @@ public class MultilineTextInput(Point origin, Size size) : TextInput(origin, siz
 
     protected override void Reflow()
     {
-        // Wrap: a new line starts after '\n' or once the line is full (Width - 1, keeping a cell for the caret).
-        int w = Math.Max(1, Width - 1);
+        // Wrap: a new line starts after '\n' or once the line is full
+        int w = Math.Max(1, Width);
         _lineStarts.Clear();
         _lineStarts.Add(0);
         for (int i = 1; i <= _buffer.Length; i++)
