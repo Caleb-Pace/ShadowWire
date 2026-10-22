@@ -22,11 +22,13 @@ public class Tui(IScene startingScene) : IEventSink
 
     public async Task RunAsync()
     {
+        _scene.Render(); // Initial render
+
         await foreach (UiEvent e in _events.Reader.ReadAllAsync())
         {
             if (!Dispatch(e)) return;
 
-            // Coalesce queued events, then draw once
+            // Coalesce queued events, then draw once.
             while (_events.Reader.TryRead(out var nextEvent))
                 if (!Dispatch(nextEvent)) return;
 

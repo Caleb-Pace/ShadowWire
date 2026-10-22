@@ -119,7 +119,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Planning: 1h
-    - Tui: 36m
+    - Tui: 38m
     - KeyReader: 16m
     - Components/
         - BaseComponent: 15m
