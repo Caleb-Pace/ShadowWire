@@ -1,6 +1,7 @@
-﻿namespace ShadowWire.Desktop.Client.TUI.Components;
-/*
-public class MultilineTextInput : TextInput
+﻿using System.Drawing;
+
+namespace ShadowWire.Desktop.Client.TUI.Components;
+public class MultilineTextInput(Point origin, Size size) : TextInput(origin, size)
 {
     /// <summary>
     /// When <see langword="true"/>, <c>{ Shift + Enter }</c> inserts a newline and pasted newlines are kept.
@@ -8,6 +9,7 @@ public class MultilineTextInput : TextInput
     public bool AllowNewlines { get; init; } = false;
 
     //VisibleText
+    protected readonly List<int> _lineStarts = new() { 0 }; // Buffer index where each wrapped line begins.
 
 
     protected override bool HandleKey(ConsoleKeyInfo k)
@@ -47,6 +49,51 @@ public class MultilineTextInput : TextInput
         }
     }
 
-    //Reflow
+    protected override void Reflow()
+    {
+        // Wrap: a new line starts after '\n' or once the line is full (Width - 1, keeping a cell for the caret).
+        int w = Math.Max(1, Width - 1);
+        _lineStarts.Clear();
+        _lineStarts.Add(0);
+        for (int i = 1; i <= _buffer.Length; i++)
+            if (_buffer[i - 1] == '\n' || i - _lineStarts[^1] == w)
+                _lineStarts.Add(i);
+
+        int row = _lineStarts.FindLastIndex(start => (start <= _index));
+
+        int h = Math.Max(1, Height);
+        int maxScroll = Math.Max(0, _lineStarts.Count - h);
+        _hiddenAmount = Math.Clamp(_hiddenAmount, 0, maxScroll);
+
+        if (row < _hiddenAmount)
+            _hiddenAmount = row;
+        else if (row - _hiddenAmount > h - 1)
+            _hiddenAmount = row - (h - 1);
+
+        // Absolute screen position.
+        Cursor = new Point(X + _index - _lineStarts[row], Y + row - _hiddenAmount);
+    }
+
+
+    protected override void Draw()
+    {
+        for (int r = 0; r < Height; r++)
+        {
+            Console.SetCursorPosition(X, Y + r);
+            Console.Write(LineText(_hiddenAmount + r).PadRight(Math.Max(1, Width)));
+        }
+
+        Console.SetCursorPosition(Cursor.X, Cursor.Y);
+    }
+
+    private string LineText(int row)
+    {
+        if (row >= _lineStarts.Count)
+            return string.Empty;
+
+        int start = _lineStarts[row];
+        int end   = (row + 1 < _lineStarts.Count) ? _lineStarts[row + 1] : _buffer.Length;
+
+        return _buffer.ToString(start, (end - start)).TrimEnd('\n');
+    }
 }
-*/
