@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShadowWire.Desktop.Client.TUI.Components;
 
-public class TextInput : BaseComponent
+public class TextInput : BaseComponent, IEventConsumer
 {
     protected readonly StringBuilder _buffer = new();
 
@@ -40,7 +40,6 @@ public class TextInput : BaseComponent
         => Cursor = origin;
 
 
-    /// <returns><see langword="true"/> if the event was consumed.</returns>
     public bool Handle(UiEvent e)
     {
         bool consumed =  false;
