@@ -1,4 +1,4 @@
-﻿namespace ShadowWire.Desktop.Client.CLI.Events;
+﻿namespace ShadowWire.Desktop.Client.TUI.Events;
 
 public abstract record UiEvent();
 

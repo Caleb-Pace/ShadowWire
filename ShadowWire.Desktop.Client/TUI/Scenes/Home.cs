@@ -1,8 +1,8 @@
-﻿using ShadowWire.Desktop.Client.CLI.Components;
-using ShadowWire.Desktop.Client.CLI.Events;
+﻿using ShadowWire.Desktop.Client.TUI.Components;
+using ShadowWire.Desktop.Client.TUI.Events;
 using System.Drawing;
 
-namespace ShadowWire.Desktop.Client.CLI.Scenes;
+namespace ShadowWire.Desktop.Client.TUI.Scenes;
 
 public class Home : IScene
 {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace ShadowWire.Desktop.Client.CLI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components;
 
 public abstract class BaseComponent(Point origin, Size size)
 {

@@ -1,6 +1,6 @@
 ## MVP (Minimum Viable Product)
 
-### Client - Basic CLI
+### Client - Basic TUI
 - [x] Setup
 	- [x] Generate & store key pair.
 	- [x] Get & store username.

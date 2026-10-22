@@ -117,13 +117,13 @@ Client:
     - ClientMessageHandlerRegistry: 6m
 - ClientContext: 8m
 - EventBus: 7m
-- CLI/
-    - Planning: 57m
-    - Cli: 30m
+- TUI/
+    - Planning: 1h
+    - Tui: 35m
     - KeyReader: 16m
     - Components/
         - BaseComponent: 9m
-        - TextInput: 1h 16m
+        - TextInput: 1h 20m
         - MultilineTextInput: 21m
     - Events/
         - UiEvent: 6m

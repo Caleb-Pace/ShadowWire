@@ -1,8 +1,8 @@
-﻿using ShadowWire.Desktop.Client.CLI.Events;
+﻿using ShadowWire.Desktop.Client.TUI.Events;
 using System.Drawing;
 using System.Text;
 
-namespace ShadowWire.Desktop.Client.CLI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components;
 
 public class TextInput : BaseComponent
 {

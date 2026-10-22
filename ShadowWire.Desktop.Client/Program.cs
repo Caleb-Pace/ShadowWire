@@ -1,9 +1,12 @@
-﻿using ShadowWire.Desktop.Client.Network;
+﻿using ShadowWire.Desktop.Client.TUI;
+using ShadowWire.Desktop.Client.TUI.Scenes;
+using ShadowWire.Desktop.Client.Network;
 using ShadowWire.Desktop.Client.Security;
 using ShadowWire.Desktop.Client.Security.Algorithms.Asymmetric;
 using ShadowWire.Desktop.Client.Security.Algorithms.Hashing;
 using ShadowWire.Desktop.Client.Security.Algorithms.Symmetric;
 using ShadowWire.Desktop.Client.Services;
+using ShadowWire.Desktop.Client.TUI;
 using ShadowWire.Shared;
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
@@ -21,7 +24,7 @@ internal class Program
     {
         const string URI = "ws://127.0.0.1:4960/ws/";
 
-
+        /*
         // Initialise cryptography
         var cryptoAlgorithms = new CryptoAlgorithmSuite(
             Asymmetric: new RsaAlgorithm(HashAlgorithmName.SHA256),
@@ -61,6 +64,14 @@ internal class Program
         var respBin = await connection.ReceiveAsync();
         var content = respBin.Length > 1 ? $"\"{Encoding.UTF8.GetString(respBin.AsSpan(1))}\"" : "";
         Console.WriteLine($"Response from the server: ({respBin[0]}:{(MessageKind)respBin[0]}) with length of {respBin.Length}; {content}");
+        //*/
+
+
+        // Start TUI
+        Tui tui = new( new Home() );
+        new KeyReader(tui).Start(); // Start keyboard listener
+
+        tui.RunAsync().GetAwaiter().GetResult();
 
 
         // TODO: Remove, for testing

@@ -1,7 +1,7 @@
-﻿using ShadowWire.Desktop.Client.CLI.Events;
+﻿using ShadowWire.Desktop.Client.TUI.Events;
 using System.Text;
 
-namespace ShadowWire.Desktop.Client.CLI;
+namespace ShadowWire.Desktop.Client.TUI;
 
 public class KeyReader(IEventSink sink)
 {

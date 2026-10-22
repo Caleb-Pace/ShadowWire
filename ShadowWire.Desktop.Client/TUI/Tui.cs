@@ -1,23 +1,24 @@
-﻿using ShadowWire.Desktop.Client.CLI.Events;
-using ShadowWire.Desktop.Client.CLI.Scenes;
+﻿using ShadowWire.Desktop.Client.TUI.Events;
+using ShadowWire.Desktop.Client.TUI.Scenes;
 using System.Threading.Channels;
 
-namespace ShadowWire.Desktop.Client.CLI;
+namespace ShadowWire.Desktop.Client.TUI;
 
-public class Cli : IEventSink
+public class Tui(IScene startingScene) : IEventSink
 {
     private readonly Channel<UiEvent> _events = Channel.CreateUnbounded<UiEvent>(new UnboundedChannelOptions()
     {
         SingleReader = true,
         SingleWriter = false
     });
-    private IScene _scene;
+    private IScene _scene = startingScene;
 
 
     /// <summary>
     /// Thread-safe event posting
     /// </summary>
-    public void Post(UiEvent e) => _events.Writer.TryWrite(e);
+    public void Post(UiEvent e)
+        => _events.Writer.TryWrite(e);
 
     public async Task RunAsync()
     {
