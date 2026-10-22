@@ -1,4 +1,5 @@
 ﻿using ShadowWire.Desktop.Client.CLI.Events;
+using System.Drawing;
 using System.Text;
 
 namespace ShadowWire.Desktop.Client.CLI.Components;
@@ -10,13 +11,29 @@ public class TextInput
     public Func<char, bool> Allowed { get; init; } = _ => true;
     public int MinLength { get; init; } = 1;
     public int MaxLength { get; init; } = int.MaxValue;
-    /// <summary>
-    /// When <see langword="true"/>, <c>{ Shift + Enter }</c> inserts a newline and pasted newlines are kept.
-    /// </summary>
-    public bool AllowNewlines { get; init; } = false;
 
-    public int Cursor { get; private set; }
+    public int Width
+    {
+        get => _width;
+        set { _width = value; Reflow(); }
+    }
+    protected int _width = int.MaxValue;
+    protected int _hiddenAmount = 0;
+    protected int _index = 0; // Position in the underlying buffer.
+    public Point Cursor { get; protected set; }
+    
     public string Text => _buffer.ToString();
+    /// <summary>
+    /// The slice of text to draw. Long text is hidden on the left so the cursor stays visible.
+    /// </summary>
+    public virtual string VisibleText
+    {
+        get
+        {
+            int len = Math.Min(Math.Max(1, Width), _buffer.Length - _hiddenAmount);
+            return _buffer.ToString(_hiddenAmount, len);
+        }
+    }
     /// <summary>
     /// <see langword="true"/> when the current text satisfies constraints.
     /// </summary>
@@ -26,55 +43,57 @@ public class TextInput
     /// <returns><see langword="true"/> if the event was consumed.</returns>
     public bool Handle(UiEvent e)
     {
+        bool consumed =  false;
+
         switch (e)
         {
             case PasteEvent p:
                 Insert(p.Text);
-                return true;
+                consumed = true;
+                break;
 
             case KeyEvent { KeyInfo: var k }:
-                return HandleKey(k);
+                consumed = HandleKey(k);
+                break;
 
             default:
-                return false;
+                break;
         }
+
+        if (consumed)
+            Reflow();
+        return consumed;
     }
 
     /// <returns><see langword="true"/> if the event was consumed.</returns>
-    protected bool HandleKey(ConsoleKeyInfo k)
+    protected virtual bool HandleKey(ConsoleKeyInfo k)
     {
         switch (k.Key)
         {
-            // Soft newline support: { Shift + Enter }
-            case ConsoleKey.Enter
-            when AllowNewlines && (k.Modifiers & ConsoleModifiers.Shift) != 0:
-                Insert("\n");
-                return true;
-
             case ConsoleKey.Backspace:
-                if (Cursor > 0)
-                    _buffer.Remove(--Cursor, 1);
+                if (_index > 0)
+                    _buffer.Remove(--_index, 1);
                 return true;
 
             case ConsoleKey.Delete:
-                if (Cursor < _buffer.Length)
-                    _buffer.Remove(Cursor, 1);
+                if (_index < _buffer.Length)
+                    _buffer.Remove(_index, 1);
                 return true;
 
             case ConsoleKey.LeftArrow:
-                Cursor = Math.Max(0, Cursor - 1);
+                _index = Math.Max(0, _index - 1);
                 return true;
 
             case ConsoleKey.RightArrow:
-                Cursor = Math.Min(_buffer.Length, Cursor + 1);
+                _index = Math.Min(_buffer.Length, _index + 1);
                 return true;
 
             case ConsoleKey.Home:
-                Cursor = 0;
+                _index = 0;
                 return true;
 
             case ConsoleKey.End:
-                Cursor = _buffer.Length;
+                _index = _buffer.Length;
                 return true;
         }
 
@@ -87,22 +106,37 @@ public class TextInput
         return false; // Key not handled by text input, defer.
     }
 
-    protected void Insert(string text)
+    protected virtual void Insert(string text)
     {
-        // Normalise line endings
-        text = text.Replace("\r\n", "\n").Replace('\r', '\n');
-
         foreach (var c in text)
         {
-            if (c == '\n' && !AllowNewlines)
-                continue; // Strip
-            else if (char.IsControl(c) || !Allowed(c))
+            if (char.IsControl(c) || !Allowed(c))
                 continue; // Ignore
             if (_buffer.Length >= MaxLength)
                 break;    // Limit reached.
             
-            _buffer.Insert(Cursor++, c);
+            _buffer.Insert(_index++, c);
         }
+    }
+
+    /// <summary>
+    /// Recomputes scroll offset and <see cref="Cursor"/> after any change to text, index or size.
+    /// </summary>
+    protected virtual void Reflow()
+    {
+        int w = Math.Max(1, Width);
+
+        // Don't leave blank space on the right after deleting; keep the cursor cell reserved.
+        int maxScroll = Math.Max(0, _buffer.Length - (w - 1));
+        _hiddenAmount = Math.Clamp(_hiddenAmount, 0, maxScroll);
+
+        // Scroll just enough to keep the cursor visible.
+        if (_index < _hiddenAmount)
+            _hiddenAmount = _index;
+        else if (_index - _hiddenAmount > w - 1)
+            _hiddenAmount = _index - (w - 1);
+
+        Cursor = new Point(_index - _hiddenAmount, 0);
     }
 
 
