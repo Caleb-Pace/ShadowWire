@@ -119,16 +119,16 @@ Client:
 - EventBus: 7m
 - TUI/
     - Planning: 1h
-    - Tui: 35m
+    - Tui: 36m
     - KeyReader: 16m
     - Components/
-        - BaseComponent: 9m
-        - TextInput: 1h 20m
+        - BaseComponent: 15m
+        - TextInput: 1h 28m
         - MultilineTextInput: 21m
     - Events/
         - UiEvent: 6m
         - IEventSink: 1m
     - Scenes/
         - BaseScene: 9m
-        - Home: 5m
+        - Home: 20m
         - Chat: 
