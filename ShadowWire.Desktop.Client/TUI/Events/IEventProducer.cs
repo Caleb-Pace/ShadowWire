@@ -1,6 +1,6 @@
 ﻿namespace ShadowWire.Desktop.Client.TUI.Events;
 
-public interface IEventSink
+public interface IEventProducer
 {
     public void Post(UiEvent e);
 }

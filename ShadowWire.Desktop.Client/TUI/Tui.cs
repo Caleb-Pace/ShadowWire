@@ -4,7 +4,7 @@ using System.Threading.Channels;
 
 namespace ShadowWire.Desktop.Client.TUI;
 
-public class Tui(IScene startingScene) : IEventSink
+public class Tui(IScene startingScene) : IEventProducer
 {
     private readonly Channel<UiEvent> _events = Channel.CreateUnbounded<UiEvent>(new UnboundedChannelOptions()
     {

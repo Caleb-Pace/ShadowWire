@@ -3,9 +3,9 @@ using System.Text;
 
 namespace ShadowWire.Desktop.Client.TUI;
 
-public class KeyReader(IEventSink sink)
+public class KeyReader(IEventProducer sink)
 {
-    private readonly IEventSink _sink = sink;
+    private readonly IEventProducer _sink = sink;
     private Thread? _thread;
 
 

@@ -118,7 +118,7 @@ Client:
 - ClientContext: 8m
 - EventBus: 7m
 - TUI/
-    - Planning: 1h
+    - Planning: 1h 9m
     - Tui: 38m
     - KeyReader: 16m
     - Components/
@@ -127,7 +127,8 @@ Client:
         - MultilineTextInput: 39m
     - Events/
         - UiEvent: 6m
-        - IEventSink: 1m
+        - IEventProducer: 1m
+        - IEventConsumer: 1m
     - Scenes/
         - BaseScene: 9m
         - Home: 23m
