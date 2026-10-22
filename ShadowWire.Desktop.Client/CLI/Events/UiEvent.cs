@@ -5,7 +5,7 @@ public abstract record UiEvent();
 // Core UI
 public record Redraw : UiEvent;
 public record Quit : UiEvent;
-public record ChangeScene(Scenes.BaseScene NewScene) : UiEvent;
+public record ChangeScene(Scenes.IScene NewScene) : UiEvent;
 
 // Input
 public record KeyEvent(ConsoleKeyInfo KeyInfo) : UiEvent;
