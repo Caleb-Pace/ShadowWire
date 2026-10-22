@@ -2,8 +2,7 @@
 
 namespace ShadowWire.Desktop.Client.TUI.Scenes;
 
-public interface IScene
+public interface IScene : IEventConsumer
 {
-    public void Handle(UiEvent e);
     public void Render();
 }

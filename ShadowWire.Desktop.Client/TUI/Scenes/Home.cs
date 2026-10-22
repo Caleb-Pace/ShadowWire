@@ -6,32 +6,37 @@ namespace ShadowWire.Desktop.Client.TUI.Scenes;
 
 public class Home : IScene
 {
-    protected TextInput _input = new TextInput(new Point(0,0), 20);
+    protected MultilineTextInput _input = new MultilineTextInput(new Point(0, 0), new(5, 3))
+    {
+        AllowNewlines = true,
+    };
     private bool _inputEnabled = true;
 
 
-    public void Handle(UiEvent e)
+    public bool Handle(UiEvent e)
     {
         bool consumed = false;
-        
+
         if (_inputEnabled)
             consumed |= _input.Handle(e);
 
-        
+
         if (consumed)
-            return;
+            return true;
 
         if ((e is KeyEvent k) && (k.KeyInfo.Key == ConsoleKey.Enter))
         {
             if (!_input.TryTakeText(out string text))
-                return;
+                return false;
 
             _inputEnabled = false;
             Console.CursorVisible = false;
 
-            Console.SetCursorPosition(_input.X, (_input.Y + 1));
-            Console.WriteLine($"\"{text}\"");
+            Console.SetCursorPosition(_input.X, (_input.Y + _input.Height + 1));
+            Console.WriteLine($"\"{text.Replace("\n", "\\n")}\"");
         }
+
+        return false;
     }
 
     public void Render()

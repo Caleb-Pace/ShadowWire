@@ -130,6 +130,6 @@ Client:
         - IEventProducer: 1m
         - IEventConsumer: 1m
     - Scenes/
-        - BaseScene: 9m
-        - Home: 23m
+        - IScene: 10m
+        - Home: 24m
         - Chat: 
