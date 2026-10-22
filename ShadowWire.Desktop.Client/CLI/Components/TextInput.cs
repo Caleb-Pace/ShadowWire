@@ -12,12 +12,6 @@ public class TextInput : BaseComponent
     public int MinLength { get; init; } = 1;
     public int MaxLength { get; init; } = int.MaxValue;
 
-    public int Width
-    {
-        get => _width;
-        set { _width = value; Reflow(); }
-    }
-    protected int _width = int.MaxValue;
     protected int _hiddenAmount = 0;
     protected int _index = 0; // Position in the underlying buffer.
     public Point Cursor { get; protected set; }
@@ -40,8 +34,10 @@ public class TextInput : BaseComponent
     public bool IsValid => (_buffer.Length >= MinLength);
 
 
-    public TextInput(Point origin, int width) : base(origin, new Size(width, 1)) { }
-    public TextInput(Point origin, Size size) : base(origin, size) { }
+    public TextInput(Point origin, int width) : base(origin, new Size(width, 1))
+        => Cursor = origin;
+    public TextInput(Point origin, Size size) : base(origin, size)
+        => Cursor = origin;
 
 
     /// <returns><see langword="true"/> if the event was consumed.</returns>
@@ -144,6 +140,12 @@ public class TextInput : BaseComponent
     }
 
 
+    public override void Resize(Size newSize)
+    {
+        base.Resize(newSize);
+        Reflow();
+    }
+
     public override void Draw()
     {
         Console.SetCursorPosition(Cursor.X, Cursor.Y);
@@ -178,6 +180,6 @@ public class TextInput : BaseComponent
     public void Clear()
     {
         _buffer.Clear();
-        Cursor = 0;
+        Cursor = Origin;
     }
 }
