@@ -20,7 +20,7 @@ public class TextInput : BaseComponent
     /// <summary>
     /// The slice of text to draw. Long text is hidden on the left so the cursor stays visible.
     /// </summary>
-    public virtual string VisibleText
+    protected virtual string VisibleText
     {
         get
         {
@@ -191,8 +191,8 @@ public class TextInput : BaseComponent
         _buffer.Clear();
         _index = 0;
         _hiddenAmount = 0;
-        Cursor = Origin;
-
+        
+        Reflow();     // Reset Cursor
         Invalidate(); // Redraw
     }
 }
