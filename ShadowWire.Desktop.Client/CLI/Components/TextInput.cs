@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShadowWire.Desktop.Client.CLI.Components;
 
-public class TextInput
+public class TextInput : BaseComponent
 {
     protected readonly StringBuilder _buffer = new();
 
@@ -38,6 +38,10 @@ public class TextInput
     /// <see langword="true"/> when the current text satisfies constraints.
     /// </summary>
     public bool IsValid => (_buffer.Length >= MinLength);
+
+
+    public TextInput(Point origin, int width) : base(origin, new Size(width, 1)) { }
+    public TextInput(Point origin, Size size) : base(origin, size) { }
 
 
     /// <returns><see langword="true"/> if the event was consumed.</returns>
@@ -137,6 +141,13 @@ public class TextInput
             _hiddenAmount = _index - (w - 1);
 
         Cursor = new Point(_index - _hiddenAmount, 0);
+    }
+
+
+    public override void Draw()
+    {
+        Console.SetCursorPosition(Cursor.X, Cursor.Y);
+        Console.Write(VisibleText);
     }
 
 
