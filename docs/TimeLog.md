@@ -123,12 +123,12 @@ Client:
     - KeyReader: 11m
     - Components/
         - BaseComponent: 5m
-        - TextInput: 1h 4m
+        - TextInput: 1h 10m
         - MultilineTextInput: 21m
     - Events/
         - UiEvent: 6m
         - IEventSink: 1m
     - Scenes/
         - BaseScene: 9m
-        - Home: 3m
+        - Home: 5m
         - Chat: 
