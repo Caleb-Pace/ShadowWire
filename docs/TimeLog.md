@@ -120,9 +120,9 @@ Client:
 - CLI/
     - Planning: 57m
     - Cli: 25m
-    - KeyReader: 7m
+    - KeyReader: 11m
     - Components/
-        - TextInput: 25m
+        - TextInput: 53m
     - Events/
         - UiEvent: 6m
         - IEventSink: 1m
