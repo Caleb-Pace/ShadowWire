@@ -82,7 +82,7 @@ Server:
 
 Client:
 - Testing: 6m
-- Planning: 2h 41m
+- Planning: 2h 51m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Version setup: 1m
@@ -118,13 +118,14 @@ Client:
 - ClientContext: 8m
 - EventBus: 7m
 - TUI/
-    - Planning: 1h 9m
+    - Planning: 1h 24m
     - Tui: 38m
     - KeyReader: 16m
     - Components/
         - BaseComponent: 15m
         - TextInput: 1h 33m
         - MultilineTextInput: 45m
+        - Text: 24m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m
