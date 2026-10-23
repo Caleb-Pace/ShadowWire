@@ -74,7 +74,7 @@ Server:
     - MessageRouter: 13m
     - SessionManager: 1h 15m
 - Handlers/
-    - Planning: 53m
+    - Planning: 57m
     - ServerMessageHandlerRegistry: 28m
     - AuthenticationHandler: 1h 3m
     - MessageHandler: 17m
@@ -82,7 +82,7 @@ Server:
 
 Client:
 - Testing: 6m
-- Planning: 2h 51m
+- Planning: 3h 3m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Version setup: 1m
@@ -115,6 +115,7 @@ Client:
     - AuthenticationService: 5m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
+    - MessageHandler: 5m
 - ClientContext: 8m
 - EventBus: 7m
 - TUI/
