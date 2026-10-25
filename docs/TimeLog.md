@@ -43,6 +43,7 @@ Shared:
     - IMessageHandler: 15m
     - IEncodable: 8m
     - IProtocolMessage: 6m
+    - IConversationStorable: 9m
     - Messages/
       - Acknowledge: 1m
       - AuthenticationRequest: 42m
@@ -114,10 +115,10 @@ Client:
     - IMessageService: 2m
     - AuthenticationService: 5m
 - Storage/
-    - Planning: 6m 37m 11m
-    - IConversationRepository:
-    - SqliteConversationRepository:
-    - 
+    - Planning: 1h 33m
+    - IConversationRepository: 3m
+    - StoredEntry: 6m
+    - SqliteConversationRepository: 
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 5m
