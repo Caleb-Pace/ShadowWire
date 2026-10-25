@@ -113,6 +113,11 @@ Client:
     - Planning: 21m
     - IMessageService: 2m
     - AuthenticationService: 5m
+- Storage/
+    - Planning: 6m 37m 11m
+    - IConversationRepository:
+    - SqliteConversationRepository:
+    - 
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 5m
