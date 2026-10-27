@@ -16,7 +16,7 @@ Protocol structure research: 20m
 Shared:
 - Moving & setup: 8m
 - Contacts: 1h 7m
-    - Planning: 49m
+    - Planning: 52m
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
@@ -24,7 +24,7 @@ Shared:
     - Codec improvement: 53m
     - Contact Codec consolidation: 33m
     - Manager updates: 32m
-    - Fingerprint: 1h 1m
+    - Fingerprint: 1h 4m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m

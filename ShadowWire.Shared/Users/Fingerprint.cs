@@ -3,9 +3,11 @@ using System.Security.Cryptography;
 
 namespace ShadowWire.Shared.Users;
 
+// TODO: Handle default(Fingerprint). _value will be null then.
+// TODO: Look into handling memory better, like no copy for routing.
 public readonly struct Fingerprint : IEquatable<Fingerprint>
 {
-    // Note: must be at least 8
+    // Note: must be a multiple of 8
     //       because GetHashCode reads fingerprint in 8-byte chunks.
     public const int SIZE = 32; // 256-bit fingerprint
 
@@ -20,9 +22,6 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     /// Wraps bytes that are already a fingerprint.<br/>
     /// To derive one from a public key, use <see cref="FromPublicKey"/>.
     /// </summary>
-    /// <remarks>
-    /// The memory is not copied, so the caller must not modify it afterwards.
-    /// </remarks>
     /// <param name="value">The raw fingerprint bytes.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is not <see cref="SIZE"/> bytes long.</exception>
     private Fingerprint(ReadOnlyMemory<byte> value)
