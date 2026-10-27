@@ -16,7 +16,7 @@ Protocol structure research: 20m
 Shared:
 - Moving & setup: 8m
 - Contacts: 1h 7m
-    - Planning: 47m
+    - Planning: 49m
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
@@ -56,7 +56,7 @@ Shared:
       - Message: 48m
       - Unauthenticated: 1m
 - BinaryEncoding/
-    - Planning: 1h 21m
+    - Planning: 1h 24m
     - SpanReader: 1h 8m
     - SpanWriter: 2h 56m
     - ByteArrayUtils: 36m

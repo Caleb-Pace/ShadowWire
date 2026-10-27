@@ -25,7 +25,7 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     /// </remarks>
     /// <param name="value">The raw fingerprint bytes.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is not <see cref="SIZE"/> bytes long.</exception>
-    public Fingerprint(ReadOnlyMemory<byte> value)
+    private Fingerprint(ReadOnlyMemory<byte> value)
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, SIZE, nameof(value));
 
@@ -34,7 +34,7 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     }
 
     /// <summary>
-    /// Generates a Fingerprint from a given  public key.
+    /// Generates a Fingerprint from a given public key.
     /// </summary>
     /// <param name="publicKeyDer">The public key as DER-encoded SubjectPublicKeyInfo (SPKI).</param>
     /// <exception cref="ArgumentException">Thrown if the key is empty.</exception>
