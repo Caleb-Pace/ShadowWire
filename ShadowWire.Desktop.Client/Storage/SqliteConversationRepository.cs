@@ -16,6 +16,11 @@ internal sealed class SqliteConversationRepository : IConversationRepository
     private readonly byte[] _myFingerprintBytes;
 
 
+    static SqliteConversationRepository()
+    {
+        // Registers the native SQLite library; must run before the first connection.
+        SQLitePCL.Batteries_V2.Init();
+    }
 
     public SqliteConversationRepository(string dbPath, Fingerprint self)
     {
