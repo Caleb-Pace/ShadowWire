@@ -31,7 +31,7 @@ public readonly struct Message : IEncodable, IProtocolMessage, IConversationStor
         this._data            = data;
     }
 
-    /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the byte span cannot be decoded.</exception>
     public Message(ReadOnlySpan<byte> messageBytes)
     {
         const int MINIMUM_LENGTH = 1

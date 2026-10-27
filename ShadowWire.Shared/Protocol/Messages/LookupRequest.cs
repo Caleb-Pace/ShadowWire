@@ -15,7 +15,7 @@ public class LookupRequest : IEncodable, IProtocolMessage
     public LookupRequest(Fingerprint fingerprint)
         => this.fingerprint = fingerprint;
 
-    /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the byte span cannot be decoded.</exception>
     public LookupRequest(ReadOnlySpan<byte> messageBytes)
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual(messageBytes.Length, REQUEST_LENGTH, nameof(messageBytes));

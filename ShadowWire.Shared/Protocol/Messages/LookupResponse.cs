@@ -13,7 +13,7 @@ public sealed class LookupResponse : IEncodable, IProtocolMessage
     public LookupResponse(Contact contact)
         => this.contact = contact;
 
-    /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the byte span cannot be decoded.</exception>
     public LookupResponse(ReadOnlySpan<byte> messageBytes)
     {
         const int MINIMUM_LENGTH = 1

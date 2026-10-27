@@ -17,7 +17,7 @@ public readonly struct AuthenticationRequest : IEncodable, IProtocolMessage
         this.contact = contact;
     }
 
-    /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the byte span cannot be decoded.</exception>
     public AuthenticationRequest(ReadOnlySpan<byte> messageBytes)
     {
         const int MINIMUM_LENGTH = 1
