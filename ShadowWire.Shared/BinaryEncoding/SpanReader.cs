@@ -71,6 +71,22 @@ public ref struct SpanReader(ReadOnlySpan<byte> span)
     }
 
     /// <summary>
+    /// Reads a <see cref="DateTimeOffset"/> written as UTC.
+    /// </summary>
+    /// <remarks>
+    /// Decoded from UTC ticks (100ns units since 0001-01-01T00:00:00Z).<br/>
+    /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    /// <param name="convertToLocalTime">If <see langword="true"/>, converts the result to the local time zone.</param>
+    public DateTimeOffset ReadDateTimeOffset(bool convertToLocalTime = false)
+    {
+        var utcTime = new DateTimeOffset((long)ReadUInt64(), TimeSpan.Zero);
+        return ( convertToLocalTime ? utcTime.ToLocalTime() : utcTime );
+    }
+
+    /// <summary>
     /// Reads a sequence of <paramref name="length"/> bytes from the current position.
     /// </summary>
     /// <param name="length">The number of bytes to read.</param>

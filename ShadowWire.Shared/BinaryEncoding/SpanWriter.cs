@@ -76,6 +76,19 @@ public ref struct SpanWriter(Span<byte> span)
     }
 
     /// <summary>
+    /// Writes a <see cref="DateTimeOffset"/> as UTC.
+    /// </summary>
+    /// <remarks>
+    /// Encoded as UTC ticks (100ns units since 0001-01-01T00:00:00Z).<br/>
+    /// The original offset is not preserved.
+    /// </remarks>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// If there is not enough remaining span capacity.
+    /// </exception>
+    public void WriteDateTimeOffset(DateTimeOffset dto)
+        => WriteUInt64((ulong)dto.ToUniversalTime().Ticks);
+
+    /// <summary>
     /// Writes a byte array without a length prefix.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">

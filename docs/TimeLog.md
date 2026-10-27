@@ -37,7 +37,7 @@ Shared:
         - Authentication: 23m
     - Protocol Pattern correction: 10m
 - Protocol/
-    - Planning: 2h 12m
+    - Planning: 2h 30m
     - MessageKind: 1h 17m
     - MessageHandlerRegistry: 1h 3m
     - IMessageHandler: 15m
@@ -53,12 +53,12 @@ Shared:
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 11m
       - LookupResponse: 8m
-      - Message: 30m
+      - Message: 39m
       - Unauthenticated: 1m
 - BinaryEncoding/
     - Planning: 1h 21m
-    - SpanReader: 1h 2m
-    - SpanWriter: 2h 46m
+    - SpanReader: 1h 8m
+    - SpanWriter: 2h 56m
     - ByteArrayUtils: 36m
 - Version: 45m
     - Research: 15m
