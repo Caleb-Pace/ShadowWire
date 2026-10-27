@@ -24,6 +24,13 @@ internal sealed class SqliteConversationRepository : IConversationRepository
     public async Task InitializeAsync(CancellationToken ct = default)
     {
         await using var conn = await OpenAsync(ct);
+
+        // Use Write-Ahead Logging mode for better concurrency
+        await using var pragma = conn.CreateCommand();
+        pragma.CommandText = "PRAGMA journal_mode=WAL;";
+        await pragma.ExecuteNonQueryAsync(ct);
+
+        // Ensure tables are created
         await using var cmd = conn.CreateCommand();
         cmd.CommandText = """
             CREATE TABLE IF NOT EXISTS Items (
