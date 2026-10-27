@@ -104,7 +104,7 @@ internal sealed class SqliteConversationRepository : IConversationRepository
     public async Task<IReadOnlyList<StoredEntry<T>>> GetMessagesAsync<T>(
         Fingerprint peer,
         int limit,
-        DateTimeOffset? before = null,
+        ConversationCursor? before = null,
         CancellationToken ct = default
     ) where T : struct, IConversationStorable<T>
     {
@@ -115,15 +115,17 @@ internal sealed class SqliteConversationRepository : IConversationRepository
             WHERE Kind = $kind
               AND ((Source = $peer AND Destination = $me)
               OR   (Source = $me   AND Destination = $peer))
-              AND Timestamp < $before
+              AND (Timestamp, LocalId) < ($beforeTs, $beforeId)
             ORDER BY Timestamp DESC, LocalId DESC
             LIMIT $limit;
             """;
-        cmd.Parameters.AddWithValue("$kind",   (byte)T.Kind);
-        cmd.Parameters.AddWithValue("$peer",   peer.ToArray());
-        cmd.Parameters.AddWithValue("$me",     _myFingerprintBytes);
-        cmd.Parameters.AddWithValue("$before", (before ?? DateTimeOffset.MaxValue).UtcTicks);
-        cmd.Parameters.AddWithValue("$limit",  limit);
+        var cursor = before ?? new ConversationCursor(long.MaxValue, long.MaxValue);
+        cmd.Parameters.AddWithValue("$kind",     (byte)T.Kind);
+        cmd.Parameters.AddWithValue("$peer",     peer.ToArray());
+        cmd.Parameters.AddWithValue("$me",       _myFingerprintBytes);
+        cmd.Parameters.AddWithValue("$beforeTs", cursor.Ticks);
+        cmd.Parameters.AddWithValue("$beforeId", cursor.LocalId);
+        cmd.Parameters.AddWithValue("$limit",    limit);
         return await ReadAllAsync<T>(cmd, ct);
     }
 

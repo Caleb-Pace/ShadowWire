@@ -116,7 +116,8 @@ Client:
     - AuthenticationService: 5m
 - Storage/
     - Planning: 2h 11m
-    - IConversationRepository: 12m
+    - IConversationRepository: 14m
+    - ConversationCursor: 4m
     - StoredEntry: 7m
     - SqliteConversationRepository: 40m
 - Handlers/

@@ -23,11 +23,14 @@ public interface IConversationRepository
     /// </summary>
     /// <param name="peer">The fingerprint of the other party.</param>
     /// <param name="limit">The maximum number of items to return.</param>
-    /// <param name="before">If set, only items with an earlier timestamp are returned (for paging).</param>
+    /// <param name="before">
+    /// If set, only items older than this are returned (for paging).<br/>
+    /// Use <see cref="ConversationCursor.From{T}"/> on the last entry of the previous page.
+    /// </param>
     Task<IReadOnlyList<StoredEntry<T>>> GetMessagesAsync<T>(
         Fingerprint peer,
         int limit,
-        DateTimeOffset? before = null,
+        ConversationCursor? before = null,
         CancellationToken ct = default
     )
         where T : struct, IConversationStorable<T>;
