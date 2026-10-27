@@ -51,7 +51,12 @@ internal sealed class SqliteConversationRepository : IConversationRepository
     }
 
 
-    // TODO: Add comment
+    /// <summary>
+    /// Opens a pooled connection to the database.
+    /// </summary>
+    /// <remarks>
+    /// The caller must dispose the connection.
+    /// </remarks>
     private async Task<SqliteConnection> OpenAsync(CancellationToken ct)
     {
         var conn = new SqliteConnection(_connectionString);
@@ -59,7 +64,12 @@ internal sealed class SqliteConversationRepository : IConversationRepository
         return conn;
     }
 
-    // TODO: Add comment
+    /// <summary>
+    /// Executes a query and decodes each row into a <see cref="StoredEntry{T}"/>.
+    /// </summary>
+    /// <remarks>
+    /// The query must select <c>LocalId, IsRead, Raw</c>, in that order.
+    /// </remarks>
     private static async Task<IReadOnlyList<StoredEntry<T>>> ReadAllAsync<T>(
         SqliteCommand cmd,
         CancellationToken ct

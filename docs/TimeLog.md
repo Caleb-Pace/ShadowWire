@@ -119,7 +119,7 @@ Client:
     - IConversationRepository: 14m
     - ConversationCursor: 4m
     - StoredEntry: 7m
-    - SqliteConversationRepository: 40m
+    - SqliteConversationRepository: 41m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 5m
