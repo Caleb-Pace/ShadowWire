@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Binary;
+using System.Security.Cryptography;
 
 namespace ShadowWire.Shared.Users;
 
@@ -21,6 +22,19 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
 
         _value = value;
         _hashCode = ComputeHashCode();
+    }
+
+    /// <summary>
+    /// Generates a Fingerprint from a given  public key.
+    /// </summary>
+    /// <param name="publicKeyDer">The public key as DER-encoded SubjectPublicKeyInfo (SPKI).</param>
+    /// <exception cref="ArgumentException">Thrown if the key is empty.</exception>
+    public static Fingerprint FromPublicKey(ReadOnlySpan<byte> publicKeyDer)
+    {
+        if (publicKeyDer.IsEmpty)
+            throw new ArgumentException("Public key must not be empty.", nameof(publicKeyDer));
+
+        return new Fingerprint( SHA256.HashData(publicKeyDer) );
     }
 
 
