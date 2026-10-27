@@ -2,6 +2,9 @@
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
 
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("ShadowWire.Desktop.Client.Tests")]
+
 namespace ShadowWire.Desktop.Client.Storage;
 
 // TODO: (Post-MVP) handle self messaging cleanly.

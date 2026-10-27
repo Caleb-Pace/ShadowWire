@@ -75,10 +75,10 @@ Server:
     - MessageRouter: 13m
     - SessionManager: 1h 15m
 - Handlers/
-    - Planning: 57m
+    - Planning: 58m
     - ServerMessageHandlerRegistry: 28m
     - AuthenticationHandler: 1h 3m
-    - MessageHandler: 17m
+    - MessageHandler: 18m
 - User registry (ContactManager): 7m
 
 Client:
@@ -115,14 +115,15 @@ Client:
     - IMessageService: 2m
     - AuthenticationService: 5m
 - Storage/
-    - Planning: 2h 11m
+    - Planning: 2h 17m
     - IConversationRepository: 14m
     - ConversationCursor: 4m
     - StoredEntry: 7m
     - SqliteConversationRepository: 41m
+        - Tests: 19m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
-    - MessageHandler: 5m
+    - MessageHandler: 6m
 - ClientContext: 8m
 - EventBus: 7m
 - TUI/
