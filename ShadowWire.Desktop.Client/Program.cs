@@ -67,17 +67,12 @@ internal class Program
         //*/
 
 
-        //// Start TUI
-        //Tui tui = new( new Home() );
-        //new KeyReader(tui).Start(); // Start keyboard listener
+        // Start TUI
+        Tui tui = new(new Home());
+        new KeyReader(tui).Start(); // Start keyboard listener
 
-        //tui.RunAsync().GetAwaiter().GetResult();
+        tui.RunAsync().GetAwaiter().GetResult();
 
-        var from  = Fingerprint.FromSpan(new byte[Fingerprint.SIZE].Select(_ => (byte)1).ToArray());
-        var to    = Fingerprint.FromSpan(new byte[Fingerprint.SIZE].Select(_ => (byte)2).ToArray());
-        var ticks = 5;
-        var msg   = new Message(from, to, new DateTimeOffset(ticks, TimeSpan.Zero), [0]);
-        msg.Encode();
 
         // TODO: Remove, for testing
         Console.WriteLine("\nPress any key to continue!");
