@@ -53,7 +53,7 @@ Shared:
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 11m
       - LookupResponse: 8m
-      - Message: 39m
+      - Message: 48m
       - Unauthenticated: 1m
 - BinaryEncoding/
     - Planning: 1h 21m
