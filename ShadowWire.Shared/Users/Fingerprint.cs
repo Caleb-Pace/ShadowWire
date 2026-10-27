@@ -13,6 +13,10 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
 
     private readonly int _hashCode;
 
+    /// <summary>
+    /// Copies the fingerprint bytes into a new array.
+    /// </summary>
+    public byte[] ToArray() => _value.ToArray();
     public ReadOnlyMemory<byte> Memory => _value;
     public ReadOnlySpan<byte> Span => _value.Span;
     private readonly ReadOnlyMemory<byte> _value;

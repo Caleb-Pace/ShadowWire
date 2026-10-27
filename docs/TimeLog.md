@@ -24,7 +24,7 @@ Shared:
     - Codec improvement: 53m
     - Contact Codec consolidation: 33m
     - Manager updates: 32m
-    - Fingerprint: 1h 7m
+    - Fingerprint: 1h 8m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -115,10 +115,10 @@ Client:
     - IMessageService: 2m
     - AuthenticationService: 5m
 - Storage/
-    - Planning: 1h 45m
+    - Planning: 1h 48m
     - IConversationRepository: 12m
     - StoredEntry: 7m
-    - SqliteConversationRepository: 3m
+    - SqliteConversationRepository: 17m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 5m
