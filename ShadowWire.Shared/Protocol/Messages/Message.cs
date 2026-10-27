@@ -16,7 +16,7 @@ public readonly struct Message : IEncodable, IProtocolMessage, IConversationStor
 
     public DateTimeOffset Timestamp => _timestamp;
     private readonly DateTimeOffset _timestamp;
-    private const int TIMESTAMP_FIELD_SIZE = sizeof(Int32);
+    private const int TIMESTAMP_FIELD_SIZE = sizeof(UInt64);
 
     public ReadOnlyMemory<byte> Data => _data;
     public readonly ReadOnlyMemory<byte> _data;
@@ -62,6 +62,8 @@ public readonly struct Message : IEncodable, IProtocolMessage, IConversationStor
                    + TIMESTAMP_FIELD_SIZE
                    + DATA_LENGTH_FIELD_SIZE
                    + _data.Length;
+
+        Console.WriteLine($"Message.Encode() : {length} ?= {1 + _destFingerprint.Span.Length + _srcFingerprint.Span.Length + sizeof(UInt64) + 4 + _data.Span.Length}");
 
         var buffer = new byte[length];
         var writer = new SpanWriter(new Span<byte>(buffer));

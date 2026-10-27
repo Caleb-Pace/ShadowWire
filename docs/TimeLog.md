@@ -53,7 +53,7 @@ Shared:
       - ~~ContactMessageBase~~: 6m
       - LookupRequest: 11m
       - LookupResponse: 8m
-      - Message: 48m
+      - Message: 1h 2m
       - Unauthenticated: 1m
 - BinaryEncoding/
     - Planning: 1h 24m
@@ -120,7 +120,7 @@ Client:
     - ConversationCursor: 4m
     - StoredEntry: 7m
     - SqliteConversationRepository: 50m
-        - Tests: 19m
+        - Tests: 20m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 6m

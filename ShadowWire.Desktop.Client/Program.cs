@@ -1,13 +1,14 @@
-﻿using ShadowWire.Desktop.Client.TUI;
-using ShadowWire.Desktop.Client.TUI.Scenes;
-using ShadowWire.Desktop.Client.Network;
+﻿using ShadowWire.Desktop.Client.Network;
 using ShadowWire.Desktop.Client.Security;
 using ShadowWire.Desktop.Client.Security.Algorithms.Asymmetric;
 using ShadowWire.Desktop.Client.Security.Algorithms.Hashing;
 using ShadowWire.Desktop.Client.Security.Algorithms.Symmetric;
 using ShadowWire.Desktop.Client.Services;
+using ShadowWire.Desktop.Client.TUI;
+using ShadowWire.Desktop.Client.TUI.Scenes;
 using ShadowWire.Shared;
 using ShadowWire.Shared.Protocol;
+using ShadowWire.Shared.Protocol.Messages;
 using ShadowWire.Shared.Users;
 using System.Security.Cryptography;
 using System.Text;
@@ -66,12 +67,17 @@ internal class Program
         //*/
 
 
-        // Start TUI
-        Tui tui = new( new Home() );
-        new KeyReader(tui).Start(); // Start keyboard listener
+        //// Start TUI
+        //Tui tui = new( new Home() );
+        //new KeyReader(tui).Start(); // Start keyboard listener
 
-        tui.RunAsync().GetAwaiter().GetResult();
+        //tui.RunAsync().GetAwaiter().GetResult();
 
+        var from  = Fingerprint.FromSpan(new byte[Fingerprint.SIZE].Select(_ => (byte)1).ToArray());
+        var to    = Fingerprint.FromSpan(new byte[Fingerprint.SIZE].Select(_ => (byte)2).ToArray());
+        var ticks = 5;
+        var msg   = new Message(from, to, new DateTimeOffset(ticks, TimeSpan.Zero), [0]);
+        msg.Encode();
 
         // TODO: Remove, for testing
         Console.WriteLine("\nPress any key to continue!");
