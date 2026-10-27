@@ -86,7 +86,7 @@ public ref struct SpanWriter(Span<byte> span)
     /// If there is not enough remaining span capacity.
     /// </exception>
     public void WriteDateTimeOffset(DateTimeOffset dto)
-        => WriteUInt64((ulong)dto.ToUniversalTime().Ticks);
+        => WriteUInt64((ulong)dto.UtcTicks);
 
     /// <summary>
     /// Writes a byte array without a length prefix.
