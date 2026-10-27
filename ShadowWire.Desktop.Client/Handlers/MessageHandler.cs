@@ -6,21 +6,28 @@ namespace ShadowWire.Desktop.Client.Handlers;
 public class MessageHandler : IMessageHandler<ClientContext, Message>
 {
     private static MessageHandler? _instance;
-    private readonly MessageRegistry _messageRegistry;
+    //private readonly MessageRegistry _messageRegistry;
 
     public static MessageHandler Instance
         => _instance ?? throw new InvalidOperationException("Not initialized!");
 
 
-    private MessageHandler(MessageRegistry messageRegistry)
-        => _messageRegistry = messageRegistry;
+    //private MessageHandler(MessageRegistry messageRegistry)
+    //    => _messageRegistry = messageRegistry;
 
-    public static void Initialize(MessageRegistry messageRegistry)
+    //public static void Initialize(MessageRegistry messageRegistry)
+    //{
+    //    if (_instance != null)
+    //        throw new InvalidOperationException("Already initialized!");
+
+    //    _instance = new MessageHandler(messageRegistry);
+    //}
+    public static void Initialize()
     {
         if (_instance != null)
             throw new InvalidOperationException("Already initialized!");
 
-        _instance = new MessageHandler(messageRegistry);
+        _instance = new MessageHandler();
     }
 
 
