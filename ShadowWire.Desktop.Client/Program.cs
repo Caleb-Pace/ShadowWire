@@ -6,7 +6,6 @@ using ShadowWire.Desktop.Client.Security.Algorithms.Asymmetric;
 using ShadowWire.Desktop.Client.Security.Algorithms.Hashing;
 using ShadowWire.Desktop.Client.Security.Algorithms.Symmetric;
 using ShadowWire.Desktop.Client.Services;
-using ShadowWire.Desktop.Client.TUI;
 using ShadowWire.Shared;
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Users;
