@@ -28,16 +28,15 @@ public readonly struct Contact : IEncodable
         PublicKeyDer = publicKeyDer;
     }
 
-    /// <exception cref="ArgumentException">Thrown if the byte span cannot be decoded.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the byte span cannot be decoded.</exception>
     public Contact(ReadOnlySpan<byte> contactBytes)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(contactBytes.Length, MINIMUM_SIZE, nameof(contactBytes));
 
         var reader = new SpanReader(contactBytes);
 
-        Nickname = reader.ReadString();
-        var fingerprintBinary = reader.ReadBytes(Fingerprint.SIZE);
-        Fingerprint = new Fingerprint(fingerprintBinary.ToArray());
+        Nickname     = reader.ReadString();
+        Fingerprint  = Fingerprint.FromSpan(reader.ReadBytes(Fingerprint.SIZE));
         PublicKeyDer = reader.ReadBytes().ToArray();
     }
 

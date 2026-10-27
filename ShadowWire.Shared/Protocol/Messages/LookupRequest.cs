@@ -20,7 +20,7 @@ public class LookupRequest : IEncodable, IProtocolMessage
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual(messageBytes.Length, REQUEST_LENGTH, nameof(messageBytes));
 
-        this.fingerprint = new Fingerprint(messageBytes[1..].ToArray()); // Skip message kind
+        this.fingerprint = Fingerprint.FromSpan( messageBytes[1..] ); // Skip message kind
     }
 
     public byte[] Encode()

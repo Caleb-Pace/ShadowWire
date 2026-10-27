@@ -24,7 +24,7 @@ Shared:
     - Codec improvement: 53m
     - Contact Codec consolidation: 33m
     - Manager updates: 32m
-    - Fingerprint: 1h 4m
+    - Fingerprint: 1h 7m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m

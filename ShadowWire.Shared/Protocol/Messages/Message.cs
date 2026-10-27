@@ -44,11 +44,9 @@ public readonly struct Message : IEncodable, IProtocolMessage, IConversationStor
         ReadOnlySpan<byte> payloadBytes = messageBytes[1..]; // Skip message kind
         var reader = new SpanReader(payloadBytes);
 
-        var fingerprintBytes  = reader.ReadBytes(Fingerprint.SIZE);
-        this._destFingerprint = new Fingerprint(fingerprintBytes.ToArray());
+        this._destFingerprint = Fingerprint.FromSpan( reader.ReadBytes(Fingerprint.SIZE) );
 
-        fingerprintBytes     = reader.ReadBytes(Fingerprint.SIZE);
-        this._srcFingerprint = new Fingerprint(fingerprintBytes.ToArray());
+        this._srcFingerprint = Fingerprint.FromSpan( reader.ReadBytes(Fingerprint.SIZE) );
 
         this._timestamp = reader.ReadDateTimeOffset(convertToLocalTime: true);
 
