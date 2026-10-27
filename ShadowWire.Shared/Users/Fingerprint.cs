@@ -1,5 +1,4 @@
 ﻿using System.Buffers.Binary;
-using System.Runtime.InteropServices;
 
 namespace ShadowWire.Shared.Users;
 
@@ -9,9 +8,20 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     //       because GetHashCode reads fingerprint in 8-byte chunks.
     public const int SIZE = 32; // 256-bit fingerprint
 
-    private readonly ReadOnlyMemory<byte> _value;
     private readonly int _hashCode;
+
+    public ReadOnlyMemory<byte> Memory => _value;
     public ReadOnlySpan<byte> Span => _value.Span;
+    private readonly ReadOnlyMemory<byte> _value;
+
+
+    public Fingerprint(ReadOnlyMemory<byte> value)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, SIZE, nameof(value));
+
+        _value = value;
+        _hashCode = ComputeHashCode();
+    }
 
 
     private int ComputeHashCode()
@@ -30,23 +40,14 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
         return (int)(accumulator ^ (accumulator >> 32));
     }
 
-    public Fingerprint(ReadOnlyMemory<byte> value)
-    {
-        ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, SIZE, nameof(value));
-
-        _value = value;
-        _hashCode = ComputeHashCode();
-    }
-
+    public override int GetHashCode()
+        => _hashCode;
 
     public bool Equals(Fingerprint other)
         => _value.Span.SequenceEqual(other.Span);
 
     public override bool Equals(object? obj)
         => obj is Fingerprint other && Equals(other);
-
-    public override int GetHashCode()
-        => _hashCode;
 
 
     public static bool operator ==(Fingerprint left, Fingerprint right)

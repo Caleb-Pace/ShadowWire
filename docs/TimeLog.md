@@ -16,7 +16,7 @@ Protocol structure research: 20m
 Shared:
 - Moving & setup: 8m
 - Contacts: 1h 7m
-    - Planning: 20m
+    - Planning: 23m
     - Persistence: 35m
         - Bson issue: 41m
         - Fingerprint lookup issue: 6m
@@ -24,7 +24,7 @@ Shared:
     - Codec improvement: 53m
     - Contact Codec consolidation: 33m
     - Manager updates: 32m
-    - Fingerprint: 46m
+    - Fingerprint: 48m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
     - Planning: 47m
@@ -115,10 +115,10 @@ Client:
     - IMessageService: 2m
     - AuthenticationService: 5m
 - Storage/
-    - Planning: 1h 33m
+    - Planning: 1h 45m
     - IConversationRepository: 12m
     - StoredEntry: 7m
-    - SqliteConversationRepository: 
+    - SqliteConversationRepository: 3m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 5m
