@@ -16,6 +16,15 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
     private readonly ReadOnlyMemory<byte> _value;
 
 
+    /// <summary>
+    /// Wraps bytes that are already a fingerprint.<br/>
+    /// To derive one from a public key, use <see cref="FromPublicKey"/>.
+    /// </summary>
+    /// <remarks>
+    /// The memory is not copied, so the caller must not modify it afterwards.
+    /// </remarks>
+    /// <param name="value">The raw fingerprint bytes.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is not <see cref="SIZE"/> bytes long.</exception>
     public Fingerprint(ReadOnlyMemory<byte> value)
     {
         ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, SIZE, nameof(value));
@@ -35,6 +44,18 @@ public readonly struct Fingerprint : IEquatable<Fingerprint>
             throw new ArgumentException("Public key must not be empty.", nameof(publicKeyDer));
 
         return new Fingerprint( SHA256.HashData(publicKeyDer) );
+    }
+
+    /// <summary>
+    /// Creates a fingerprint by copying a span of fingerprint bytes.
+    /// </summary>
+    /// <param name="span">The raw fingerprint bytes.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="span"/> is not <see cref="SIZE"/> bytes long.</exception>
+    public static Fingerprint FromSpan(ReadOnlySpan<byte> span)
+    {
+        ArgumentOutOfRangeException.ThrowIfNotEqual(span.Length, SIZE, nameof(span));
+
+        return new Fingerprint(span.ToArray());
     }
 
 
