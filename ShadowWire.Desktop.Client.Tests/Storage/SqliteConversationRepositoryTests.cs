@@ -33,11 +33,19 @@ public sealed class SqliteConversationRepositoryTests : IAsyncLifetime
         => Fingerprint.FromSpan(new byte[Fingerprint.SIZE].Select(_ => id).ToArray());
 
     private static Message Msg(Fingerprint from, Fingerprint to, long ticks)
-        => new Message(from, to, new DateTimeOffset(ticks, TimeSpan.Zero), []);
+        => new Message(to, from, new DateTimeOffset(ticks, TimeSpan.Zero), [0]);
 
     private Task Store(Message m)
         => _repo.StoreAsync(m, m.Encode());
 
+    [Fact]
+    public void Debug_helper_direction()
+    {
+        var m = Msg(Sam, Me, 1000);
+        Assert.Equal(Convert.ToHexString(Sam.Span), Convert.ToHexString(m.Source.Span));
+        Assert.Equal(Sam, m.Source);        // fails -> suspect 1 or 2
+        Assert.Equal(Me, m.Destination);
+    }
 
     [Fact]
     public async Task Stored_incoming_message_is_returned_and_unread()

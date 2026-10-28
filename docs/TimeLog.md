@@ -120,7 +120,7 @@ Client:
     - ConversationCursor: 4m
     - StoredEntry: 7m
     - SqliteConversationRepository: 50m
-        - Tests: 20m
+        - Tests: 27m
 - Handlers/
     - ClientMessageHandlerRegistry: 6m
     - MessageHandler: 6m
