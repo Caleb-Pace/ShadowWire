@@ -22,14 +22,15 @@ public abstract class BaseComponent(Point origin, Size size)
     public int Width => Size.Width;
     public int Height => Size.Height;
 
-    public bool IsDirty { get; private set; } = true; // Always draw first frame.
+    public virtual bool IsDirty => _isDirty;
+    private bool _isDirty = true; // Always draw first frame.
 
 
     /// <summary>
     /// Marks the component as needing a redraw.
     /// </summary>
     public void Invalidate()
-        => IsDirty = true;
+        => _isDirty = true;
 
     public virtual void Resize(Size newSize)
     {
@@ -47,7 +48,7 @@ public abstract class BaseComponent(Point origin, Size size)
             return false;
 
         Draw();
-        IsDirty = false;
+        _isDirty = false;
         return true;
     }
 
