@@ -129,7 +129,7 @@ Client:
 - ClientContext: 8m
 - EventBus: 7m
 - TUI/
-    - Flowchart: 51m
+    - Flowchart: 1h 3m
     - Planning: 1h 44m
     - Tui: 38m
     - KeyReader: 16m
