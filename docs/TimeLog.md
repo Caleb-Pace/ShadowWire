@@ -138,7 +138,7 @@ Client:
         - TextInput: 1h 33m
         - MultilineTextInput: 45m
         - Text: 24m
-        - List: 14m
+        - List: 16m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m
