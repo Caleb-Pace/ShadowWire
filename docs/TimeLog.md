@@ -83,12 +83,14 @@ Server:
 
 Client:
 - Testing: 6m
-- Planning: 3h 3m
+- Planning: 3h 10m
 - Test setup: 3m
 - WebSocket setup: 15m
 - Version setup: 1m
 - Register with Server: 20m
 - Security refactor re-implementation: 10m
+- Initalisation: 3m
+- TUI Intergration: 6m
 - Network/
     - Connection: 35m
 - Security/
@@ -127,7 +129,8 @@ Client:
 - ClientContext: 8m
 - EventBus: 7m
 - TUI/
-    - Planning: 1h 24m
+    - Flowchart: 38m
+    - Planning: 1h 44m
     - Tui: 38m
     - KeyReader: 16m
     - Components/
