@@ -134,10 +134,11 @@ Client:
     - Tui: 38m
     - KeyReader: 16m
     - Components/
-        - BaseComponent: 15m
+        - BaseComponent: 16m
         - TextInput: 1h 33m
         - MultilineTextInput: 45m
         - Text: 24m
+        - List: 5m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m

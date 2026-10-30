@@ -4,7 +4,17 @@ namespace ShadowWire.Desktop.Client.TUI.Components;
 
 public abstract class BaseComponent(Point origin, Size size)
 {
-    public Point Origin { get; init; } = origin;
+    public Point Origin
+    {
+        get => _origin;
+        set
+        {
+            if (_origin == value) return;
+            _origin = value;
+            Invalidate();
+        }
+    }
+    private Point _origin = origin;
     public int X => Origin.X;
     public int Y => Origin.Y;
 
