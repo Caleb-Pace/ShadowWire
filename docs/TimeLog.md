@@ -135,12 +135,12 @@ Client:
     - KeyReader: 16m
     - Colours and Unicode support: 22m
     - Components/
-        - BaseComponent: 24m
-        - TextInput: 1h 39m
-        - MultilineTextInput: 47m
-        - Text: 25m
-        - VerticalList: 21m
-        - Surface: 52m
+        - BaseComponent: 25m
+        - TextInput: 1h 40m
+        - MultilineTextInput: 48m
+        - Text: 26m
+        - VerticalList: 22m
+        - Surface: 53m
         - Style: 7m
     - Events/
         - UiEvent: 6m

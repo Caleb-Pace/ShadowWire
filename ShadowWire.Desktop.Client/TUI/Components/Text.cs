@@ -38,10 +38,10 @@ public class Text : BaseComponent
 
     protected override void Draw(Surface s)
     {
-        s.Fill(' ');
+        s.Fill(' ', Style);
 
         var lines = Content.Split('\n');
         for (int i = 0; i < lines.Length; i++)
-            s.Write(0, i, lines[i], OverflowType);
+            s.Write(0, i, lines[i], Style, OverflowType);
     }
 }

@@ -22,6 +22,23 @@ public abstract class BaseComponent(Point origin, Size size)
     public int Width => Size.Width;
     public int Height => Size.Height;
 
+    /// <summary>
+    /// Colours the component draws with. Defaults to the terminal's own.
+    /// </summary>
+    public Style Style
+    {
+        get => _style;
+        set
+        {
+            if (_style == value)
+                return;
+            
+            _style = value;
+            Invalidate();
+        }
+    }
+    private Style _style;
+
     public virtual bool IsDirty => _isDirty;
     private bool _isDirty = true; // Always draw first frame.
 

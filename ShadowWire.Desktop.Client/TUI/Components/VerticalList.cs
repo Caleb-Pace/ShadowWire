@@ -138,7 +138,7 @@ public class VerticalList<TComp>(Point origin, Size size) : BaseComponent(origin
 
     protected override void Draw(Surface s)
     {
-        s.Fill(' ');
+        s.Fill(' ', Style);
 
         int y = 0;
         int count = VisibleCount();

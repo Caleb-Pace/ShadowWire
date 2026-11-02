@@ -77,9 +77,9 @@ public class MultilineTextInput(Point origin, Size size) : TextInput(origin, siz
 
     protected override void Draw(Surface s)
     {
-        s.Fill(' '); // Erase deleted characters.
+        s.Fill(' ', Style); // Erase deleted characters.
         for (int r = 0; r < Height; r++)
-            s.Write(0, r, LineText(_hiddenAmount + r));
+            s.Write(0, r, LineText(_hiddenAmount + r), style: Style);
 
         // Put the terminal cursor where the user is typing.
         if (IsFocused)

@@ -166,8 +166,8 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
 
     protected override void Draw(Surface s)
     {
-        s.Fill(' '); // Erase deleted characters.
-        s.Write(0, 0, VisibleText);
+        s.Fill(' ', Style); // Erase deleted characters.
+        s.Write(0, 0, VisibleText, style: Style);
 
         // Put the terminal cursor where the user is typing.
         if (IsFocused)
