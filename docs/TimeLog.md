@@ -141,7 +141,7 @@ Client:
         - Text: 25m
         - VerticalList: 21m
         - Surface: 52m
-        - Style: 2m
+        - Style: 7m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m
