@@ -64,6 +64,12 @@ public sealed class Surface
         return new Surface(_cells, _cursor, sliceBounds.Location, Rectangle.Intersect(_clip, sliceBounds), area.Size);
     }
 
+    /// <summary>
+    /// Creates a view of a component's area. See <see cref="Slice(Rectangle)"/>.
+    /// </summary>
+    public Surface Slice(BaseComponent component)
+        => Slice( new Rectangle(component.Origin, component.Size) );
+
 
     public void Write(int x, int y, string text, Overflow overflow = Overflow.Clip)
     {

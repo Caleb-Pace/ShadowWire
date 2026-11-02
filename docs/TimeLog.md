@@ -139,12 +139,13 @@ Client:
         - MultilineTextInput: 47m
         - Text: 25m
         - VerticalList: 21m
-        - Surface: 39m
+        - Surface: 39m 4m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m
         - IEventConsumer: 1m
     - Scenes/
         - IScene: 10m
-        - Home: 24m
+        - Test Scene: 24m 1m 4m
+        - Home:
         - Chat: 
