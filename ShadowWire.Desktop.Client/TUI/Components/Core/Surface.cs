@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Text;
 
-namespace ShadowWire.Desktop.Client.TUI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components.Core;
 
 public enum Overflow
 {

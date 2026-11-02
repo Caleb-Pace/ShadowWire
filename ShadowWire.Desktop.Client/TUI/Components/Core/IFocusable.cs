@@ -1,4 +1,4 @@
-﻿namespace ShadowWire.Desktop.Client.TUI.Components;
+﻿namespace ShadowWire.Desktop.Client.TUI.Components.Core;
 
 public interface IFocusable
 {

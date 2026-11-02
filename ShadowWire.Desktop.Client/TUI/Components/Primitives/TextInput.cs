@@ -1,8 +1,9 @@
-﻿using ShadowWire.Desktop.Client.TUI.Events;
+﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
+using ShadowWire.Desktop.Client.TUI.Events;
 using System.Drawing;
 using System.Text;
 
-namespace ShadowWire.Desktop.Client.TUI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
 
 public class TextInput : BaseComponent, IEventConsumer, IFocusable
 {

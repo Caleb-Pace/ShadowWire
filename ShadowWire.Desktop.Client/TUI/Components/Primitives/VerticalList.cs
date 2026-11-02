@@ -1,7 +1,8 @@
-﻿using ShadowWire.Desktop.Client.TUI.Events;
+﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
+using ShadowWire.Desktop.Client.TUI.Events;
 using System.Drawing;
 
-namespace ShadowWire.Desktop.Client.TUI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
 
 /// <summary>
 /// A vertically stacked list of components, scrolled one item at a time.

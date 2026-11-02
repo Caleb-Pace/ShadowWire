@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Text;
 
-namespace ShadowWire.Desktop.Client.TUI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components.Core;
 
 /// <summary>
 /// A 24-bit terminal colour packed into one int. <c>default</c> is the terminal's own colour.

@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ShadowWire.Shared\ShadowWire.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TUI\Components\Composites\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
+using System.Drawing;
 
-namespace ShadowWire.Desktop.Client.TUI.Components;
+namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
 
 public class MultilineTextInput(Point origin, Size size) : TextInput(origin, size)
 {

@@ -1,4 +1,5 @@
-﻿using ShadowWire.Desktop.Client.TUI.Components;
+﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
+using ShadowWire.Desktop.Client.TUI.Components.Primitives;
 using ShadowWire.Desktop.Client.TUI.Events;
 using System.Drawing;
 
