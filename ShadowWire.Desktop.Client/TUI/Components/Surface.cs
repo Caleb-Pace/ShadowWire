@@ -19,6 +19,9 @@ public sealed class Surface
     // Cell grid indexed [row, column]. Owned by the root and shared by all slices.
     private readonly char[,] _cells;
 
+    // Per-cell colours, parallel to _cells.
+    private readonly Style[,] _styles;
+
     // Position of this surface's local (0,0) (in root buffer coordinates).
     private readonly Point _origin;
 
@@ -43,16 +46,17 @@ public sealed class Surface
     /// </summary>
     public Surface(int width, int height)
     {
-        _cells  = new char[height, width];
+        _cells = new char[height, width];
+        _styles = new Style[height, width];
         _cursor = new CursorState();
-        _clip   = new Rectangle(0, 0, width, height);
-        Size    = _clip.Size;
+        _clip = new Rectangle(0, 0, width, height);
+        Size = _clip.Size;
         Fill(' ');
     }
 
     // Creates a slice over an existing buffer.
-    private Surface(char[,] cells, CursorState cursor, Point origin, Rectangle clip, Size size)
-        => (_cells, _cursor, _origin, _clip, Size) = (cells, cursor, origin, clip, size);
+    private Surface(char[,] cells, Style[,] styles, CursorState cursor, Point origin, Rectangle clip, Size size)
+        => (_cells, _styles, _cursor, _origin, _clip, Size) = (cells, styles, cursor, origin, clip, size);
 
     /// <summary>
     /// Creates a view of an area that shares this surface's buffer.
@@ -61,17 +65,11 @@ public sealed class Surface
     public Surface Slice(Rectangle area)
     {
         var sliceBounds = new Rectangle(_origin.X + area.X, _origin.Y + area.Y, area.Width, area.Height);
-        return new Surface(_cells, _cursor, sliceBounds.Location, Rectangle.Intersect(_clip, sliceBounds), area.Size);
+        return new Surface(_cells, _styles, _cursor, sliceBounds.Location, Rectangle.Intersect(_clip, sliceBounds), area.Size);
     }
 
-    /// <summary>
-    /// Creates a view of a component's area. See <see cref="Slice(Rectangle)"/>.
-    /// </summary>
-    public Surface Slice(BaseComponent component)
-        => Slice( new Rectangle(component.Origin, component.Size) );
 
-
-    public void Write(int x, int y, string text, Overflow overflow = Overflow.Clip)
+    public void Write(int x, int y, string text, Style style = default, Overflow overflow = Overflow.Clip)
     {
         int ax = _origin.X + x;
         int ay = _origin.Y + y;
@@ -84,20 +82,31 @@ public sealed class Surface
             return;
 
         for (int i = start; i < end; i++)
-            _cells[ay, ax + i] = text[i];
+        {
+            _cells[ay, ax + i]  = text[i];
+            _styles[ay, ax + i] = style;
+        }
 
         if (overflow == Overflow.Ellipsis && end < text.Length)
-            _cells[ay, ax + end - 1] = '…';
+        {
+            _cells[ay, ax + end - 1]  = '…';
+            _styles[ay, ax + end - 1] = style;
+        }
     }
 
     /// <summary>
     /// Fills the visible region with a character.
     /// </summary>
-    public void Fill(char c)
+    public void Fill(char c, Style style = default)
     {
         for (int y = _clip.Top; y < _clip.Bottom; y++)
+        {
             for (int x = _clip.Left; x < _clip.Right; x++)
-                _cells[y, x] = c;
+            {
+                _cells[y, x]  = c;
+                _styles[y, x] = style;
+            }
+        }
     }
 
 
@@ -129,8 +138,33 @@ public sealed class Surface
         _frameSB.Clear();
         for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < width; x++)
-                _frameSB.Append(_cells[y, x]);
+            // Write each run of identically styled cells as one span.
+            //     Styled runs are reset straight after, so colour can't
+            //     bleed past the end of the line.
+            for (int x = 0; x < width;)
+            {
+                var style   = _styles[y, x];
+                bool styled = (style != default);
+
+                // Calculate style run length
+                int end = x + 1;
+                while ( (end < width) && (_styles[y, end] == style) )
+                    end++;
+
+                // Apply colour
+                if (styled)
+                    style.AppendSgr(_frameSB);
+
+                // Text
+                for (int i = x; i < end; i++)
+                    _frameSB.Append(_cells[y, i]);
+
+                // Reset
+                if (styled)
+                    _frameSB.Append("\x1b[0m");
+
+                x = end;
+            }
 
             if (y < height - 1)
                 _frameSB.Append('\n');

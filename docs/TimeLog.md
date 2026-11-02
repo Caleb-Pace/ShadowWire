@@ -133,13 +133,15 @@ Client:
     - Planning: 2h 14m
     - Tui: 38m
     - KeyReader: 16m
+    - Colours and Unicode support: 22m
     - Components/
         - BaseComponent: 24m
         - TextInput: 1h 39m
         - MultilineTextInput: 47m
         - Text: 25m
         - VerticalList: 21m
-        - Surface: 43m
+        - Surface: 52m
+        - Style: 2m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m
