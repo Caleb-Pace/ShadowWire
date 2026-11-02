@@ -1,6 +1,5 @@
 ﻿using ShadowWire.Desktop.Client.TUI.Components;
 using ShadowWire.Desktop.Client.TUI.Events;
-using System.Collections;
 using System.Drawing;
 
 namespace ShadowWire.Desktop.Client.TUI.Scenes;
@@ -23,17 +22,17 @@ public class Home : IScene
         _rootSurface = new Surface(50, 25);
 
         // TODO: Remove, for debugging
-        _rootSurface.Fill('#');
+        _rootSurface.Fill('#', new Style(default, Color.Pink) );
         _rootSurface.Flush();
 
         var overflowType = Overflow.Ellipsis;
-        _list.Add( new Text(Point.Empty, "abcdef") { OverflowType = overflowType } );
-        _list.Add( new Text(Point.Empty, "0")      { OverflowType = overflowType } );
-        _list.Add( new Text(Point.Empty, " 1")     { OverflowType = overflowType } );
-        _list.Add( new Text(Point.Empty, "  2")    { OverflowType = overflowType } );
-        _list.Add( new Text(Point.Empty, "   3")   { OverflowType = overflowType } );
-        _list.Add( new Text(Point.Empty, "    4")  { OverflowType = overflowType } );
-        _list.Add( new Text(Point.Empty, "     5") { OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, "abcdef") { Style = new Style(Color.Beige, Color.FromArgb(0, 191, 255)), OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, "0")      { Style = new Style(Color.FromArgb(0, 255, 255, 255), Color.Gray), OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, " 1")     { Style = new Style(Color.FromArgb(51, 255, 255, 255), Color.Black), OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, "  2")    { Style = new Style(Color.FromArgb(102, 255, 255, 255), Color.Gray), OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, "   3")   { Style = new Style(Color.FromArgb(153, 255, 255, 255), Color.Black), OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, "    4")  { Style = new Style(Color.FromArgb(204, 255, 255, 255), Color.Gray), OverflowType = overflowType } );
+        _list.Add( new Text(Point.Empty, "     5") { Style = new Style(Color.FromArgb(255, 255, 255, 255), Color.Black), OverflowType = overflowType } );
     }
 
 
@@ -74,7 +73,7 @@ public class Home : IScene
 
         // Redraw
         if (anyDirty)
-            _rootSurface.Write(0, 0, "01234567890123456789"); // TODO: Remove, for debugging
+            _rootSurface.Write(0, 0, "01234567890123456789", style: new Style(Color.Beige)); // TODO: Remove, for debugging
         
         //_input.Render();
         _list.Render(_rootSurface);
@@ -83,6 +82,5 @@ public class Home : IScene
         // Flush to Console
         if (anyDirty)
             _rootSurface.Flush();
-        Console.WriteLine("…");
     }
 }

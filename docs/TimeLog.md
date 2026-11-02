@@ -148,6 +148,6 @@ Client:
         - IEventConsumer: 1m
     - Scenes/
         - IScene: 10m
-        - Test Scene: 38m
+        - Test Scene: 49m
         - Home:
         - Chat: 
