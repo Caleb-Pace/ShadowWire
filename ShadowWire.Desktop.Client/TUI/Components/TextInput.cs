@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShadowWire.Desktop.Client.TUI.Components;
 
-public class TextInput : BaseComponent, IEventConsumer
+public class TextInput : BaseComponent, IEventConsumer, IFocusable
 {
     protected readonly StringBuilder _buffer = new();
 
@@ -32,6 +32,20 @@ public class TextInput : BaseComponent, IEventConsumer
     /// <see langword="true"/> when the current text satisfies constraints.
     /// </summary>
     public bool IsValid => (_buffer.Length >= MinLength);
+
+    public bool IsFocused
+    {
+        get => _isFocused;
+        set
+        {
+            if (_isFocused == value)
+                return;
+
+            _isFocused = value;
+            Invalidate(); // Redraw so the cursor gets placed.
+        }
+    }
+    private bool _isFocused = true;
 
 
     public TextInput(Point origin, int width) : base(origin, new Size(width, 1))
@@ -156,7 +170,8 @@ public class TextInput : BaseComponent, IEventConsumer
         s.Write(0, 0, VisibleText);
 
         // Put the terminal cursor where the user is typing.
-        s.SetCursor(Cursor.X, Cursor.Y);
+        if (IsFocused)
+            s.SetCursor(Cursor.X, Cursor.Y);
     }
 
 

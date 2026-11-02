@@ -135,7 +135,7 @@ Client:
     - KeyReader: 16m
     - Components/
         - BaseComponent: 23m
-        - TextInput: 1h 36m
+        - TextInput: 1h 39m
         - MultilineTextInput: 47m
         - Text: 25m
         - VerticalList: 21m

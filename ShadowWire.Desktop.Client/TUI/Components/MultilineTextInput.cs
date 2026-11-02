@@ -82,7 +82,8 @@ public class MultilineTextInput(Point origin, Size size) : TextInput(origin, siz
             s.Write(0, r, LineText(_hiddenAmount + r));
 
         // Put the terminal cursor where the user is typing.
-        s.SetCursor(Cursor.X, Cursor.Y);
+        if (IsFocused)
+            s.SetCursor(Cursor.X, Cursor.Y);
     }
 
     private string LineText(int row)
