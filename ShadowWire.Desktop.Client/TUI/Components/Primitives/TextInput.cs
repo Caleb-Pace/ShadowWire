@@ -49,10 +49,12 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
     private bool _isFocused = true;
 
 
-    public TextInput(Point origin, int width) : base(origin, new Size(width, 1))
-        => Cursor = origin;
     public TextInput(Point origin, Size size) : base(origin, size)
-        => Cursor = origin;
+    {
+        Cursor = origin;
+        Style  = new Style(default(Colour), default(Colour)); // Avoid colour bleeding by default.
+    }
+    public TextInput(Point origin, int width) : this(origin, new Size(width, 1)) { }
 
 
     public bool Handle(UiEvent e)

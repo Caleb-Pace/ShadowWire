@@ -141,10 +141,10 @@ Client:
             - Surface: 54m
             - Style: 20m
         - Primitives/
-            - TextInput: 1h 40m
+            - TextInput: 1h 42m
             - MultilineTextInput: 48m
             - Text: 26m
-            - VerticalList: 22m
+            - VerticalList: 24m
             - Border: 31m
         - Composites/
     - Events/

@@ -10,7 +10,7 @@ namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
 /// <remarks>
 /// Only items that fully fit are drawn. Changes to a child are not tracked, call <see cref="BaseComponent.Invalidate"/> on the list.
 /// </remarks>
-public class VerticalList<TComp>(Point origin, Size size) : BaseComponent(origin, size), IEventConsumer
+public class VerticalList<TComp> : BaseComponent, IEventConsumer
     where TComp : BaseComponent
 {
     private readonly System.Collections.Generic.List<TComp> _items = new();
@@ -40,6 +40,12 @@ public class VerticalList<TComp>(Point origin, Size size) : BaseComponent(origin
 
             return false;
         }
+    }
+
+
+    public VerticalList(Point origin, Size size) : base(origin, size)
+    {
+        Style = new Style(default(Colour), default(Colour)); // Avoid colour bleeding by default.
     }
 
 
