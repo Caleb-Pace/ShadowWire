@@ -140,4 +140,17 @@ public class ContactManager
 
         return GetByIndex(index);
     }
+
+    public List<Contact> GetAll(int limit = int.MaxValue, int startingIndex = 0)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(limit);
+        ArgumentOutOfRangeException.ThrowIfNegative(startingIndex);
+
+        if (startingIndex >= contacts.Count)
+            return [];
+
+        return contacts.Skip(startingIndex)
+                       .Take( Math.Min(limit, contacts.Count) )
+                       .ToList();
+    }
 }

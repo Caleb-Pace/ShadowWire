@@ -23,7 +23,7 @@ Shared:
     - Contact Packaging: 23m
     - Codec improvement: 53m
     - Contact Codec consolidation: 33m
-    - Manager updates: 32m
+    - Manager updates: 40m
     - Fingerprint: 1h 8m
 - UsernameManager: 2h 2m
 - Protocols/ (Removed): 10m
@@ -90,7 +90,7 @@ Client:
 - Register with Server: 20m
 - Security refactor re-implementation: 10m
 - Initalisation: 3m
-- TUI Intergration: 6m
+- TUI Intergration: 7m
 - Network/
     - Connection: 35m
 - Security/
@@ -154,5 +154,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home:
+        - Home: 4m
         - Chat: 
