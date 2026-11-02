@@ -40,13 +40,13 @@ public class Home : IScene
         _listBorder = new Border(new Point(1, 1), _list)
         {
             Line = BorderLine.Heavy,
-            Style = new Style(Color.Gray),   // border colour; the child keeps its own style
+            Style = new Style(Color.Gray),
         };
 
         _border = new Border(_rootSurface)
         {
             Line = BorderLine.Rounded,
-            Style = new Style(Color.Black, Color.Pink)
+            Style = new Style(Color.Black)
         };
     }
 

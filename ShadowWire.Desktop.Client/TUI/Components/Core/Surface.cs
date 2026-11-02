@@ -84,13 +84,13 @@ public sealed class Surface
         for (int i = start; i < end; i++)
         {
             _cells[ay, ax + i]  = text[i];
-            _styles[ay, ax + i] = style;
+            _styles[ay, ax + i] = style.Over(_styles[ay, ax + i]);
         }
 
         if (overflow == Overflow.Ellipsis && end < text.Length)
         {
             _cells[ay, ax + end - 1]  = '…';
-            _styles[ay, ax + end - 1] = style;
+            _styles[ay, ax + end - 1] = style.Over(_styles[ay, ax + end - 1]);
         }
     }
 
@@ -104,7 +104,7 @@ public sealed class Surface
             for (int x = _clip.Left; x < _clip.Right; x++)
             {
                 _cells[y, x]  = c;
-                _styles[y, x] = style;
+                _styles[y, x] = style.Over(_styles[y, x]);
             }
         }
     }

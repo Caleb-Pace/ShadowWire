@@ -36,18 +36,21 @@ public readonly record struct Colour
 }
 
 /// <summary>
-/// Foreground and background of a cell. <c>default</c> is the terminal's own colours.
+/// Foreground and background of a cell.
 /// </summary>
-public readonly record struct Style(Colour Fg, Colour Bg = default)
+/// <remarks>
+/// <list type="bullet">
+///     <item><see langword="null"/> keeps whatever is already there;</item>
+///     <item>a <see langword="default"/> <see cref="Colour"/> sets the terminal's default colour.</item>
+/// </list>
+/// </remarks>
+public readonly record struct Style(Colour? Fg = null, Colour? Bg = null)
 {
     /// <summary>
-    /// Creates a style where a translucent <paramref name="fg"/> is blended over <paramref name="bg"/>.
+    /// Blends a translucent <paramref name="fg"/> over an opaque-or-known <paramref name="bg"/>.
     /// </summary>
-    /// <remarks>
-    /// A fully transparent foreground shows the background. A transparent background is the terminal default,
-    /// which is unknown, so a foreground over it is used as-is.
-    /// </remarks>
-    public Style(Color fg, Color bg = default) : this( Over(fg, bg), bg ) { }
+    public static Style Blend(Color fg, Color bg)
+        => new(Over(fg, bg), bg);
 
     private static Colour Over(Color fg, Color bg)
     {
@@ -58,17 +61,20 @@ public readonly record struct Style(Colour Fg, Colour Bg = default)
         return Color.FromArgb(Mix(fg.R, bg.R), Mix(fg.G, bg.G), Mix(fg.B, bg.B));
 
         int Mix(int f, int b)
-            => ( (f * a) + (b * (255 - a) ) + 127) / 255;
+            => ((f * a) + (b * (255 - a)) + 127) / 255;
     }
 
     /// <summary>
-    /// Appends an SGR sequence that resets, then applies this style.
+    /// This style applied over <paramref name="under"/>: anything not set here is kept.
     /// </summary>
-    internal void AppendSgr(StringBuilder sb)
+    public Style Over(Style under)
+        => new(Fg ?? under.Fg, Bg ?? under.Bg);
+
+    public void AppendSgr(StringBuilder sb)
     {
         sb.Append("\x1b[0");
-        Fg.AppendSgr(sb, background: false);
-        Bg.AppendSgr(sb, background: true);
+        Fg?.AppendSgr(sb, background: false);
+        Bg?.AppendSgr(sb, background: true);
         sb.Append('m');
     }
 }

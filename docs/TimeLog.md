@@ -130,7 +130,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 2h 17m
+    - Planning: 2h 19m
     - Tui: 38m
     - KeyReader: 16m
     - Colours and Unicode support: 22m
@@ -138,8 +138,8 @@ Client:
         - Restructure: 2m
         - Core/
             - BaseComponent: 25m
-            - Surface: 53m
-            - Style: 7m
+            - Surface: 54m
+            - Style: 20m
         - Primitives/
             - TextInput: 1h 40m
             - MultilineTextInput: 48m
