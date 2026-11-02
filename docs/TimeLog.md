@@ -130,16 +130,16 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 1h 53m
+    - Planning: 2h 1m
     - Tui: 38m
     - KeyReader: 16m
     - Components/
         - BaseComponent: 23m
-        - TextInput: 1h 34m
-        - MultilineTextInput: 45m
+        - TextInput: 1h 36m
+        - MultilineTextInput: 47m
         - Text: 25m
         - VerticalList: 21m
-        - Surface: 32m
+        - Surface: 39m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m

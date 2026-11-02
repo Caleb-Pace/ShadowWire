@@ -70,20 +70,19 @@ public class MultilineTextInput(Point origin, Size size) : TextInput(origin, siz
         else if (row - _hiddenAmount > h - 1)
             _hiddenAmount = row - (h - 1);
 
-        // Absolute screen position.
-        Cursor = new Point(X + _index - _lineStarts[row], Y + row - _hiddenAmount);
+        // Surface bound position.
+        Cursor = new Point(_index - _lineStarts[row], row - _hiddenAmount);
     }
 
 
-    protected override void Draw()
+    protected override void Draw(Surface s)
     {
+        s.Fill(' '); // Erase deleted characters.
         for (int r = 0; r < Height; r++)
-        {
-            Console.SetCursorPosition(X, Y + r);
-            Console.Write(LineText(_hiddenAmount + r).PadRight(Math.Max(1, Width)));
-        }
+            s.Write(0, r, LineText(_hiddenAmount + r));
 
-        Console.SetCursorPosition(Cursor.X, Cursor.Y);
+        // Put the terminal cursor where the user is typing.
+        s.SetCursor(Cursor.X, Cursor.Y);
     }
 
     private string LineText(int row)

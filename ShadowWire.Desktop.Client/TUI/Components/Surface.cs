@@ -30,21 +30,29 @@ public sealed class Surface
     /// </summary>
     public Size Size { get; }
 
+    // Terminal cursor. Owned by the root and shared by all slices, like _cells.
+    private sealed class CursorState
+    {
+        public Point? Position; // Null when disabled (in root buffer coordinates).
+    }
+    private readonly CursorState _cursor;
+
 
     /// <summary>
     /// Creates a root surface with its own buffer, filled with spaces.
     /// </summary>
     public Surface(int width, int height)
     {
-        _cells = new char[height, width];
-        _clip  = new Rectangle(0, 0, width, height);
-        Size   = _clip.Size;
+        _cells  = new char[height, width];
+        _cursor = new CursorState();
+        _clip   = new Rectangle(0, 0, width, height);
+        Size    = _clip.Size;
         Fill(' ');
     }
 
     // Creates a slice over an existing buffer.
-    private Surface(char[,] cells, Point origin, Rectangle clip, Size size)
-        => (_cells, _origin, _clip, Size) = (cells, origin, clip, size);
+    private Surface(char[,] cells, CursorState cursor, Point origin, Rectangle clip, Size size)
+        => (_cells, _cursor, _origin, _clip, Size) = (cells, cursor, origin, clip, size);
 
     /// <summary>
     /// Creates a view of an area that shares this surface's buffer.
@@ -53,7 +61,7 @@ public sealed class Surface
     public Surface Slice(Rectangle area)
     {
         var sliceBounds = new Rectangle(_origin.X + area.X, _origin.Y + area.Y, area.Width, area.Height);
-        return new Surface(_cells, sliceBounds.Location, Rectangle.Intersect(_clip, sliceBounds), area.Size);
+        return new Surface(_cells, _cursor, sliceBounds.Location, Rectangle.Intersect(_clip, sliceBounds), area.Size);
     }
 
 
@@ -88,6 +96,23 @@ public sealed class Surface
 
 
     /// <summary>
+    /// Shows the terminal cursor at a position relative to this surface.
+    /// </summary>
+    /// <remarks>
+    /// Ignored if the position is clipped. Stays until <see cref="HideCursor"/> is called.
+    /// </remarks>
+    public void SetCursor(int x, int y)
+    {
+        var position = new Point(_origin.X + x, _origin.Y + y);
+        if (_clip.Contains(position))
+            _cursor.Position = position;
+    }
+
+    public void HideCursor()
+        => _cursor.Position = null;
+
+
+    /// <summary>
     /// <b>Root only.</b> Writes the whole buffer to the terminal.
     /// </summary>
     public void Flush()
@@ -105,7 +130,16 @@ public sealed class Surface
                 _frameSB.Append('\n');
         }
 
+
+        Console.CursorVisible = false; // Hide cursor to avoid flashing.
         Console.SetCursorPosition(0, 0);
         Console.Write(_frameSB);
+
+        // Show cursor if enabled.
+        if (_cursor.Position is { } p)
+        {
+            Console.SetCursorPosition(p.X, p.Y);
+            Console.CursorVisible = true;
+        }
     }
 }

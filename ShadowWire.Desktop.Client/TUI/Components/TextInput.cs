@@ -139,8 +139,8 @@ public class TextInput : BaseComponent, IEventConsumer
         else if (_index - _hiddenAmount > w - 1)
             _hiddenAmount = _index - (w - 1);
 
-        // Absolute screen position.
-        Cursor = new Point(X + _index - _hiddenAmount, Y);
+        // Surface bound position.
+        Cursor = new Point(_index - _hiddenAmount, 0);
     }
 
 
@@ -150,14 +150,13 @@ public class TextInput : BaseComponent, IEventConsumer
         Reflow();
     }
 
-    protected override void Draw()
+    protected override void Draw(Surface s)
     {
-        // Draw the text from the field's origin, padded so deleted characters get erased.
-        Console.SetCursorPosition(X, Y);
-        Console.Write(VisibleText.PadRight(Math.Max(1, Width)));
+        s.Fill(' '); // Erase deleted characters.
+        s.Write(0, 0, VisibleText);
 
         // Put the terminal cursor where the user is typing.
-        Console.SetCursorPosition(Cursor.X, Cursor.Y);
+        s.SetCursor(Cursor.X, Cursor.Y);
     }
 
 
