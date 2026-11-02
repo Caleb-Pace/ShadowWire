@@ -136,24 +136,17 @@ public class VerticalList<TComp>(Point origin, Size size) : BaseComponent(origin
     }
 
 
-    protected override void Draw()
+    protected override void Draw(Surface s)
     {
-        // Clear the viewport.
-        string blank = new(' ', Math.Max(0, Width));
-        for (int row = 0; row < Height; row++)
-        {
-            Console.SetCursorPosition(X, Y + row);
-            Console.Write(blank);
-        }
+        s.Fill(' ');
 
-        int y = Y;
+        int y = 0;
         int count = VisibleCount();
         for (int i = _top; i < _top + count; i++)
         {
             var item = _items[i];
-            item.Origin = new Point(X, y);
-            item.Invalidate(); // Area was cleared.
-            item.Render();
+            item.Invalidate();
+            item.Render(s, new Point(0, y));
             y += item.Height;
         }
     }

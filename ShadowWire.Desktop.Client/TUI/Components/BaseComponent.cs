@@ -39,18 +39,28 @@ public abstract class BaseComponent(Point origin, Size size)
     }
 
     /// <summary>
-    /// Draws only if something changed.
+    /// Draws onto <paramref name="parent"/> <b>at</b> a location, only if something changed.
     /// </summary>
     /// <returns><see langword="true"/> if something was drawn.</returns>
-    public bool Render()
+    public bool Render(Surface parent, Point at)
     {
         if (!IsDirty)
             return false;
 
-        Draw();
+        Draw(parent.Slice(new Rectangle(at, Size)));
         _isDirty = false;
         return true;
     }
 
-    protected abstract void Draw();
+    /// <summary>
+    /// Draws onto <paramref name="parent"/> at the component <see cref="Origin"/>, only if something changed.
+    /// </summary>
+    /// <returns><see langword="true"/> if something was drawn.</returns>
+    public bool Render(Surface parent)
+        => Render(parent, Origin);
+
+    /// <summary>
+    /// Draws the component onto the surface <paramref name="s"/>, where (0, 0) is its top-left.
+    /// </summary>
+    protected abstract void Draw(Surface s);
 }

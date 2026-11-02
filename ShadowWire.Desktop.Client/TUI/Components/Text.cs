@@ -15,6 +15,8 @@ public class Text : BaseComponent
     }
     private string _content = string.Empty;
 
+    public Overflow OverflowType { get; init; } = Overflow.Clip;
+
 
     public Text(Point origin, string text) : base(origin, GetStringBounds(NormaliseLineEndings(text)))
         => _content = NormaliseLineEndings(text);
@@ -34,9 +36,12 @@ public class Text : BaseComponent
     }
 
 
-    protected override void Draw()
+    protected override void Draw(Surface s)
     {
-        Console.SetCursorPosition(X, Y);
-        Console.Write(Content);
+        s.Fill(' ');
+
+        var lines = Content.Split('\n');
+        for (int i = 0; i < lines.Length; i++)
+            s.Write(0, i, lines[i], OverflowType);
     }
 }
