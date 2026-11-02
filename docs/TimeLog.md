@@ -130,7 +130,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 2h 19m
+    - Planning: 2h 21m
     - Tui: 38m
     - KeyReader: 16m
     - Colours and Unicode support: 22m
@@ -154,5 +154,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 4m
+        - Home: 36m
         - Chat: 

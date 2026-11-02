@@ -51,22 +51,22 @@ internal class Program
 
 
 
-        /*
         // Load username
         var usernameManger = new UsernameManager("sw-username.txt");
-        Console.WriteLine($"Retrieved username: \"{usernameManger.Username}\"!");
+        //Console.WriteLine($"Retrieved username: \"{usernameManger.Username}\"!");
 
         // Resolve key pair
         var keyPair     = keyResolver.ResolveKeyPair();
         var fingerprint = Fingerprint.FromPublicKey(keyPair.PublicKey.Span);
 
-        //// Load contacts
-        // var contacts = new ContactManager("contacts.bin");
+        // Load contacts
+        var contacts = new ContactManager("contacts.bin");
 
         // Prepare identity
         var identity = new Contact(usernameManger.Username, fingerprint, keyPair.publicKey);
 
 
+        /*
         // Connect to Server
         var connection = new Connection(URI);
         var context = new ClientContext(version, identity, connection);
@@ -86,7 +86,7 @@ internal class Program
 
 
         // Start TUI
-        Tui tui = new(new Home());
+        Tui tui = new( new Home(contacts) );
         new KeyReader(tui).Start(); // Start keyboard listener
 
         tui.RunAsync().GetAwaiter().GetResult();
