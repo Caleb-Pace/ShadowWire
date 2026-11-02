@@ -16,6 +16,8 @@ public class Home : IScene
     private bool _inputEnabled = false;
 
     private VerticalList<Text> _list = new(new Point(1, 1), new Size(5, 3));
+    private Border _listBorder;
+    private Border _border;
 
 
     public Home()
@@ -34,6 +36,18 @@ public class Home : IScene
         _list.Add( new Text(Point.Empty, "   3")   { Style = new Style(Color.FromArgb(153, 255, 255, 255), Color.Black), OverflowType = overflowType } );
         _list.Add( new Text(Point.Empty, "    4")  { Style = new Style(Color.FromArgb(204, 255, 255, 255), Color.Gray), OverflowType = overflowType } );
         _list.Add( new Text(Point.Empty, "     5") { Style = new Style(Color.FromArgb(255, 255, 255, 255), Color.Black), OverflowType = overflowType } );
+
+        _listBorder = new Border(new Point(1, 1), _list)
+        {
+            Line = BorderLine.Heavy,
+            Style = new Style(Color.Gray),   // border colour; the child keeps its own style
+        };
+
+        _border = new Border(_rootSurface)
+        {
+            Line = BorderLine.Rounded,
+            Style = new Style(Color.Black, Color.Pink)
+        };
     }
 
 
@@ -75,9 +89,13 @@ public class Home : IScene
         // Redraw
         if (anyDirty)
             _rootSurface.Write(0, 0, "01234567890123456789", style: new Style(Color.Beige)); // TODO: Remove, for debugging
-        
-        //_input.Render();
+
+        _border.Render(_rootSurface);
+
+        _listBorder.Render(_rootSurface);
         _list.Render(_rootSurface);
+
+        //_input.Render();
 
 
         // Flush to Console

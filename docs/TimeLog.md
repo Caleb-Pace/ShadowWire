@@ -145,6 +145,7 @@ Client:
             - MultilineTextInput: 48m
             - Text: 26m
             - VerticalList: 22m
+            - Border: 31m
         - Composites/
     - Events/
         - UiEvent: 6m
@@ -152,6 +153,6 @@ Client:
         - IEventConsumer: 1m
     - Scenes/
         - IScene: 10m
-        - Test Scene: 49m
+        - Test Scene: 53m
         - Home:
         - Chat: 
