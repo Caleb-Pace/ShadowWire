@@ -38,7 +38,11 @@ internal class Program
     {
         const string URI = "ws://127.0.0.1:4960/ws/";
 
+        // Update encoding
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.InputEncoding  = Encoding.UTF8;
 
+        
         // Initialise key resolver
         var keyStorage  = new BasicKeyStorage("sw-rsa-key-pub.der", "sw-rsa-key-priv.der");
         // TODO: Add hook for UI to show generated key
