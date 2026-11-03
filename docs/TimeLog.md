@@ -145,7 +145,7 @@ Client:
         - Primitives/
             - TextInput: 1h 42m
             - MultilineTextInput: 48m
-            - Text: 28m
+            - Text: 30m
             - VerticalList: 24m
             - Border: 31m
         - Composites/
@@ -157,5 +157,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 38m
+        - Home: 43m
         - Chat: 

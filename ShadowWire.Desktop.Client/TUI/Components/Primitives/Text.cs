@@ -22,7 +22,7 @@ public class Text : BaseComponent
 
 
     public static string NormaliseLineEndings(string str)
-        => str.Replace("\r\n", "\n").Replace('\r', '\n');
+        => (str is null) ? "" : str.Replace("\r\n", "\n").Replace('\r', '\n');
 
     public static Size GetStringBounds(string str)
     {
