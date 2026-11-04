@@ -3,7 +3,7 @@
 
 public static class Palettes
 {
-    public static Palette Dark { get; } = new()
+    public static Palette Midnight { get; } = new()
     {
         Surface0 = TrueColor.Rgb(0x12151C),
         Surface1 = TrueColor.Rgb(0x151922),
@@ -13,11 +13,11 @@ public static class Palettes
 
         TextStrong = TrueColor.Rgb(0xE6EBFF),
         TextNormal = TrueColor.Rgb(0xC0CAF5),
-        TextMuted = TrueColor.Rgb(0x8A93AD),
-        TextFaint = TrueColor.Rgb(0x6B7385),
+        TextMuted  = TrueColor.Rgb(0x8A93AD),
+        TextFaint  = TrueColor.Rgb(0x6B7385),
 
         Accent = TrueColor.Rgb(0x7AA2F7),
-        Self = TrueColor.Rgb(0x73DACA),
+        Self   = TrueColor.Rgb(0x73DACA),
     };
 }
 

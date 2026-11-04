@@ -3,7 +3,7 @@
 
 public static class Themes
 {
-    public static Theme Dark { get; } = Theme.FromPalette("Dark", Palettes.Dark);
+    public static Theme Midnight { get; } = Theme.FromPalette("Midnight", Palettes.Midnight);
 }
 
 
