@@ -130,18 +130,22 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 2h 34m
-    - Research: 38m
-        - Identicons: 13m
+    - Planning: 2h 49m
+    - Research: 47m
+        - Identicons: 18m
     - Tui: 38m
     - KeyReader: 16m
     - Colours and Unicode support: 22m
+    - Themes/
+        - Colour planning: 44m
+        - Theme: 2m
+        - Palettes: 1m
     - Components/
         - Restructure: 2m
         - Core/
             - BaseComponent: 25m
             - Surface: 54m
-            - Style: 20m
+            - Style: 27m
         - Primitives/
             - TextInput: 1h 42m
             - MultilineTextInput: 48m
@@ -149,7 +153,7 @@ Client:
             - VerticalList: 24m
             - Border: 31m
         - Composites/
-            - ContactCard: 15m
+            - ContactCard: 59m
     - Events/
         - UiEvent: 6m
         - IEventProducer: 1m
@@ -157,5 +161,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 43m
+        - Home: 55m
         - Chat: 
