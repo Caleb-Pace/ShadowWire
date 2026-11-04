@@ -10,7 +10,9 @@ namespace ShadowWire.Desktop.Client.TUI.Scenes;
 
 public sealed class Home : IScene
 {
-    private ContactManager _contacts;
+    private readonly EventQueue _events;
+    private readonly Theme _theme;
+    private readonly ContactManager _contacts;
 
     private Surface _rootSurface;
     private BaseComponent[] _componentsRef;
@@ -23,6 +25,8 @@ public sealed class Home : IScene
 
     public Home(EventQueue events, Theme theme, ContactManager contacts)
     {
+        _events   = events;
+        _theme    = theme;
         _contacts = contacts;
 
         int screenHeight = Console.WindowHeight;
@@ -31,20 +35,20 @@ public sealed class Home : IScene
         _rootSurface = new Surface(screenWidth, screenHeight);
 
         // Flush style
-        _rootSurface.Fill(' ', new Style(Color.White, Color.Gray));
+        _rootSurface.Fill(' ', _theme.Base);
         _rootSurface.Flush();
 
 
         // Components
         _list = new VerticalList<BaseComponent>(new Point(1, 1), new Size(screenWidth - 2, screenHeight - 3))
         {
-            Style = new Style(Bg: Color.Green)
+            Style = _theme.Base
         };
         PopulateContactList();
 
         _input = new TextInput(new Point(1, (screenHeight - 2)), screenWidth - 2)
         {
-            Style = new Style(Color.Red, default(Color)),
+            Style     = _theme.Input,
             MaxLength = screenWidth - 2,
         };
 
@@ -64,11 +68,9 @@ public sealed class Home : IScene
 
         foreach (var contact in _contacts.GetAll())
         {
-            var backgroundColour = IsOddIndex() ? Color.Blue : Color.Red;
-
             var contactCard = new ContactCard(contact, _list.Width)
             {
-                Style = new Style(Bg: backgroundColour)
+                Style = IsOddIndex() ? _theme.Home.Row : _theme.Home.RowAlt
             };
 
             _contactCards.Add(contactCard);
