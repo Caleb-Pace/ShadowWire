@@ -141,7 +141,7 @@ Client:
         - Style: 30m
         - TrueColor: 1m
         - Theme: 2m
-        - Palettes: 1m
+        - Palettes: 2m
     - Components/
         - Restructure: 2m
         - Core/
