@@ -141,7 +141,7 @@ Client:
         - Colour planning: 44m
         - Style: 30m
         - TrueColor: 1m
-        - Themes: 9m
+        - Themes: 11m
         - Palettes: 2m
     - Components/
         - Restructure: 2m
@@ -155,7 +155,7 @@ Client:
             - VerticalList: 24m
             - Border: 31m
         - Composites/
-            - ContactCard: 59m
+            - ContactCard: 1h 7m
     - Events/
         - EventQueue: 1m
         - UiEvent: 6m
@@ -164,5 +164,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 57m 4m
+        - Home: 1h 1m
         - Chat: 

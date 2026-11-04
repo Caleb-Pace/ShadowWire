@@ -17,7 +17,8 @@ public sealed record HomeTheme
     public required Style ContactName { get; init; }
     public required Style ContactNameUnread { get; init; }
     public required Style MessagePreview { get; init; }
-    public required Style MessagePreviewSelf { get; init; }
+    public required Style MessagePreviewUnread { get; init; }
+    public required Style MessagePreviewSelfPrefix { get; init; }
     public required Style Timestamp { get; init; }
     public required Style UnreadBadge { get; init; }
 }
@@ -71,12 +72,13 @@ public sealed record Theme
             RowSelected       = S(p.TextStrong, p.Selected),
             RowSelectedMarker = S(p.Accent, p.Selected),
 
-            ContactName        = S(p.TextMuted),
-            ContactNameUnread  = S(p.TextStrong, bold: true),
-            MessagePreview     = S(p.TextMuted),
-            MessagePreviewSelf = S(p.Self),
-            Timestamp          = S(p.TextFaint),
-            UnreadBadge        = S(p.Surface0, p.Accent),
+            ContactName              = S(p.TextMuted),
+            ContactNameUnread        = S(p.TextStrong, bold: true),
+            MessagePreview           = S(p.TextMuted),
+            MessagePreviewUnread     = S(p.TextNormal),
+            MessagePreviewSelfPrefix = S(p.Self),
+            Timestamp                = S(p.TextFaint),
+            UnreadBadge              = S(p.Surface0, p.Accent),
         },
 
         Chat = new ChatTheme
