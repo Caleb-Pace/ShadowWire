@@ -138,6 +138,7 @@ Client:
     - Colours and Unicode support: 22m
     - Themes/
         - Colour planning: 44m
+        - TrueColor: 1m
         - Theme: 2m
         - Palettes: 1m
     - Components/
