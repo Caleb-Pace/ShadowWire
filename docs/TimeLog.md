@@ -155,7 +155,7 @@ Client:
             - VerticalList: 24m
             - Border: 31m
         - Composites/
-            - ContactCard: 1h 7m
+            - ContactCard: 1h 9m
     - Events/
         - EventQueue: 1m
         - UiEvent: 6m

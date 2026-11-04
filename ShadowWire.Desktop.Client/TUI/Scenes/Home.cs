@@ -17,6 +17,7 @@ public sealed class Home : IScene
     private Surface _rootSurface;
     private BaseComponent[] _componentsRef;
 
+    // TODO: Make dictionary, <Fingerprint, ContactCard>
     private List<ContactCard> _contactCards = new();
     private VerticalList<BaseComponent> _list; // TODO: Select Contact card composite component.
     private TextInput _input;
@@ -68,7 +69,7 @@ public sealed class Home : IScene
 
         foreach (var contact in _contacts.GetAll())
         {
-            var contactCard = new ContactCard(contact, _list.Width)
+            var contactCard = new ContactCard(_theme, contact, _list.Width)
             {
                 Style = IsOddIndex() ? _theme.Home.Row : _theme.Home.RowAlt
             };

@@ -1,14 +1,21 @@
 ﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
 using ShadowWire.Desktop.Client.TUI.Components.Primitives;
+using ShadowWire.Desktop.Client.TUI.Themes;
 using ShadowWire.Shared.Users;
 using System.Drawing;
 
 namespace ShadowWire.Desktop.Client.TUI.Components.Composites;
 
+// TODO: Fix colour background issue (choosing default over, use background)
+// TODO: Missing "you" prefix
+// TODO: Missing timestamp
+// TODO: Update fingerprint handling
 public class ContactCard : BaseComponent, IFocusable
 {
+    private readonly Theme _theme;
+
     public Fingerprint Fingerprint => _contact.Fingerprint;
-    private Contact _contact;
+    private readonly Contact _contact;
 
     private Text _nickname;
     private Text _fingerprint;
@@ -68,8 +75,9 @@ public class ContactCard : BaseComponent, IFocusable
     public bool IsFocused { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
-    public ContactCard(Contact contact, int width) : base(Point.Empty, new Size(width, 3))
+    public ContactCard(Theme theme, Contact contact, int width) : base(Point.Empty, new Size(width, 3))
     {
+        _theme   = theme;
         _contact = contact;
 
         _nickname = new Text(new Point(0, 0), new Size(32, 1))
@@ -89,6 +97,7 @@ public class ContactCard : BaseComponent, IFocusable
         _unreadMessageCountText = new Text(new Point(64, 0), new Size(5, 1))
         {
             OverflowType = Overflow.Clip,
+            Style        = _theme.Home.UnreadBadge,
         };
         _latestMessage = new Text(new Point(0, 1), new Size(5, 1))
         {
@@ -97,11 +106,20 @@ public class ContactCard : BaseComponent, IFocusable
     }
 
 
+    private void UpdateStyles()
+    {
+        _nickname.Style       = (UnreadMessageCount > 0) ? _theme.Home.ContactNameUnread    : _theme.Home.ContactName;
+        _latestMessage.Style  = (UnreadMessageCount > 0) ? _theme.Home.MessagePreviewUnread : _theme.Home.MessagePreview;
+
+    }
+
     protected override void Draw(Surface s)
     {
         if (base.IsDirty)
         {
             s.Fill(' ', Style);
+
+            UpdateStyles();
 
             _nickname.Invalidate();
             _fingerprint.Invalidate();
