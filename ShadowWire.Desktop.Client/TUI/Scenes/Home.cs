@@ -1,17 +1,21 @@
-﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
+﻿using ShadowWire.Desktop.Client.TUI.Components.Composites;
+using ShadowWire.Desktop.Client.TUI.Components.Core;
 using ShadowWire.Desktop.Client.TUI.Components.Primitives;
 using ShadowWire.Desktop.Client.TUI.Events;
+using ShadowWire.Desktop.Client.TUI.Themes;
 using ShadowWire.Shared.Users;
-using System.Collections;
 using System.Drawing;
 
 namespace ShadowWire.Desktop.Client.TUI.Scenes;
 
 public sealed class Home : IScene
 {
+    private ContactManager _contacts;
+
     private Surface _rootSurface;
     private BaseComponent[] _componentsRef;
 
+    private List<ContactCard> _contactCards = new();
     private VerticalList<BaseComponent> _list; // TODO: Select Contact card composite component.
     private TextInput _input;
     private Border _border;
@@ -19,6 +23,8 @@ public sealed class Home : IScene
 
     public Home(ContactManager contacts)
     {
+        _contacts = contacts;
+
         int screenHeight = Console.WindowHeight;
         int screenWidth  = Console.WindowWidth;
 
@@ -34,6 +40,7 @@ public sealed class Home : IScene
         {
             Style = new Style(Bg: Color.Green)
         };
+        PopulateContactList();
 
         _input = new TextInput(new Point(1, (screenHeight - 2)), screenWidth - 2)
         {
@@ -50,7 +57,27 @@ public sealed class Home : IScene
         _componentsRef = [ _list, _input, _border ];
     }
 
+    private void PopulateContactList()
+    {
+        bool IsOddIndex()
+            => (_contactCards.Count & 1) != 0;
 
+        foreach (var contact in _contacts.GetAll())
+        {
+            var backgroundColour = IsOddIndex() ? Color.Blue : Color.Red;
+
+            var contactCard = new ContactCard(contact, _list.Width)
+            {
+                Style = new Style(Bg: backgroundColour)
+            };
+
+            _contactCards.Add(contactCard);
+            _list.Add(contactCard);
+        }
+    }
+
+
+    // TODO: Update with new comps
     public bool Handle(UiEvent e)
     {
         bool consumed = false;
