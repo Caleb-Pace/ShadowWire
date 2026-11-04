@@ -21,7 +21,7 @@ public sealed class Home : IScene
     private Border _border;
 
 
-    public Home(ContactManager contacts)
+    public Home(EventQueue events, Theme theme, ContactManager contacts)
     {
         _contacts = contacts;
 
