@@ -1,5 +1,6 @@
 ﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
 using ShadowWire.Desktop.Client.TUI.Events;
+using ShadowWire.Desktop.Client.TUI.Themes;
 using System.Drawing;
 using System.Text;
 
@@ -52,7 +53,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
     public TextInput(Point origin, Size size) : base(origin, size)
     {
         Cursor = origin;
-        Style  = new Style(default(Colour), default(Colour)); // Avoid colour bleeding by default.
+        Style  = new Style(default(TrueColor), default(TrueColor)); // Avoid colour bleeding by default.
     }
     public TextInput(Point origin, int width) : this(origin, new Size(width, 1)) { }
 

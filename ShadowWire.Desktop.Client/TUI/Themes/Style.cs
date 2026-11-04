@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Text;
 
-namespace ShadowWire.Desktop.Client.TUI.Components.Core;
+namespace ShadowWire.Desktop.Client.TUI.Themes;
 
 /// <summary>
 /// Foreground and background of a cell.

@@ -1,5 +1,6 @@
 ﻿using ShadowWire.Desktop.Client.TUI.Components.Core;
 using ShadowWire.Desktop.Client.TUI.Events;
+using ShadowWire.Desktop.Client.TUI.Themes;
 using System.Drawing;
 
 namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
@@ -45,7 +46,7 @@ public class VerticalList<TComp> : BaseComponent, IEventConsumer
 
     public VerticalList(Point origin, Size size) : base(origin, size)
     {
-        Style = new Style(default(Colour), default(Colour)); // Avoid colour bleeding by default.
+        Style = new Style(default(TrueColor), default(TrueColor)); // Avoid colour bleeding by default.
     }
 
 

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using ShadowWire.Desktop.Client.TUI.Themes;
+using System.Drawing;
 
 namespace ShadowWire.Desktop.Client.TUI.Components.Core;
 

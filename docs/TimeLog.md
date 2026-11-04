@@ -138,6 +138,7 @@ Client:
     - Colours and Unicode support: 22m
     - Themes/
         - Colour planning: 44m
+        - Style: 30m
         - TrueColor: 1m
         - Theme: 2m
         - Palettes: 1m
@@ -146,7 +147,6 @@ Client:
         - Core/
             - BaseComponent: 25m
             - Surface: 54m
-            - Style: 27m
         - Primitives/
             - TextInput: 1h 42m
             - MultilineTextInput: 48m
