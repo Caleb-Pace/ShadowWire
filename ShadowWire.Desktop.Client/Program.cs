@@ -6,7 +6,9 @@ using ShadowWire.Desktop.Client.Security.Algorithms.Symmetric;
 using ShadowWire.Desktop.Client.Services;
 using ShadowWire.Desktop.Client.Storage;
 using ShadowWire.Desktop.Client.TUI;
+using ShadowWire.Desktop.Client.TUI.Events;
 using ShadowWire.Desktop.Client.TUI.Scenes;
+using ShadowWire.Desktop.Client.TUI.Themes;
 using ShadowWire.Shared;
 using ShadowWire.Shared.Protocol;
 using ShadowWire.Shared.Protocol.Messages;
@@ -85,11 +87,16 @@ internal class Program
 
 
 
-        // Start TUI
-        Tui tui = new( new Home(contacts) );
-        new KeyReader(tui).Start(); // Start keyboard listener
 
-        tui.RunAsync().GetAwaiter().GetResult();
+        // Start TUI
+        var events = new EventQueue();
+        var theme  = Themes.Midnight;
+
+        var home = new Home(events, theme, contacts);
+
+        var tui  = new Tui(events, home);
+        new KeyReader(events).Start(); // Start keyboard listener
+        await tui.RunAsync();
 
 
         // TODO: Remove, for testing

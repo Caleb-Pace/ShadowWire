@@ -90,7 +90,7 @@ Client:
 - Register with Server: 20m
 - Security refactor re-implementation: 10m
 - Initalisation: 3m
-- TUI Intergration: 7m
+- TUI Intergration: 9m
 - Network/
     - Connection: 35m
 - Security/
@@ -164,5 +164,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 55m
+        - Home: 57m
         - Chat: 
