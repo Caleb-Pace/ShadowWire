@@ -130,12 +130,13 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 2h 49m
+    - Planning: 2h 55m
     - Research: 47m
         - Identicons: 18m
-    - Tui: 38m
+    - Tui: 40m
     - KeyReader: 16m
     - Colours and Unicode support: 22m
+    - Scene implementation: 3m
     - Themes/
         - Colour planning: 44m
         - Style: 30m
@@ -156,6 +157,7 @@ Client:
         - Composites/
             - ContactCard: 59m
     - Events/
+        - EventQueue: 1m
         - UiEvent: 6m
         - IEventProducer: 1m
         - IEventConsumer: 1m
