@@ -133,14 +133,15 @@ Client:
     - Planning: 2h 55m
     - Research: 47m
         - Identicons: 18m
+        - Other ANSI styling options: 24m
     - Tui: 40m
     - KeyReader: 16m
     - Colours and Unicode support: 22m
     - Scene implementation: 3m
     - Themes/
         - Colour planning: 44m
-        - Style: 30m
-        - TrueColor: 1m
+        - Style: 1h 1m
+        - TrueColor: 10m
         - Themes: 11m
         - Palettes: 2m
     - Components/
