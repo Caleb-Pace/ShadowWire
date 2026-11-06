@@ -115,11 +115,10 @@ public sealed class Home : IScene
         bool anyDirty = _componentsRef.Any(comp => comp.IsDirty);
 
 
-        //// Redraw
-        //_list.Render(_rootSurface);
-        //_input.Render(_rootSurface);
-        //_border.Render(_rootSurface);
-        Program.Run(_rootSurface); // TODO: Remove for testing
+        // Redraw
+        _list.Render(_rootSurface);
+        _input.Render(_rootSurface);
+        _border.Render(_rootSurface);
 
 
         // Flush to Console
