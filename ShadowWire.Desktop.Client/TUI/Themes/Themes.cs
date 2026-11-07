@@ -56,43 +56,39 @@ public sealed record Theme
         Name    = name,
         Palette = p,
 
-        Base         = S(p.TextNormal, p.Surface0),
-        Bar          = S(p.TextMuted, p.Surface3),
-        BarTitle     = S(p.Accent, p.Surface3, bold: true),
-        Input        = S(p.TextNormal, p.Surface3),
-        InputPrompt  = S(p.Accent, p.Surface3),
-        Divider      = S(p.TextFaint),
-        Muted        = S(p.TextMuted),
-        Accent       = S(p.Accent),
+        Base         = new Style(p.TextNormal, p.Surface0),
+        Bar          = new Style(p.TextMuted,  p.Surface3),
+        BarTitle     = new Style(p.Accent,     p.Surface3, Attrs: TextAttributes.Bold),
+        Input        = new Style(p.TextNormal, p.Surface3),
+        InputPrompt  = new Style(p.Accent,     p.Surface3),
+        Divider      = new Style(p.TextFaint),
+        Muted        = new Style(p.TextMuted),
+        Accent       = new Style(p.Accent),
 
         Home = new HomeTheme
         {
-            Row               = S(p.TextNormal, p.Surface1),
-            RowAlt            = S(p.TextNormal, p.Surface2),
-            RowSelected       = S(p.TextStrong, p.Selected),
-            RowSelectedMarker = S(p.Accent, p.Selected),
+            Row               = new Style(p.TextNormal, p.Surface1),
+            RowAlt            = new Style(p.TextNormal, p.Surface2),
+            RowSelected       = new Style(p.TextStrong, p.Selected),
+            RowSelectedMarker = new Style(p.Accent,     p.Selected),
 
-            ContactName              = S(p.TextMuted),
-            ContactNameUnread        = S(p.TextStrong, bold: true),
-            MessagePreview           = S(p.TextMuted),
-            MessagePreviewUnread     = S(p.TextNormal),
-            MessagePreviewSelfPrefix = S(p.Self),
-            Timestamp                = S(p.TextFaint),
-            UnreadBadge              = S(p.Surface0, p.Accent),
+            ContactName              = new Style(p.TextMuted),
+            ContactNameUnread        = new Style(p.TextStrong, Attrs: TextAttributes.Bold),
+            MessagePreview           = new Style(p.TextMuted),
+            MessagePreviewUnread     = new Style(p.TextNormal),
+            MessagePreviewSelfPrefix = new Style(p.Self),
+            Timestamp                = new Style(p.TextFaint),
+            UnreadBadge              = new Style(p.Surface0, p.Accent),
         },
 
         Chat = new ChatTheme
         {
-            AuthorSelf  = S(p.Self, bold: true),
-            AuthorOther = S(p.Accent, bold: true),
-            MessageBody = S(p.TextNormal),
-            Timestamp   = S(p.TextFaint),
-            DayDivider  = S(p.TextFaint),
-            NewMarker   = S(p.Accent),
+            AuthorSelf  = new Style(p.Self,   Attrs: TextAttributes.Bold),
+            AuthorOther = new Style(p.Accent, Attrs: TextAttributes.Bold),
+            MessageBody = new Style(p.TextNormal),
+            Timestamp   = new Style(p.TextFaint),
+            DayDivider  = new Style(p.TextFaint),
+            NewMarker   = new Style(p.Accent),
         },
     };
-
-    // TODO: Support richer styles
-    private static Style S(TrueColor fg, TrueColor bg = default, bool bold = false, bool italic = false)
-        => new(fg, bg /*, bold, italic */);
 }

@@ -142,7 +142,7 @@ Client:
         - Colour planning: 44m
         - Style: 1h 1m
         - TrueColor: 10m
-        - Themes: 11m
+        - Themes: 18m
         - Palettes: 2m
     - Components/
         - Restructure: 2m
