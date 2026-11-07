@@ -118,24 +118,35 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer
         if (e is not KeyEvent { KeyInfo: var k })
             return false;
 
-        switch (k.Key)
+        // Trigger item action
+        if (k.Key == ConsoleKey.Enter)
         {
-            case ConsoleKey.UpArrow:Select(_selected - 1); return true;
-            case ConsoleKey.DownArrow: Select(_selected + 1); return true;
-            case ConsoleKey.PageUp: Select(_selected - Math.Max(1, VisibleCount())); return true;
-            case ConsoleKey.PageDown: Select(_selected + Math.Max(1, VisibleCount())); return true;
-            case ConsoleKey.Home: Select(0); return true;
-            case ConsoleKey.End: Select(int.MaxValue); return true;
-            case ConsoleKey.Enter:
-                if (SelectedItem is { } item)
-                {
-                    SelectionTriggered?.Invoke(item);
-                    return true;
-                }
+            if (SelectedItem is not { } item)
                 return false;
+
+            SelectionTriggered?.Invoke(item);
+            return true;
         }
 
-        return false;
+        // Select item
+        int page = Math.Max(1, VisibleCount());
+
+        int? targetIndex = k.Key switch
+        {
+            ConsoleKey.UpArrow   => _selected - 1,
+            ConsoleKey.DownArrow => _selected + 1,
+            ConsoleKey.PageUp    => _selected - page,
+            ConsoleKey.PageDown  => _selected + page,
+            ConsoleKey.Home      => 0,
+            ConsoleKey.End       => int.MaxValue,
+            _                    => null,
+        };
+
+        if (targetIndex is not { } index)
+            return false;
+
+        Select(index); // Clamps, so overshooting at either end is fine.
+        return true;
     }
 
     public override void Resize(Size newSize)

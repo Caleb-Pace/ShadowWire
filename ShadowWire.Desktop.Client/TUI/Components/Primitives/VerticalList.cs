@@ -84,16 +84,24 @@ public class VerticalList<TComp> : BaseComponent, IEventConsumer
         if (e is not KeyEvent { KeyInfo: var k })
             return false;
 
-        switch (k.Key)
+        // Scroll to item
+        int page = Math.Max(1, VisibleCount());
+        
+        int? targetIndex = k.Key switch
         {
-            case ConsoleKey.UpArrow: ScrollTo(_top - 1); return true;
-            case ConsoleKey.DownArrow: ScrollTo(_top + 1); return true;
-            case ConsoleKey.PageUp: ScrollTo(_top - Math.Max(1, VisibleCount())); return true;
-            case ConsoleKey.PageDown: ScrollTo(_top + Math.Max(1, VisibleCount())); return true;
-            case ConsoleKey.Home: ScrollTo(0); return true;
-            case ConsoleKey.End: ScrollTo(int.MaxValue); return true;
-        }
+            ConsoleKey.UpArrow   => _top - 1,
+            ConsoleKey.DownArrow => _top + 1,
+            ConsoleKey.PageUp    => _top - page,
+            ConsoleKey.PageDown  => _top + page,
+            ConsoleKey.Home      => 0,
+            ConsoleKey.End       => int.MaxValue,
+            _                    => null,
+        };
 
+        if (targetIndex is not { } index)
+            return false;
+
+        ScrollTo(index); // Clamps, so overshooting at either end is fine.
         return false;
     }
 
