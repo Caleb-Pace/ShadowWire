@@ -9,12 +9,14 @@ namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
 /// A vertically stacked list of components, scrolled one item at a time.
 /// </summary>
 /// <remarks>
-/// Only items that fully fit are drawn. Changes to a child are not tracked, call <see cref="BaseComponent.Invalidate"/> on the list.
+/// Items are drawn whole or not at all. A visible item that becomes dirty marks the list dirty, <br/>
+/// but item heights are only read when drawing, so call <see cref="BaseComponent.Invalidate"/>  <br/>
+/// on the list after changing a child's height.
 /// </remarks>
 public class VerticalList<TComp> : BaseComponent, IEventConsumer
     where TComp : BaseComponent
 {
-    private readonly System.Collections.Generic.List<TComp> _items = new();
+    private readonly List<TComp> _items = new();
 
     public IReadOnlyList<TComp> Items => _items;
 
@@ -122,7 +124,8 @@ public class VerticalList<TComp> : BaseComponent, IEventConsumer
         return count;
     }
 
-    private int VisibleCount() => CountFitting(_top);
+    private int VisibleCount()
+        => CountFitting(_top);
 
     /// <summary>
     /// The largest top index that still fills the viewport.
