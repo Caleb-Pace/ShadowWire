@@ -113,22 +113,28 @@ public class VerticalList<TComp> : BaseComponent, IEventConsumer
 
 
     /// <summary>
-    /// Number of items from <paramref name="start"/> that fit fully in the viewport.
+    /// Number of items from <paramref name="startIndex"/> that fit fully in the viewport.
     /// </summary>
     /// <remarks>
     /// Always at least one (if any exist), so an oversized item cannot block scrolling.
     /// </remarks>
-    private int CountFitting(int start)
+    private int CountFitting(int startIndex)
     {
-        int used = 0, count = 0;
-        for (int i = start; i < _items.Count; i++)
+        int remaining = Height;
+        int count = 0;
+
+        for (int i = startIndex; i < _items.Count; i++)
         {
-            int h = _items[i].Height;
-            if (used + h > Height && count > 0)
+            int height = _items[i].Height;
+
+            // The first item is always taken, so an oversized item can't stall scrolling.
+            if (count > 0 && height > remaining)
                 break;
-            used += h;
+
+            remaining -= height;
             count++;
         }
+
         return count;
     }
 
@@ -143,14 +149,16 @@ public class VerticalList<TComp> : BaseComponent, IEventConsumer
         if (_items.Count == 0)
             return 0;
 
-        int used = 0, top = _items.Count - 1;
-        for (int i = _items.Count - 1; i >= 0; i--)
+        // The last item is always visible. Walk upwards while the previous item still fits above it.
+        int top = _items.Count - 1;
+        int remaining = Height - _items[top].Height;
+
+        while (top > 0 && _items[top - 1].Height <= remaining)
         {
-            if (used + _items[i].Height > Height && i != _items.Count - 1)
-                break;
-            used += _items[i].Height;
-            top = i;
+            top--;
+            remaining -= _items[top].Height;
         }
+
         return top;
     }
 

@@ -157,22 +157,28 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer
 
 
     /// <summary>
-    /// Number of items from <paramref name="start"/> that fit fully in the viewport.
+    /// Number of items from <paramref name="startIndex"/> that fit fully in the viewport.
     /// </summary>
     /// <remarks>
     /// Always at least one (if any exist), so an oversized item cannot hide the selection.
     /// </remarks>
-    private int CountFitting(int start)
+    private int CountFitting(int startIndex)
     {
-        int used = 0, count = 0;
-        for (int i = start; i < _items.Count; i++)
+        int remaining = Height;
+        int count = 0;
+
+        for (int i = startIndex; i < _items.Count; i++)
         {
-            int h = _items[i].Height;
-            if (used + h > Height && count > 0)
+            int height = _items[i].Height;
+
+            // The first item is always taken, so an oversized item can't stall scrolling.
+            if (count > 0 && height > remaining)
                 break;
-            used += h;
+
+            remaining -= height;
             count++;
         }
+
         return count;
     }
 
