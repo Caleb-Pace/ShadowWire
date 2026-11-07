@@ -130,7 +130,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 2h 55m
+    - Planning: 2h 57m
     - Research: 47m
         - Identicons: 18m
         - Other ANSI styling options: 24m
@@ -148,12 +148,15 @@ Client:
         - Restructure: 2m
         - Core/
             - BaseComponent: 25m
+            - IFocusable: 1m
+            - ISelectable: 2m
             - Surface: 54m
         - Primitives/
             - TextInput: 1h 42m
             - MultilineTextInput: 48m
             - Text: 30m
-            - VerticalList: 24m
+            - VerticalList: 25m 1m
+            - SelectableList: 25m
             - Border: 31m
         - Composites/
             - ContactCard: 1h 9m
