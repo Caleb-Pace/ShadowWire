@@ -145,6 +145,9 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer, IFocusable
 
     public bool Handle(UiEvent e)
     {
+        if (!IsFocused)
+            return false; // Early exit: not focus
+
         if (e is not KeyEvent { KeyInfo: var k })
             return false;
 

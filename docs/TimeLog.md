@@ -156,7 +156,7 @@ Client:
             - MultilineTextInput: 48m
             - Text: 30m
             - VerticalList: 34m
-            - SelectableList: 40m
+            - SelectableList: 41m
             - Border: 31m
         - Composites/
             - ContactCard: 1h 22m
@@ -168,5 +168,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 1h 2m
+        - Home: 1h 7m
         - Chat: 
