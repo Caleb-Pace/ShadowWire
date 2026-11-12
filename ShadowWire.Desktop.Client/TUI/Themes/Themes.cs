@@ -42,6 +42,7 @@ public sealed record Theme
     public required Style Bar { get; init; }
     public required Style BarTitle { get; init; }
     public required Style Input { get; init; }
+    public required Style InputUnfocused { get; init; }
     public required Style InputPrompt { get; init; }
     public required Style Divider { get; init; }
     public required Style Muted { get; init; }
@@ -56,14 +57,15 @@ public sealed record Theme
         Name    = name,
         Palette = p,
 
-        Base         = new Style(p.TextNormal, p.Surface0),
-        Bar          = new Style(p.TextMuted,  p.Surface3),
-        BarTitle     = new Style(p.Accent,     p.Surface3, Attrs: TextAttributes.Bold),
-        Input        = new Style(p.TextNormal, p.Surface3),
-        InputPrompt  = new Style(p.Accent,     p.Surface3),
-        Divider      = new Style(p.TextFaint),
-        Muted        = new Style(p.TextMuted),
-        Accent       = new Style(p.Accent),
+        Base           = new Style(p.TextNormal, p.Surface0),
+        Bar            = new Style(p.TextMuted,  p.Surface3),
+        BarTitle       = new Style(p.Accent,     p.Surface3, Attrs: TextAttributes.Bold),
+        Input          = new Style(p.TextNormal, p.Surface3),
+        InputUnfocused = new Style(p.TextMuted,  p.Surface2),
+        InputPrompt    = new Style(p.Accent,     p.Surface3),
+        Divider        = new Style(p.TextFaint),
+        Muted          = new Style(p.TextMuted),
+        Accent         = new Style(p.Accent),
 
         Home = new HomeTheme
         {

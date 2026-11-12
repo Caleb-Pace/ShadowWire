@@ -17,7 +17,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
     protected int _hiddenAmount = 0;
     protected int _index = 0; // Position in the underlying buffer.
     public Point Cursor { get; protected set; }
-    
+
     public string Text => _buffer.ToString();
     /// <summary>
     /// The slice of text to draw. Long text is hidden on the left so the cursor stays visible.
@@ -49,10 +49,53 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
     }
     private bool _isFocused = true;
 
+    public Style FocusedStyle
+    {
+        get => _focusedStyle;
+        set
+        {
+            if (_focusedStyle == value)
+                return; // Early exit: no change.
+
+            _focusedStyle = value;
+            if (IsFocused)
+                base.Invalidate();
+        }
+    }
+    private Style _focusedStyle;
+    public Style UnfocusedStyle
+    {
+        get => _unfocusedStyle;
+        set
+        {
+            if (_unfocusedStyle == value)
+                return; // Early exit: no change.
+
+            _unfocusedStyle = value;
+            if (!IsFocused)
+                base.Invalidate();
+        }
+    }
+    private Style _unfocusedStyle;
+    public override Style Style
+    {
+        get => (IsFocused ? _focusedStyle : _unfocusedStyle);
+        set
+        {
+            if (_focusedStyle == value && _unfocusedStyle == value)
+                return; // Early exit: no change.
+
+            _focusedStyle   = value;
+            _unfocusedStyle = value;
+            base.Invalidate();
+        }
+    }
 
     public TextInput(Point origin, Size size) : base(origin, size)
     {
-        Style  = new Style(default(TrueColor), default(TrueColor)); // Avoid colour bleeding by default.
+        Style = new Style(default(TrueColor), default(TrueColor)); // Avoid colour bleeding by default.
+        _unfocusedStyle = Style; // Default to normal/focused style.
+
         Reflow(); // Set Cursor's local position.
     }
     public TextInput(Point origin, int width) : this(origin, new Size(width, 1)) { }
@@ -60,7 +103,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
 
     public bool Handle(UiEvent e)
     {
-        bool consumed =  false;
+        bool consumed = false;
 
         if (!IsFocused)
             return consumed; // Early exit: not focus
@@ -138,7 +181,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
                 continue; // Ignore
             if (_buffer.Length >= MaxLength)
                 break;    // Limit reached.
-            
+
             _buffer.Insert(_index++, c);
         }
     }
@@ -211,7 +254,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
         _buffer.Clear();
         _index = 0;
         _hiddenAmount = 0;
-        
+
         Reflow();     // Reset Cursor
         Invalidate(); // Redraw
     }

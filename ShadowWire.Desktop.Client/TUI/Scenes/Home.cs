@@ -50,9 +50,10 @@ public sealed class Home : IScene
 
         _input = new TextInput(new Point(1, (screenHeight - 2)), screenWidth - 2)
         {
-            IsFocused = false,
-            MaxLength = screenWidth - 2,
-            Style     = _theme.Input,
+            MaxLength      = screenWidth - 2, // TODO: Change (placeholder)
+            IsFocused      = false,
+            FocusedStyle   = _theme.Input,
+            UnfocusedStyle = _theme.InputUnfocused,
         };
 
         _border = new Border(_rootSurface)
@@ -102,6 +103,9 @@ public sealed class Home : IScene
         {
             _input.IsFocused = !_input.IsFocused;
             _list.IsFocused  = !_input.IsFocused;
+            
+            if (!_input.IsFocused)
+                _rootSurface.HideCursor();
 
             consumed = true;
         }

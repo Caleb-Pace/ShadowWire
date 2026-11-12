@@ -130,7 +130,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 3h 7m
+    - Planning: 3h 8m
     - Research: 47m
         - Identicons: 18m
         - Other ANSI styling options: 24m
@@ -139,10 +139,10 @@ Client:
     - Colours and Unicode support: 22m
     - Scene implementation: 3m
     - Themes/
-        - Colour planning: 44m
+        - Colour planning: 48m
         - Style: 1h 1m
         - TrueColor: 10m
-        - Themes: 18m
+        - Themes: 19m
         - Palettes: 2m
     - Components/
         - Restructure: 2m
@@ -152,8 +152,8 @@ Client:
             - ISelectable: 2m
             - Surface: 54m
         - Primitives/
-            - TextInput: 1h 51m
-            - MultilineTextInput: 48m
+            - TextInput: 2h 3m
+            - MultilineTextInput: 49m
             - Text: 30m
             - VerticalList: 34m
             - SelectableList: 41m
@@ -168,5 +168,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 1h 16m
+        - Home: 1h 17m
         - Chat: 
