@@ -13,7 +13,7 @@ namespace ShadowWire.Desktop.Client.TUI.Components.Primitives;
 /// but item heights are only read when drawing, so call <see cref="BaseComponent.Invalidate"/>  <br/>
 /// on the list after changing a child's height.
 /// </remarks>
-public class SelectableList<TComp> : BaseComponent, IEventConsumer
+public class SelectableList<TComp> : BaseComponent, IEventConsumer, IFocusable
     where TComp : BaseComponent, ISelectable
 {
     private readonly List<TComp> _items = new();
@@ -63,6 +63,25 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer
         }
     }
 
+    public bool IsFocused
+    {
+        get => _isFocused;
+        set
+        {
+            if (_isFocused == value)
+                return;
+
+            _isFocused = value;
+            if (!_isFocused && _items.Count > 0)
+                _items[_selected].IsSelected = false; // Visually deselect
+            else
+                Select(_selected, force: true);       // Force reselection
+
+            Invalidate(); // Redraw so selected is cleared.
+        }
+    }
+    private bool _isFocused = true;
+
 
     public SelectableList(Point origin, Size size) : base(origin, size)
     {
@@ -92,13 +111,13 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer
     /// <summary>
     /// Selects the item at <paramref name="index"/> (clamped) and scrolls it into view.
     /// </summary>
-    public void Select(int index)
+    public void Select(int index, bool force = false)
     {
         if (_items.Count == 0)
             return; // Early exit: No items to select.
 
         int clamped = Math.Clamp(index, 0, (_items.Count - 1));
-        if (clamped == _selected)
+        if (clamped == _selected && !force)
             return; // Early exit: Already selected.
 
         if (_selected >= 0)
@@ -110,6 +129,17 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer
         EnsureSelectedVisible();
         Invalidate(); // Redraw
         SelectionChanged?.Invoke(_selected);
+    }
+
+    /// <summary>
+    /// Clears selection.
+    /// </summary>
+    public void Deselect()
+    {
+        _selected = -1;
+
+        if (_items.Count > 0)
+            _items[_selected].IsSelected = false; // Unselect previous
     }
 
 

@@ -156,7 +156,7 @@ Client:
             - MultilineTextInput: 48m
             - Text: 30m
             - VerticalList: 34m
-            - SelectableList: 30m
+            - SelectableList: 40m
             - Border: 31m
         - Composites/
             - ContactCard: 1h 22m
