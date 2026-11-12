@@ -19,7 +19,7 @@ public sealed class Home : IScene
 
     // TODO: Make dictionary, <Fingerprint, ContactCard>
     private List<ContactCard> _contactCards = new();
-    private VerticalList<BaseComponent> _list; // TODO: Select Contact card composite component.
+    private SelectableList<ContactCard> _list; // TODO: Select Contact card composite component.
     private TextInput _input;
     private Border _border;
 
@@ -41,7 +41,7 @@ public sealed class Home : IScene
 
 
         // Components
-        _list = new VerticalList<BaseComponent>(new Point(1, 1), new Size(screenWidth - 2, screenHeight - 3))
+        _list = new SelectableList<ContactCard>(new Point(1, 1), new Size(screenWidth - 2, screenHeight - 3))
         {
             Style = _theme.Base
         };

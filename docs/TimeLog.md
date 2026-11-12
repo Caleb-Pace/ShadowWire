@@ -130,7 +130,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 2h 57m
+    - Planning: 2h 58m
     - Research: 47m
         - Identicons: 18m
         - Other ANSI styling options: 24m
@@ -159,7 +159,7 @@ Client:
             - SelectableList: 30m
             - Border: 31m
         - Composites/
-            - ContactCard: 1h 9m
+            - ContactCard: 1h 22m
     - Events/
         - EventQueue: 1m
         - UiEvent: 6m
@@ -168,5 +168,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 1h 1m
+        - Home: 1h 2m
         - Chat: 
