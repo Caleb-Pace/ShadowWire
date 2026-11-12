@@ -62,6 +62,9 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
     {
         bool consumed =  false;
 
+        if (!IsFocused)
+            return consumed; // Early exit: not focus
+
         switch (e)
         {
             case PasteEvent p:
