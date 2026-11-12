@@ -26,7 +26,7 @@ public abstract class BaseComponent(Point origin, Size size)
     /// <summary>
     /// Colours the component draws with. Defaults to the terminal's own.
     /// </summary>
-    public Style Style
+    public virtual Style Style
     {
         get => _style;
         set
