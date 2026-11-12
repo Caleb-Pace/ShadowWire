@@ -19,7 +19,7 @@ public sealed class Home : IScene
 
     // TODO: Make dictionary, <Fingerprint, ContactCard>
     private List<ContactCard> _contactCards = new();
-    private SelectableList<ContactCard> _list; // TODO: Select Contact card composite component.
+    private SelectableList<ContactCard> _list;
     private TextInput _input;
     private Border _border;
 
@@ -43,14 +43,16 @@ public sealed class Home : IScene
         // Components
         _list = new SelectableList<ContactCard>(new Point(1, 1), new Size(screenWidth - 2, screenHeight - 3))
         {
-            Style = _theme.Base
+            IsFocused = true,
+            Style     = _theme.Base,
         };
         PopulateContactList();
 
         _input = new TextInput(new Point(1, (screenHeight - 2)), screenWidth - 2)
         {
-            Style     = _theme.Input,
+            IsFocused = false,
             MaxLength = screenWidth - 2,
+            Style     = _theme.Input,
         };
 
         _border = new Border(_rootSurface)
@@ -80,22 +82,12 @@ public sealed class Home : IScene
     }
 
 
-    // TODO: Update with new comps
     public bool Handle(UiEvent e)
     {
         bool consumed = false;
 
-        if (_input.IsFocused)
-            consumed |= _input.Handle(e);
-
-        consumed |= _list.Handle(e);
-
-
-        if (consumed)
-            return true;
-
-        if ((e is KeyEvent k) && (k.KeyInfo.Key == ConsoleKey.Enter))
-        {
+        // TODO: Clean up vvv
+        /*
             if (!_input.TryTakeText(out string text))
                 return false;
 
@@ -103,9 +95,22 @@ public sealed class Home : IScene
             _rootSurface.HideCursor();
 
             _rootSurface.Write(1, 0, $"\"{text.Replace("\n", "\\n")}\"");
+         */
+
+        // Switch focus
+        if ((e is KeyEvent k) && (k.KeyInfo.Key == ConsoleKey.Tab))
+        {
+            _input.IsFocused = !_input.IsFocused;
+            _list.IsFocused  = !_input.IsFocused;
+
+            consumed = true;
         }
 
-        return false;
+        // Component handlers
+        consumed |= _input.Handle(e);
+        consumed |= _list.Handle(e);
+
+        return consumed;
     }
 
     public void Render()
