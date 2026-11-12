@@ -152,7 +152,7 @@ Client:
             - ISelectable: 2m
             - Surface: 54m
         - Primitives/
-            - TextInput: 2h 3m
+            - TextInput: 2h 15m
             - MultilineTextInput: 49m
             - Text: 30m
             - VerticalList: 34m

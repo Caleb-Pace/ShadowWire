@@ -33,7 +33,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
     /// <summary>
     /// <see langword="true"/> when the current text satisfies constraints.
     /// </summary>
-    public bool IsValid => (_buffer.Length >= MinLength);
+    public bool IsValid => (_buffer.Length >= MinLength); // Other constraints like max length are implicit.
 
     public bool IsFocused
     {
@@ -91,6 +91,15 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
         }
     }
 
+    /// <summary>
+    /// Raised when Enter is pressed.
+    /// </summary>
+    /// <remarks>
+    /// <b>Must</b> satisfy <see cref="IsValid"/> to trigger.
+    /// </remarks>
+    public event Action<TextInput>? Submitted;
+
+
     public TextInput(Point origin, Size size) : base(origin, size)
     {
         Style = new Style(default(TrueColor), default(TrueColor)); // Avoid colour bleeding by default.
@@ -106,7 +115,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
         bool consumed = false;
 
         if (!IsFocused)
-            return consumed; // Early exit: not focus
+            return consumed; // Early exit: not focused.
 
         switch (e)
         {
@@ -161,6 +170,11 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
 
             case ConsoleKey.End:
                 _index = _buffer.Length;
+                return true;
+
+            case ConsoleKey.Enter:
+                if (IsValid)
+                    Submitted?.Invoke(this);
                 return true;
         }
 
@@ -226,7 +240,7 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
 
 
     /// <summary>
-    /// Use this for "submit" actions.
+    /// Used for "submit" actions.
     /// </summary>
     /// <returns><see langword="true"/> and outputs the text (clearing the field).</returns>
     public bool TryTakeText(out string text)
