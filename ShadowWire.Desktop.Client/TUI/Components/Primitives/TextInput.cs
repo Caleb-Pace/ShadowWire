@@ -52,8 +52,8 @@ public class TextInput : BaseComponent, IEventConsumer, IFocusable
 
     public TextInput(Point origin, Size size) : base(origin, size)
     {
-        Cursor = origin;
         Style  = new Style(default(TrueColor), default(TrueColor)); // Avoid colour bleeding by default.
+        Reflow(); // Set Cursor's local position.
     }
     public TextInput(Point origin, int width) : this(origin, new Size(width, 1)) { }
 

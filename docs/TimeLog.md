@@ -152,7 +152,7 @@ Client:
             - ISelectable: 2m
             - Surface: 54m
         - Primitives/
-            - TextInput: 1h 44m
+            - TextInput: 1h 51m
             - MultilineTextInput: 48m
             - Text: 30m
             - VerticalList: 34m
@@ -168,5 +168,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 1h 12m
+        - Home: 1h 16m
         - Chat: 
