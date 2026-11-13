@@ -69,8 +69,8 @@ public sealed record Theme
 
         Home = new HomeTheme
         {
-            Row               = new Style(p.TextNormal, p.Surface1),
-            RowAlt            = new Style(p.TextNormal, p.Surface2),
+            Row               = new Style(p.TextNormal, p.Surface2),
+            RowAlt            = new Style(p.TextNormal, p.Surface1),
             RowSelected       = new Style(p.TextStrong, p.Selected),
             RowSelectedMarker = new Style(p.Accent,     p.Selected),
 
