@@ -17,11 +17,12 @@ public sealed class Home : IScene
     private Surface _rootSurface;
     private BaseComponent[] _componentsRef;
 
-    // TODO: Make dictionary, <Fingerprint, ContactCard>
+    private HomeTitleBar _titleBar;
+    //private Dictionary<Fingerprint, ContactCard> _contactCards = new(); // TODO: Remove
     private List<ContactCard> _contactCards = new();
     private SelectableList<ContactCard> _list;
     private TextInput _input;
-    private Border _border;
+    //private Border _border;
 
 
     public Home(EventQueue events, Theme theme, ContactManager contacts)
@@ -41,14 +42,22 @@ public sealed class Home : IScene
 
 
         // Components
-        _list = new SelectableList<ContactCard>(new Point(1, 1), new Size(screenWidth - 2, screenHeight - 3))
+        _list = new SelectableList<ContactCard>(new Point(0, 1), new Size(screenWidth, screenHeight - 3))
+        //_list = new SelectableList<ContactCard>(new Point(0, 2), new Size(screenWidth, screenHeight - 4))
+        //_list = new SelectableList<ContactCard>(new Point(1, 2), new Size(screenWidth - 2, screenHeight - 4))
+        //_list = new SelectableList<ContactCard>(new Point(1, 1), new Size(screenWidth - 2, screenHeight - 3))
         {
             IsFocused = true,
             Style     = _theme.Base,
         };
         PopulateContactList();
 
-        _input = new TextInput(new Point(1, (screenHeight - 2)), screenWidth - 2)
+        _titleBar = new HomeTitleBar(_theme, screenWidth)
+        {
+            ContactCount = _contactCards.Count,
+        };
+
+        _input = new TextInput(new Point(1, screenHeight - 2), screenWidth - 2)
         {
             MaxLength      = screenWidth - 2, // TODO: Change (placeholder)
             IsFocused      = false,
@@ -56,13 +65,14 @@ public sealed class Home : IScene
             UnfocusedStyle = _theme.InputUnfocused,
         };
 
-        _border = new Border(_rootSurface)
-        {
-            Line = BorderLine.Rounded
-        };
+        //_border = new Border(_rootSurface)
+        //{
+        //    Line  = BorderLine.Rounded,
+        //    Style = new Style(_theme.Bar.Bg, null),
+        //};
 
 
-        _componentsRef = [ _list, _input, _border ];
+        _componentsRef = [/*_border,*/ _titleBar, _list, _input ];
     }
 
     private void PopulateContactList()
@@ -83,6 +93,7 @@ public sealed class Home : IScene
     }
 
 
+    // TODO: Handle new messages (Update TitleBar & ContactCard)
     public bool Handle(UiEvent e)
     {
         bool consumed = false;
@@ -127,7 +138,8 @@ public sealed class Home : IScene
         // Redraw
         _list.Render(_rootSurface);
         _input.Render(_rootSurface);
-        _border.Render(_rootSurface);
+        //_border.Render(_rootSurface);
+        _titleBar.Render(_rootSurface);
 
 
         // Flush to Console

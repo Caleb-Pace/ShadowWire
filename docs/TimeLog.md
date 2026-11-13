@@ -130,7 +130,7 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 3h 8m
+    - Planning: 3h 20m
     - Research: 47m
         - Identicons: 18m
         - Other ANSI styling options: 24m
@@ -139,10 +139,10 @@ Client:
     - Colours and Unicode support: 22m
     - Scene implementation: 3m
     - Themes/
-        - Colour planning: 48m
+        - Colour planning: 57m
         - Style: 1h 1m
         - TrueColor: 10m
-        - Themes: 19m
+        - Themes: 20m
         - Palettes: 2m
     - Components/
         - Restructure: 2m
@@ -159,7 +159,8 @@ Client:
             - SelectableList: 41m
             - Border: 31m
         - Composites/
-            - ContactCard: 1h 22m
+            - ContactCard: 1h 23m
+            - HomeTitleBar: 22m
     - Events/
         - EventQueue: 1m
         - UiEvent: 6m
@@ -168,5 +169,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 1h 17m
+        - Home: 1h 27m
         - Chat: 
