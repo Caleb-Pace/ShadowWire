@@ -110,7 +110,7 @@ public class ContactCard : BaseComponent, ISelectable
         _selectedStyle = _theme.Home.RowSelected;
 
         // Components
-        _nickname = new Text(new Point(0, 0), new Size(32, 1))
+        _nickname = new Text(new Point(1, 0), new Size(32, 1))
         {
             Content = contact.Nickname,
             OverflowType = Overflow.Ellipsis,
