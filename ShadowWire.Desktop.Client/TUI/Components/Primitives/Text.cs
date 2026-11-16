@@ -8,7 +8,14 @@ public class Text : BaseComponent
     public string Content
     {
         get => _content;
-        set => _content = NormaliseLineEndings(value);
+        set
+        {
+            if (string.Equals(_content, value))
+                return;
+
+            _content = value;
+            base.Invalidate(); // Redraw
+        }
     }
     private string _content = string.Empty;
 
