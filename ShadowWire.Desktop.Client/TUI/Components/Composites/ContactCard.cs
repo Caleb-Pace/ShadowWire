@@ -69,7 +69,7 @@ public class ContactCard : BaseComponent, ISelectable
             return base.IsDirty
                 || _nickname.IsDirty
                 || _fingerprint.IsDirty
-                || _unreadMessageCountText.IsDirty;
+                || ( (UnreadMessageCount > 0) && _unreadMessageCountText.IsDirty );
         }
     }
 

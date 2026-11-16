@@ -130,7 +130,8 @@ Client:
 - EventBus: 7m
 - TUI/
     - Flowchart: 1h 3m
-    - Planning: 3h 20m
+    - Planning: 3h 21m
+        - Input: 17m
     - Research: 47m
         - Identicons: 18m
         - Other ANSI styling options: 24m
@@ -138,6 +139,7 @@ Client:
     - KeyReader: 16m
     - Colours and Unicode support: 22m
     - Scene implementation: 3m
+    - Debugging List always dirty issue: 32m
     - Themes/
         - Colour planning: 57m
         - Style: 1h 1m
@@ -154,12 +156,12 @@ Client:
         - Primitives/
             - TextInput: 2h 15m
             - MultilineTextInput: 49m
-            - Text: 30m
+            - Text: 31m
             - VerticalList: 34m
             - SelectableList: 41m
             - Border: 31m
         - Composites/
-            - ContactCard: 1h 23m
+            - ContactCard: 1h 24m
             - HomeTitleBar: 22m
     - Events/
         - EventQueue: 1m
@@ -169,5 +171,5 @@ Client:
     - Scenes/
         - IScene: 10m
         - Test Scene: 53m
-        - Home: 1h 28m
+        - Home: 1h 39m
         - Chat: 
