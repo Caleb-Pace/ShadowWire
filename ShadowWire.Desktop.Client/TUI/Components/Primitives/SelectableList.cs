@@ -136,10 +136,10 @@ public class SelectableList<TComp> : BaseComponent, IEventConsumer, IFocusable
     /// </summary>
     public void Deselect()
     {
-        _selected = -1;
-
         if (_items.Count > 0)
             _items[_selected].IsSelected = false; // Unselect previous
+
+        _selected = -1;
     }
 
 
